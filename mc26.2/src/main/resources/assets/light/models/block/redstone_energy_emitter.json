@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "redstone": "minecraft:block/redstone_block",
+    "glow": "minecraft:block/glowstone",
+    "particle": "minecraft:block/redstone_block"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down": { "texture": "#redstone" },
+        "up": { "texture": "#redstone" },
+        "north": { "texture": "#redstone" },
+        "south": { "texture": "#redstone" },
+        "west": { "texture": "#redstone" },
+        "east": { "texture": "#redstone" }
+      }
+    },
+    {
+      "from": [7, 0, -0.01],
+      "to": [9, 16, 0.01],
+      "faces": {
+        "north": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [0, 7, -0.01],
+      "to": [16, 9, 0.01],
+      "faces": {
+        "north": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [7, 0, 15.99],
+      "to": [9, 16, 16.01],
+      "faces": {
+        "south": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [0, 7, 15.99],
+      "to": [16, 9, 16.01],
+      "faces": {
+        "south": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [-0.01, 7, 0],
+      "to": [0.01, 9, 16],
+      "faces": {
+        "west": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [-0.01, 0, 7],
+      "to": [0.01, 16, 9],
+      "faces": {
+        "west": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [15.99, 7, 0],
+      "to": [16.01, 9, 16],
+      "faces": {
+        "east": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [15.99, 0, 7],
+      "to": [16.01, 16, 9],
+      "faces": {
+        "east": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [7, 15.99, 0],
+      "to": [9, 16.01, 16],
+      "faces": {
+        "up": { "texture": "#glow" }
+      }
+    },
+    {
+      "from": [0, 15.99, 7],
+      "to": [16, 16.01, 9],
+      "faces": {
+        "up": { "texture": "#glow" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{ "type": "minecraft:crafting_shapeless", "ingredients": ["light:constant_light_block", "minecraft:redstone", "minecraft:iron_ingot", "minecraft:quartz"], "result": { "id": "light:redstone_energy_sensor", "count": 1 } }

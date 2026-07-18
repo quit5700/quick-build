@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pathfinding_beacon:block/route_block_21"
+  }
+}

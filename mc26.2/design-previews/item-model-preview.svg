@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+  <rect width="1200" height="650" fill="#171b21"/>
+  <rect x="45" y="45" width="520" height="520" fill="#252b33" stroke="#697582" stroke-width="6"/>
+  <rect x="635" y="45" width="520" height="520" fill="#252b33" stroke="#697582" stroke-width="6"/>
+
+  <!-- Directional delay switch: full inventory cube with a readable top arrow. -->
+  <g shape-rendering="crispEdges">
+    <polygon points="145,245 305,150 465,245 305,340" fill="#c0c4c8" stroke="#101318" stroke-width="12"/>
+    <polygon points="145,245 305,340 305,505 145,410" fill="#858b91" stroke="#101318" stroke-width="12"/>
+    <polygon points="305,340 465,245 465,410 305,505" fill="#a5abb0" stroke="#101318" stroke-width="12"/>
+
+    <polygon points="185,248 305,178 425,248 305,318" fill="#6e563b" stroke="#36271c" stroke-width="8"/>
+    <polygon points="205,248 305,190 405,248 305,306" fill="#9a7543"/>
+    <rect x="175" y="352" width="26" height="26" fill="#3a2020"/>
+    <rect x="409" y="352" width="26" height="26" fill="#ff4b35"/>
+
+    <polygon points="220,246 286,207 304,218 260,244 348,244 348,221 405,254 348,287 348,264 260,264 304,290 286,301 220,262" fill="#e32620" stroke="#64100d" stroke-width="6"/>
+    <rect x="181" y="357" width="14" height="14" fill="#5e1111"/>
+    <rect x="414" y="357" width="14" height="14" fill="#ffb13b"/>
+
+    <rect x="140" y="535" width="330" height="34" fill="#11151a"/>
+    <rect x="180" y="540" width="80" height="24" fill="#858b91"/>
+    <rect x="260" y="540" width="90" height="24" fill="#c0c4c8"/>
+    <rect x="350" y="540" width="80" height="24" fill="#a5abb0"/>
+  </g>
+
+  <!-- Compact ID sequence reorderer: two clear ID cubes and a restrained swap control. -->
+  <g shape-rendering="crispEdges">
+    <polygon points="878,360 918,398 800,526 760,488" fill="#4c3c2f" stroke="#101318" stroke-width="12"/>
+    <polygon points="800,526 760,488 738,512 778,550" fill="#c48a32" stroke="#101318" stroke-width="10"/>
+    <polygon points="856,340 900,350 928,386 902,414 866,400 840,364" fill="#9da5ad" stroke="#101318" stroke-width="10"/>
+
+    <rect x="712" y="230" width="118" height="118" fill="#173c87" stroke="#101318" stroke-width="12"/>
+    <rect x="960" y="230" width="118" height="118" fill="#7b36b2" stroke="#101318" stroke-width="12"/>
+    <rect x="818" y="274" width="154" height="30" fill="#6f7882" stroke="#101318" stroke-width="10"/>
+
+    <g fill="#f4f7fb">
+      <rect x="763" y="253" width="14" height="70"/>
+      <rect x="746" y="260" width="31" height="14"/>
+      <rect x="742" y="309" width="53" height="14"/>
+      <rect x="985" y="253" width="58" height="14"/>
+      <rect x="1029" y="267" width="14" height="22"/>
+      <rect x="985" y="287" width="58" height="14"/>
+      <rect x="985" y="301" width="14" height="22"/>
+      <rect x="985" y="309" width="58" height="14"/>
+    </g>
+
+    <path d="M842 236 H904 V218 L940 246 904 274 V256 H842 Z" fill="#40d8ef" stroke="#0b5262" stroke-width="6"/>
+    <path d="M948 326 H886 V344 L850 316 886 288 V306 H948 Z" fill="#40d8ef" stroke="#0b5262" stroke-width="6"/>
+
+    <rect x="730" y="535" width="330" height="34" fill="#11151a"/>
+    <rect x="760" y="540" width="120" height="24" fill="#4c3c2f"/>
+    <rect x="880" y="540" width="60" height="24" fill="#173c87"/>
+    <rect x="940" y="540" width="60" height="24" fill="#7b36b2"/>
+  </g>
+</svg>

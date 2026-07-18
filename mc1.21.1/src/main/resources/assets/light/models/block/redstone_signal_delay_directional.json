@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "base": "minecraft:block/iron_block",
+    "top": "minecraft:block/redstone_lamp",
+    "arrow": "minecraft:block/redstone_block",
+    "particle": "minecraft:block/redstone_block"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down": {"texture": "#base", "cullface": "down"},
+        "up": {"texture": "#top", "cullface": "up"},
+        "north": {"texture": "#base", "cullface": "north"},
+        "south": {"texture": "#base", "cullface": "south"},
+        "west": {"texture": "#base", "cullface": "west"},
+        "east": {"texture": "#base", "cullface": "east"}
+      }
+    },
+    {
+      "from": [7, 16, 2],
+      "to": [9, 16.25, 12],
+      "faces": {"up": {"texture": "#arrow"}}
+    },
+    {
+      "from": [4, 16, 9],
+      "to": [12, 16.25, 12],
+      "faces": {"up": {"texture": "#arrow"}}
+    },
+    {
+      "from": [5, 16, 12],
+      "to": [11, 16.25, 14],
+      "faces": {"up": {"texture": "#arrow"}}
+    },
+    {
+      "from": [6, 16, 14],
+      "to": [10, 16.25, 15],
+      "faces": {"up": {"texture": "#arrow"}}
+    }
+  ]
+}

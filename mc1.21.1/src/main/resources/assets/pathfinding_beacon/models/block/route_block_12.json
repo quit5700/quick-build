@@ -1,0 +1,6 @@
+{
+    "textures":  {
+                     "all":  "pathfinding_beacon:block/route_block_12"
+                 },
+    "parent":  "minecraft:block/cube_all"
+}

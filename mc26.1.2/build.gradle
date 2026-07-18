@@ -1,0 +1,105 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+base { archivesName = project.archives_base_name }
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+loom {
+    runtimeOnlyLog4j = true
+    accessWidenerPath = file('src/main/resources/light.accesswidener')
+}
+
+sourceSets {
+    main.java.srcDir 'src/client/java'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api-base:${project.fabric_api_base_version}"
+    implementation "net.fabricmc.fabric-api:fabric-command-api-v2:${project.fabric_command_api_v2_version}"
+    implementation "net.fabricmc.fabric-api:fabric-creative-tab-api-v1:${project.fabric_creative_tab_api_v1_version}"
+    implementation "net.fabricmc.fabric-api:fabric-entity-events-v1:${project.fabric_entity_events_v1_version}"
+    implementation "net.fabricmc.fabric-api:fabric-events-interaction-v0:${project.fabric_events_interaction_v0_version}"
+    implementation "net.fabricmc.fabric-api:fabric-lifecycle-events-v1:${project.fabric_lifecycle_events_v1_version}"
+    implementation "net.fabricmc.fabric-api:fabric-networking-api-v1:${project.fabric_networking_api_v1_version}"
+    implementation "net.fabricmc.fabric-api:fabric-object-builder-api-v1:${project.fabric_object_builder_api_v1_version}"
+    implementation "net.fabricmc.fabric-api:fabric-rendering-v1:${project.fabric_rendering_v1_version}"
+
+    compileOnly files('G:/game/mcfabric/.minecraft/versions/26.1.2-Fabric/mods/Jade-mc26.1-Fabric-26.1.8.jar')
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'loader_version', project.loader_version
+    inputs.property 'minecraft_version', project.minecraft_version
+    inputs.property 'java_version', project.java_version
+    inputs.property 'fabric_version', project.fabric_version
+    filesMatching('fabric.mod.json') {
+        expand([
+                version: project.version,
+                loader_version: project.loader_version,
+                minecraft_version: project.minecraft_version,
+                java_version: project.java_version,
+                fabric_version: project.fabric_version
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.encoding = 'UTF-8'
+}
+
+def asciiTestRoot = file("${System.getProperty('java.io.tmpdir')}/quick-build-test/${project.minecraft_version}")
+tasks.register('syncAsciiTestOutputs', Sync) {
+    dependsOn tasks.named('testClasses')
+    into asciiTestRoot
+    from("$buildDir/classes/java/main") { into 'main-classes' }
+    from("$buildDir/resources/main") { into 'main-resources' }
+    from("$buildDir/classes/java/test") { into 'test-classes' }
+    from("$buildDir/resources/test") { into 'test-resources' }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    dependsOn tasks.named('syncAsciiTestOutputs')
+    testClassesDirs = files("$asciiTestRoot/test-classes")
+    classpath = files(
+            "$asciiTestRoot/test-classes",
+            "$asciiTestRoot/test-resources",
+            "$asciiTestRoot/main-classes",
+            "$asciiTestRoot/main-resources"
+    ) + configurations.testRuntimeClasspath
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.register('copyDistribution', Copy) {
+    dependsOn tasks.named('jar'), tasks.named('sourcesJar')
+    into layout.projectDirectory.dir('dist')
+    from(tasks.named('jar')) {
+        rename { "quick-build-${project.mod_version}-mc${project.minecraft_version}-fabric.jar" }
+    }
+    from(tasks.named('sourcesJar')) {
+        rename { "quick-build-${project.mod_version}-mc${project.minecraft_version}-fabric-sources.jar" }
+    }
+}
+
+tasks.named('build') { finalizedBy tasks.named('copyDistribution') }

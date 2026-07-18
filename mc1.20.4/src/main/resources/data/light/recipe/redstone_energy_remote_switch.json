@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "V",
+    "L"
+  ],
+  "key": {
+    "V": "minecraft:lever",
+    "L": "light:constant_light_block"
+  },
+  "result": { "id": "light:redstone_energy_remote_switch",
+    "count": 1
+  }
+}

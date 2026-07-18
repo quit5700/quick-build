@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north,omnidirectional=false,powered=false": {"model": "light:block/redstone_signal_delay_directional"},
+    "facing=north,omnidirectional=false,powered=true": {"model": "light:block/redstone_signal_delay_directional"},
+    "facing=east,omnidirectional=false,powered=false": {"model": "light:block/redstone_signal_delay_directional", "y": 90},
+    "facing=east,omnidirectional=false,powered=true": {"model": "light:block/redstone_signal_delay_directional", "y": 90},
+    "facing=south,omnidirectional=false,powered=false": {"model": "light:block/redstone_signal_delay_directional", "y": 180},
+    "facing=south,omnidirectional=false,powered=true": {"model": "light:block/redstone_signal_delay_directional", "y": 180},
+    "facing=west,omnidirectional=false,powered=false": {"model": "light:block/redstone_signal_delay_directional", "y": 270},
+    "facing=west,omnidirectional=false,powered=true": {"model": "light:block/redstone_signal_delay_directional", "y": 270},
+    "facing=north,omnidirectional=true,powered=false": {"model": "light:block/redstone_signal_delay_directional"},
+    "facing=north,omnidirectional=true,powered=true": {"model": "light:block/redstone_signal_delay_directional"},
+    "facing=east,omnidirectional=true,powered=false": {"model": "light:block/redstone_signal_delay_directional", "y": 90},
+    "facing=east,omnidirectional=true,powered=true": {"model": "light:block/redstone_signal_delay_directional", "y": 90},
+    "facing=south,omnidirectional=true,powered=false": {"model": "light:block/redstone_signal_delay_directional", "y": 180},
+    "facing=south,omnidirectional=true,powered=true": {"model": "light:block/redstone_signal_delay_directional", "y": 180},
+    "facing=west,omnidirectional=true,powered=false": {"model": "light:block/redstone_signal_delay_directional", "y": 270},
+    "facing=west,omnidirectional=true,powered=true": {"model": "light:block/redstone_signal_delay_directional", "y": 270}
+  }
+}

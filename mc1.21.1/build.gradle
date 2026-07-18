@@ -1,0 +1,98 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+base { archivesName = project.archives_base_name }
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+    maven { url = 'https://cursemaven.com' }
+}
+
+loom {
+    runtimeOnlyLog4j = true
+    accessWidenerPath = file('src/main/resources/light.accesswidener')
+}
+
+sourceSets {
+    main.java.srcDir 'src/client/java'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modCompileOnly "curse.maven:jade-324717:${project.jade_file_id}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'loader_version', project.loader_version
+    inputs.property 'minecraft_version', project.minecraft_version
+    inputs.property 'java_version', project.java_version
+    inputs.property 'fabric_version', project.fabric_version
+    filesMatching('fabric.mod.json') {
+        expand([
+                version: project.version,
+                loader_version: project.loader_version,
+                minecraft_version: project.minecraft_version,
+                java_version: project.java_version,
+                fabric_version: project.fabric_version
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = project.java_version.toInteger()
+    options.encoding = 'UTF-8'
+}
+
+def asciiTestRoot = file("${System.getProperty('java.io.tmpdir')}/quick-build-test/${project.minecraft_version}")
+tasks.register('syncAsciiTestOutputs', Sync) {
+    dependsOn tasks.named('testClasses')
+    into asciiTestRoot
+    from("$buildDir/classes/java/main") { into 'main-classes' }
+    from("$buildDir/resources/main") { into 'main-resources' }
+    from("$buildDir/classes/java/test") { into 'test-classes' }
+    from("$buildDir/resources/test") { into 'test-resources' }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    dependsOn tasks.named('syncAsciiTestOutputs')
+    testClassesDirs = files("$asciiTestRoot/test-classes")
+    classpath = files(
+            "$asciiTestRoot/test-classes",
+            "$asciiTestRoot/test-resources",
+            "$asciiTestRoot/main-classes",
+            "$asciiTestRoot/main-resources"
+    ) + configurations.testRuntimeClasspath
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.toVersion(project.java_version)
+    targetCompatibility = JavaVersion.toVersion(project.java_version)
+}
+
+tasks.register('copyDistribution', Copy) {
+    dependsOn tasks.named('remapJar'), tasks.named('sourcesJar')
+    into layout.projectDirectory.dir('dist')
+    from(tasks.named('remapJar')) {
+        rename { "quick-build-${project.mod_version}-mc${project.minecraft_version}-fabric.jar" }
+    }
+    from(tasks.named('sourcesJar')) {
+        rename { "quick-build-${project.mod_version}-mc${project.minecraft_version}-fabric-sources.jar" }
+    }
+}
+
+tasks.named('build') { finalizedBy tasks.named('copyDistribution') }

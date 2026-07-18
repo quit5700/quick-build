@@ -1,0 +1,6 @@
+**/.gradle/
+**/build/
+**/run/
+**/dist/
+*.log
+hs_err_pid*

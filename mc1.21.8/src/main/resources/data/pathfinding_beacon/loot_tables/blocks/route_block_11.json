@@ -1,0 +1,19 @@
+{
+    "pools":  [
+                  {
+                      "entries":  [
+                                      {
+                                          "name":  "pathfinding_beacon:route_block_11",
+                                          "type":  "minecraft:item"
+                                      }
+                                  ],
+                      "rolls":  1,
+                      "conditions":  [
+                                         {
+                                             "condition":  "minecraft:survives_explosion"
+                                         }
+                                     ]
+                  }
+              ],
+    "type":  "minecraft:block"
+}
