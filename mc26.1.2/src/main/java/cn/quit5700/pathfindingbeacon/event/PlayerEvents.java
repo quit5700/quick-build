@@ -25,7 +25,7 @@ public final class PlayerEvents {
 
     public static void register() {
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            handler.player.sendSystemMessage(Component.literal("寻路器取消指令 /pfcancel <1-30>"));
+            handler.player.sendSystemMessage(Component.translatable("text.quick_build.152"));
             RouteNetworking.syncPlayer(handler.player);
         });
         ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register((player, origin, destination) ->

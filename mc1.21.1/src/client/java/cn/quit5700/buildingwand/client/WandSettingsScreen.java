@@ -42,7 +42,7 @@ public final class WandSettingsScreen extends Screen {
     private int itemsPerPage;
 
     public WandSettingsScreen(int planeLimit, int cubeLimit, int moveLimit, boolean editable) {
-        super(Component.literal("快捷建造设置台"));
+        super(Component.translatable("text.quick_build.080"));
         this.planeLimit = planeLimit;
         this.cubeLimit = cubeLimit;
         this.moveLimit = moveLimit;
@@ -103,7 +103,7 @@ public final class WandSettingsScreen extends Screen {
         if (selected.limits() != LimitProfile.NONE) addLimitButtons(selected.limits());
 
         SettingsScreenLayout.Footer footer = SettingsScreenLayout.footer(layoutBounds());
-        addRenderableWidget(Button.builder(Component.literal("关闭"), button -> onClose())
+        addRenderableWidget(Button.builder(Component.translatable("text.quick_build.057"), button -> onClose())
                 .bounds(footer.closeX(), footer.y(), footer.closeWidth(), 20).build());
     }
 
@@ -116,8 +116,8 @@ public final class WandSettingsScreen extends Screen {
             addLimitRow(LimitType.MOVE, area.secondRowY(), area);
         }
         SettingsScreenLayout.Footer footer = SettingsScreenLayout.footer(layoutBounds());
-        String saveLabel = saveFlow.pending() ? "正在保存" : "保存设置";
-        Button save = Button.builder(Component.literal(saveLabel), button -> saveSettings())
+        String saveLabel = saveFlow.pending() ? "text.quick_build.185" : "text.quick_build.032";
+        Button save = Button.builder(Component.translatable(saveLabel), button -> saveSettings())
                 .bounds(footer.saveX(), footer.y(), footer.saveWidth(), 20).build();
         save.active = editable && !saveFlow.pending();
         addRenderableWidget(save);
@@ -157,7 +157,7 @@ public final class WandSettingsScreen extends Screen {
         graphics.fill(panelLeft, panelTop, panelLeft + panelWidth, panelTop + panelHeight, 0xF020232A);
         graphics.renderOutline(panelLeft, panelTop, panelWidth, panelHeight, 0xFF66CCFF);
         graphics.drawCenteredString(font, title, width / 2, panelTop + 10, 0xFFFFFFFF);
-        graphics.drawCenteredString(font, Component.literal("物品"), panelLeft + listWidth / 2, panelTop + 24, 0xFFD8F4FF);
+        graphics.drawCenteredString(font, Component.translatable("text.quick_build.145"), panelLeft + listWidth / 2, panelTop + 24, 0xFFD8F4FF);
 
         int contentLeft = contentLeft();
         int contentTop = panelTop + 34;
@@ -177,7 +177,7 @@ public final class WandSettingsScreen extends Screen {
                 : SettingsScreenLayout.limitArea(layoutBounds()).headingY() - 32;
         boolean descriptionFull = false;
         for (String line : page.descriptionPages().get(contentPage)) {
-            for (var wrapped : font.split(Component.literal(line), contentWidth - 24)) {
+            for (var wrapped : font.split(Component.translatable(line), contentWidth - 24)) {
                 if (y > descriptionBottom) {
                     descriptionFull = true;
                     break;
@@ -192,16 +192,16 @@ public final class WandSettingsScreen extends Screen {
         if (page.limits() != LimitProfile.NONE) {
             SettingsScreenLayout.LimitArea area = SettingsScreenLayout.limitArea(layoutBounds());
             String heading = page.limits() == LimitProfile.BUILDING
-                    ? "建筑方块上限设置（数字太大，容易造成卡顿）："
-                    : "移动方块上限设置（数字太大，容易造成卡顿）：";
-            graphics.drawString(font, Component.literal(heading), x, area.headingY(), 0xFFFFDD66);
+                    ? "text.quick_build.071"
+                    : "text.quick_build.159";
+            graphics.drawString(font, Component.translatable(heading), x, area.headingY(), 0xFFFFDD66);
             if (page.limits() == LimitProfile.BUILDING) {
-                graphics.drawString(font, Component.literal("平面上限：" + planeLimit), x, area.firstRowY() + 5, 0xFFD8F4FF);
-                graphics.drawString(font, Component.literal("建筑体上限：" + cubeLimit), x, area.secondRowY() + 5, 0xFFD8F4FF);
+                graphics.drawString(font, Component.translatable("text.quick_build.104", planeLimit), x, area.firstRowY() + 5, 0xFFD8F4FF);
+                graphics.drawString(font, Component.translatable("text.quick_build.072", cubeLimit), x, area.secondRowY() + 5, 0xFFD8F4FF);
             } else {
-                graphics.drawString(font, Component.literal("移动选区上限：" + moveLimit), x, area.secondRowY() + 5, 0xFFD8F4FF);
+                graphics.drawString(font, Component.translatable("text.quick_build.166", moveLimit), x, area.secondRowY() + 5, 0xFFD8F4FF);
             }
-            if (!editable) graphics.drawString(font, Component.literal("仅单人玩家或服务器 OP 可修改"), x, panelTop + panelHeight - 22, 0xFFFF7777);
+            if (!editable) graphics.drawString(font, Component.translatable("text.quick_build.074"), x, panelTop + panelHeight - 22, 0xFFFF7777);
         }
         if (!status.getString().isEmpty()) {
             graphics.drawCenteredString(font, status, contentLeft + contentWidth / 2, panelTop + 22, 0xFFFFDD66);
@@ -246,7 +246,7 @@ public final class WandSettingsScreen extends Screen {
     private void saveSettings() {
         switch (saveFlow.request()) {
             case SEND -> {
-                status = Component.literal("正在等待服务器保存。 ");
+                status = Component.translatable("text.quick_build.186");
                 ClientPlayNetworking.send(new WandNetworking.UpdateSettingsPayload(
                         planeLimit, cubeLimit, moveLimit));
             }
@@ -262,7 +262,7 @@ public final class WandSettingsScreen extends Screen {
         this.cubeLimit = cubeLimit;
         this.moveLimit = moveLimit;
         saveFlow.complete();
-        status = Component.literal(accepted ? "设置已保存。" : "设置保存失败，已恢复服务器数值。");
+        status = Component.translatable(accepted ? "text.quick_build.116" : "text.quick_build.115");
         rebuildWidgets();
     }
 
@@ -285,103 +285,103 @@ public final class WandSettingsScreen extends Screen {
         List<ItemPage> result = new ArrayList<>();
         addPaged(result, cn.quit5700.buildingwand.registry.ModItems.BUILDING_WAND, LimitProfile.BUILDING, true, List.of(
                 List.of(
-                        "Alt+左键：记录准星所指方块作为建筑方块。",
-                        "鼠标悬停建筑魔杖时显示当前已选方块。",
-                        "左键短按：立即在虚拟方块位置放置一个已选方块。",
-                        "左键按住并拖动：按下位置为第一点，松开位置为第二点。",
-                        "两点形成一维范围时绘制线，二维范围时绘制平面，三维范围时绘制实心体。"
+                        "text.quick_build.017",
+                        "text.quick_build.127",
+                        "text.quick_build.193",
+                        "text.quick_build.192",
+                        "text.quick_build.090"
                 ),
                 List.of(
-                        "Shift+左键拖动：固定绘制平面，可生成水平面或竖直面。",
-                        "Shift+左键短按两次：依次记录两个点，按坐标生成实心的线、平面或建筑体。",
-                        "Ctrl+左键拖动：绘制实心的线、平面或建筑体。",
-                        "Ctrl+左键短按两次：依次记录两个点，绘制中空平面或中空建筑体。",
-                        "一维范围不能中空，仍会生成普通实心线。"
+                        "text.quick_build.028",
+                        "text.quick_build.027",
+                        "text.quick_build.021",
+                        "text.quick_build.020",
+                        "text.quick_build.156"
                 ),
                 List.of(
-                        "开始绘制后立即显示虚拟方块，松开按键后预览保持不动。",
-                        "松开按键后保留虚拟预览，调整完成后左键确认建筑。",
-                        "方向键：移动整个虚拟区域。",
-                        "Ctrl+上/下：调整整个虚拟区域高度。",
-                        "Shift+方向键：移动第二点。",
-                        "Shift+Ctrl+上/下：调整第二点高度。",
-                        "Shift+右键：取消当前虚拟区域。"
+                        "text.quick_build.077",
+                        "text.quick_build.128",
+                        "text.quick_build.048",
+                        "text.quick_build.018",
+                        "text.quick_build.023",
+                        "text.quick_build.022",
+                        "text.quick_build.024"
                 ),
                 List.of(
-                        "白色预览表示可以完整放置；红色预览表示当前不能放置。",
-                        "创造模式不消耗材料，可以悬空放置并替换已有方块。",
-                        "生存模式消耗背包中的已选方块，且不能替换不可替换的已有方块。",
-                        "生存模式要求整个结构至少有一个方块与外部支撑相连。",
-                        "生存模式材料不足或任一条件不满足时，整个预览变红且一个方块也不放置。",
-                        "下方可设置平面和建筑体数量；数值不是人为最大值，但过大容易造成卡顿。"
+                        "text.quick_build.031",
+                        "text.quick_build.040",
+                        "text.quick_build.120",
+                        "text.quick_build.121",
+                        "text.quick_build.118",
+                        "text.quick_build.146"
                 )
         ));
         addPaged(result, cn.quit5700.buildingwand.registry.ModItems.MOVE_WAND, LimitProfile.MOVE, true, List.of(
                 List.of(
-                        "第一次左键：记录第一点。",
-                        "第二次左键：记录第二点，并保存两点之间的全部方块和空气。",
-                        "记录完成后，原位置保持显示虚拟区域。",
-                        "Shift+右键：忘记已记录的区域。",
-                        "移动红石装置前请保持装置静止；红石开关的连接状态会被清零。"
+                        "text.quick_build.045",
+                        "text.quick_build.043",
+                        "text.quick_build.070",
+                        "text.quick_build.025",
+                        "text.quick_build.160"
                 ),
                 List.of(
-                        "Ctrl+右键：显示已记录区域的移动投影。",
-                        "方向键：移动整个虚拟区域；Ctrl+上/下：调整整体高度。",
-                        "Alt+左/右：以区域中心旋转90度，向右为顺时针。",
-                        "投影位置确定后，左键确认并执行移动。",
-                        "移动成功后自动忘记当前记录。",
-                        "切换到有记录的移动魔杖时，会提示按Ctrl+右键显示虚拟区域。"
+                        "text.quick_build.019",
+                        "text.quick_build.049",
+                        "text.quick_build.016",
+                        "text.quick_build.134",
+                        "text.quick_build.158",
+                        "text.quick_build.107"
                 )
         ));
         add(result, LightItems.REDSTONE_SIGNAL_DELAY_ITEM, LimitProfile.NONE, false,
-                "右键打开界面，可输入0至3600秒，或用±0.1/±1秒按钮调整。",
-                "默认定向导电：箭尾输入、箭头输出；左右和上下不导电。",
-                "五面输出模式：箭尾固定为唯一输入面，其余五面只输出，不能作为输入。",
-                "红石信号开启和关闭都会完整延迟，短信号不会丢失。",
-                "注意：红石能量感应器不能作为信号输入者，否则会造成信号混乱。",
-                "区块卸载时保存模式、设置与待处理变化。");
+                "text.quick_build.178",
+                "text.quick_build.096",
+                "text.quick_build.144",
+                "text.quick_build.065",
+                "text.quick_build.188",
+                "text.quick_build.112");
 
         add(result, LightItems.REDSTONE_ENERGY_CONNECTOR_ITEM, LimitProfile.NONE, false,
-                "Shift+右键设备A，再Shift+右键设备B：连接两个设备。",
-                "对已经连接的同一对设备重复操作：断开连接。",
-                "选择第一个设备后Shift+右键空气：取消当前选择。",
-                "连续两次Shift+右键同一设备：取消当前选择。",
-                "第二个设备不符合连接条件时，保留第一个设备等待重新选择。",
-                "连接、断开或取消成功后，连接器恢复初始状态。",
-                "普通右键不执行连接操作，避免改变开关状态。禁止跨维度连接。");
+                "text.quick_build.026",
+                "text.quick_build.047",
+                "text.quick_build.150",
+                "text.quick_build.089",
+                "text.quick_build.044",
+                "text.quick_build.082",
+                "text.quick_build.105");
 
         for (Item item : cn.quit5700.pathfindingbeacon.registry.ModItems.ROUTE_BLOCK_ITEMS) {
             add(result, item, LimitProfile.NONE, false,
-                    "与普通方块相同：右键目标表面放置。所有玩家都可以放置和调整。",
-                    "同号方块组成贯穿世界高度的寻路线；同一编号不能放在相同X/Z列。",
-                    "生存模式使用木镐或更好的镐正常破坏并掉落。",
-                    "/pfcancel <1-30>：删除当前维度对应号码的全部方块和光柱，不产生掉落物。");
+                    "text.quick_build.182",
+                    "text.quick_build.131",
+                    "text.quick_build.119",
+                    "text.quick_build.011");
         }
         add(result, cn.quit5700.pathfindingbeacon.registry.ModItems.SEQUENCE_REORDERER, LimitProfile.NONE, false,
-                "依次右键两个不同的同号有效方块。", "所有玩家都可以连接断开的线路，或调整同一线路的顺序。");
+                "text.quick_build.157", "text.quick_build.129");
 
         add(result, LightItems.CONSTANT_LIGHT_BLOCK_ITEM, LimitProfile.NONE, false,
-                "右键目标表面放置；相邻红石信号控制开关。", "收到红石信号后提供亮度15、半径14格的无衰减照明。");
+                "text.quick_build.180", "text.quick_build.123");
         add(result, LightItems.REDSTONE_ENERGY_EMITTER_ITEM, LimitProfile.NONE, false,
-                "通过连接器加入无线红石网络。", "网络内开关或感应器触发时，六面输出强度15的红石信号。", "空手右键查看网络摘要；安装 Jade（玉）后可直接查看。");
+                "text.quick_build.130", "text.quick_build.138", "text.quick_build.079");
         for (Item item : LightItems.REMOTE_SWITCH_ITEMS.values()) {
-            add(result, item, LimitProfile.NONE, false, "右键切换对应颜色无线网络的红石状态。", "同颜色设备连接数量不限；不同颜色普通设备不能直接合并。");
+            add(result, item, LimitProfile.NONE, false, "text.quick_build.181", "text.quick_build.132");
         }
         add(result, LightItems.REDSTONE_ENERGY_SENSOR_ITEM, LimitProfile.NONE, false,
-                "必须使用连接器手动连接，不会自动两两配对。", "两个感应器仅在同轴、中间1至10格无障碍空间时允许连接。",
-                "空气和无形原版光源方块可通过，其他方块会阻挡。", "实体经过感应线时输出红石信号，并可衰减传给相邻红石元件。",
-                "外部信号断开后不会读取自身刚供电的红石粉。", "感应器允许连接不同颜色网络。");
+                "text.quick_build.034", "text.quick_build.092",
+                "text.quick_build.078", "text.quick_build.122",
+                "text.quick_build.135", "text.quick_build.054");
         add(result, cn.quit5700.buildingwand.registry.ModItems.WAND_SETTINGS_STATION, LimitProfile.NONE, false,
-                "右键快捷建造设置台：打开本界面。",
-                "查看快捷建筑全部物品的设置、操作方法、命令和注意事项。",
-                "左侧按设置优先和功能分组排列；使用下方箭头翻页。");
+                "text.quick_build.179",
+                "text.quick_build.038",
+                "text.quick_build.191");
         return List.copyOf(result);
     }
 
     private static void add(
             List<ItemPage> pages, Item item, LimitProfile profile, boolean hasSettings, String... lines) {
         String title = new ItemStack(item).getHoverName().getString();
-        pages.add(new ItemPage(item, hasSettings ? title + "(有设置)" : title,
+        pages.add(new ItemPage(item, hasSettings ? title + Component.translatable("text.quick_build.006").getString() : title,
                 List.of(List.of(lines)), profile));
     }
 
@@ -389,7 +389,7 @@ public final class WandSettingsScreen extends Screen {
             List<ItemPage> pages, Item item, LimitProfile profile, boolean hasSettings,
             List<List<String>> descriptionPages) {
         String title = new ItemStack(item).getHoverName().getString();
-        pages.add(new ItemPage(item, hasSettings ? title + "(有设置)" : title,
+        pages.add(new ItemPage(item, hasSettings ? title + Component.translatable("text.quick_build.006").getString() : title,
                 List.copyOf(descriptionPages), profile));
     }
 

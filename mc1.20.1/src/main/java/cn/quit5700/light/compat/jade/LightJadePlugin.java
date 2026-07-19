@@ -47,13 +47,14 @@ public final class LightJadePlugin implements IWailaPlugin {
         @Override public ResourceLocation getUid() { return UID; }
         @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
             CompoundTag data = accessor.getServerData();
-            tooltip.add(Component.literal("网络编号：" + data.getString("networkId")));
-            tooltip.add(Component.literal("网络节点：" + data.getInt("nodes")));
-            tooltip.add(Component.literal("开关：" + data.getInt("switches") + "，感应器：" + data.getInt("sensors")
-                    + "，发射器：" + data.getInt("emitters")));
+            tooltip.add(Component.translatable("text.quick_build.136" + data.getString("networkId")));
+            tooltip.add(Component.translatable("text.quick_build.137" + data.getInt("nodes")));
+            tooltip.add(Component.translatable("text.quick_build.076" + data.getInt("switches") + "text.quick_build.008" + data.getInt("sensors")
+                    + "text.quick_build.007" + data.getInt("emitters")));
             boolean powered = data.getBoolean("powered");
-            tooltip.add(Component.literal("网络状态：" + (powered ? "有信号" : "无信号")));
-            tooltip.add(Component.literal("输出信号：" + (powered ? 15 : 0)));
+            tooltip.add(Component.translatable("display.quick_build.network_status",
+                    Component.translatable(powered ? "text.quick_build.177" : "text.quick_build.142")));
+            tooltip.add(Component.translatable("display.quick_build.output_signal", powered ? 15 : 0));
         }
     }
 }

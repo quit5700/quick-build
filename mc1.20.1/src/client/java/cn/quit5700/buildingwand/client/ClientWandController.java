@@ -117,7 +117,7 @@ public final class ClientWandController {
         moveStage = Stage.RECORDED;
         WandPreviewState.clear();
         if (client.player != null && client.player.getMainHandItem().is(ModItems.MOVE_WAND)) {
-            client.player.displayClientMessage(Component.literal("按 Ctrl + 右键显示虚拟区域。"), true);
+            client.player.displayClientMessage(Component.translatable("text.quick_build.029"), true);
         }
     }
 
@@ -335,15 +335,15 @@ public final class ClientWandController {
                 moveSecond = null;
                 moveStage = Stage.FIRST_POINT;
                 WandPreviewState.set(List.of(moveFirst), WandPreviewState.PreviewColor.BLUE);
-                client.player.displayClientMessage(Component.literal("已记录第一点，请记录第二点完成选择。"), true);
+                client.player.displayClientMessage(Component.translatable("text.quick_build.169"), true);
                 client.player.sendSystemMessage(Component.literal(
-                        "移动魔杖提醒：红石装置移动前请保持静止，否则可能出错；红石开关的连接状态会被清零。"));
+                        "text.quick_build.164"));
             }
             case CAPTURE_SELECTION -> {
                 if (moveStage == Stage.FIRST_POINT) {
                     moveSecond = target;
                     refreshMoveSelectionPreview();
-                    client.player.displayClientMessage(Component.literal("已记录第二点，完成选择。"), true);
+                    client.player.displayClientMessage(Component.translatable("text.quick_build.168"), true);
                 }
                 moveStage = Stage.CAPTURE_PENDING;
                 ClientPlayNetworking.send(WandNetworking.CAPTURE_MOVE_SELECTION, WandNetworking.buffer(new WandNetworking.CaptureMoveSelectionPayload(moveFirst, moveSecond)));

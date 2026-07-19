@@ -109,7 +109,7 @@ public final class RedstoneEnergyEmitterBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
         RedstoneEnergyDisplay.formatEmitterLines(RedstoneEnergyState.get(serverWorld).info(serverWorld, pos))
-                .forEach(line -> player.sendSystemMessage(Component.literal(line)));
+                .forEach(player::sendSystemMessage);
         return InteractionResult.SUCCESS;
     }
 

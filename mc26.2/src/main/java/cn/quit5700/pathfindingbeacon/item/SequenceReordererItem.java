@@ -46,7 +46,7 @@ public final class SequenceReordererItem extends Item {
         UUID playerId = player.getUUID();
         RoutePosition position = WorldRouteManager.toRoutePosition(context.getClickedPos());
         if (!WorldRouteManager.isActive(world, position)) {
-            player.sendOverlayMessage(Component.literal("该方块未参与线路，无法重排").withStyle(style -> style.withColor(0xFF5555)));
+            player.sendOverlayMessage(Component.translatable("text.quick_build.053").withStyle(style -> style.withColor(0xFF5555)));
             return InteractionResult.FAIL;
         }
 
@@ -54,7 +54,7 @@ public final class SequenceReordererItem extends Item {
         Identifier worldKey = world.dimension().identifier();
         if (first == null || !first.worldKey().equals(worldKey) || first.number() != block.number()) {
             SELECTIONS.put(playerId, new Selection(worldKey, block.number(), position));
-            player.sendOverlayMessage(Component.literal("已选择第一个" + block.number() + "号寻路方块"));
+            player.sendOverlayMessage(Component.translatable("message.quick_build.route_first_selected", block.number()));
             return InteractionResult.SUCCESS;
         }
 
@@ -68,10 +68,10 @@ public final class SequenceReordererItem extends Item {
                 player.isCreative()
         );
         Component message = switch (status) {
-            case RECONNECTED -> Component.literal("两段线路已连接");
-            case REORDERED -> Component.literal("线路顺序已重排");
-            case DENIED -> Component.literal("其他玩家已使用这个颜色，该操作没有作用").withStyle(style -> style.withColor(0xFF5555));
-            case INVALID -> Component.literal("请选择两个不同的同号有效方块").withStyle(style -> style.withColor(0xFF5555));
+            case RECONNECTED -> Component.translatable("text.quick_build.091");
+            case REORDERED -> Component.translatable("text.quick_build.147");
+            case DENIED -> Component.translatable("text.quick_build.106").withStyle(style -> style.withColor(0xFF5555));
+            case INVALID -> Component.translatable("text.quick_build.111").withStyle(style -> style.withColor(0xFF5555));
         };
         player.sendOverlayMessage(message);
         return status == ReorderStatus.DENIED || status == ReorderStatus.INVALID

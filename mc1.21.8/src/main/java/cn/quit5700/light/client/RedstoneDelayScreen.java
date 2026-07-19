@@ -27,7 +27,7 @@ public final class RedstoneDelayScreen extends AbstractContainerScreen<RedstoneD
         super.init();
         int x = width / 2 - 110;
         int y = height / 2 - 52;
-        seconds = new EditBox(font, x + 60, y + 30, 100, 20, Component.literal("延迟秒数"));
+        seconds = new EditBox(font, x + 60, y + 30, 100, 20, Component.translatable("text.quick_build.155"));
         seconds.setMaxLength(6);
         seconds.setValue(format(menu.delayTicks()));
         lastMenuTicks = menu.delayTicks();
@@ -35,19 +35,19 @@ public final class RedstoneDelayScreen extends AbstractContainerScreen<RedstoneD
             if (!syncingFromServer) userEdited = true;
         });
         addRenderableWidget(seconds);
-        addRenderableWidget(button("-1秒", x, y + 58, () -> adjust(-20)));
-        addRenderableWidget(button("-0.1秒", x + 56, y + 58, () -> adjust(-2)));
-        addRenderableWidget(button("+0.1秒", x + 112, y + 58, () -> adjust(2)));
-        addRenderableWidget(button("+1秒", x + 168, y + 58, () -> adjust(20)));
+        addRenderableWidget(button("text.quick_build.015", x, y + 58, () -> adjust(-20)));
+        addRenderableWidget(button("text.quick_build.014", x + 56, y + 58, () -> adjust(-2)));
+        addRenderableWidget(button("text.quick_build.012", x + 112, y + 58, () -> adjust(2)));
+        addRenderableWidget(button("text.quick_build.013", x + 168, y + 58, () -> adjust(20)));
         modeButton = Button.builder(modeText(), button -> toggleMode()).bounds(x + 30, y + 90, 160, 20).build();
         addRenderableWidget(modeButton);
-        addRenderableWidget(Button.builder(Component.literal("确定"), button -> confirm()).bounds(x + 30, y + 118, 75, 20).build());
-        addRenderableWidget(Button.builder(Component.literal("取消"), button -> onClose()).bounds(x + 115, y + 118, 75, 20).build());
+        addRenderableWidget(Button.builder(Component.translatable("text.quick_build.114"), button -> confirm()).bounds(x + 30, y + 118, 75, 20).build());
+        addRenderableWidget(Button.builder(Component.translatable("text.quick_build.113"), button -> onClose()).bounds(x + 115, y + 118, 75, 20).build());
         setInitialFocus(seconds);
     }
 
     private Button button(String text, int x, int y, Runnable action) {
-        return Button.builder(Component.literal(text), button -> action.run()).bounds(x, y, 52, 20).build();
+        return Button.builder(Component.translatable(text), button -> action.run()).bounds(x, y, 52, 20).build();
     }
 
     private void adjust(int ticks) {
@@ -76,7 +76,8 @@ public final class RedstoneDelayScreen extends AbstractContainerScreen<RedstoneD
     private static String format(int ticks) { return String.format(Locale.ROOT, "%.1f", ticks / 20.0); }
 
     private Component modeText() {
-        return Component.literal("输出模式：" + (menu.omnidirectional() ? "五面输出" : "定向输出"));
+        return Component.translatable("screen.quick_build.delay_mode",
+                Component.translatable(menu.omnidirectional() ? "text.quick_build.143" : "text.quick_build.046"));
     }
 
     private void toggleMode() {
@@ -99,9 +100,10 @@ public final class RedstoneDelayScreen extends AbstractContainerScreen<RedstoneD
         int x = width / 2;
         int y = height / 2 - 52;
         graphics.drawCenteredString(font, title, x, y + 8, 0xFFFFFF);
-        graphics.drawString(font, "延迟：", x - 110, y + 36, 0xE0E0E0);
-        graphics.drawCenteredString(font, Component.literal("输入：" + (menu.inputPowered() ? "开" : "关")
-                + "    输出：" + (menu.outputPowered() ? "开" : "关")), x, y + 78, 0xC8C8C8);
+        graphics.drawString(font, "text.quick_build.154", x - 110, y + 36, 0xE0E0E0);
+        graphics.drawCenteredString(font, Component.translatable("screen.quick_build.delay_io",
+                Component.translatable(menu.inputPowered() ? "text.quick_build.075" : "text.quick_build.056"),
+                Component.translatable(menu.outputPowered() ? "text.quick_build.075" : "text.quick_build.056")), x, y + 78, 0xC8C8C8);
     }
 
     @Override

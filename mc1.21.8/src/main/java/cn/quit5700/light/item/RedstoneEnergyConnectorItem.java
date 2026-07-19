@@ -57,31 +57,31 @@ public final class RedstoneEnergyConnectorItem extends Item {
         if (!(world.getBlockState(pos).getBlock() instanceof RedstoneEnergyEmitterBlock)
                 && !(world.getBlockState(pos).getBlock() instanceof RedstoneEnergyRemoteSwitchBlock)
                 && !(world.getBlockState(pos).getBlock() instanceof RedstoneEnergySensorBlock)) {
-            if (readSelection(context.getItemInHand()) != null) notify(player, "请选择红石能量设备，已保留第一个点。", false);
+            if (readSelection(context.getItemInHand()) != null) notify(player, "text.quick_build.110", false);
             return InteractionResult.SUCCESS;
         }
 
         RedstoneEnergyState state = RedstoneEnergyState.get(serverWorld);
         EnergyNode clicked = ensureRegistered(serverWorld, pos, state);
         if (clicked == null) {
-            player.displayClientMessage(Component.literal("该方块尚未完成网络注册，请重新放置。"), false);
+            player.displayClientMessage(Component.translatable("text.quick_build.052"), false);
             return InteractionResult.SUCCESS;
         }
         SelectedNode selected = readSelection(connector);
         if (selected == null) {
             writeSelection(connector, new SelectedNode(clicked.world(), clicked.pos()));
-            notify(player, "已选择：" + displayName(clicked), true);
+            notify(player, "message.quick_build.connector_selected", true, Component.translatable(displayName(clicked)));
             return InteractionResult.SUCCESS;
         }
         EnergyNode first = state.getNode(serverWorld, selected.pos()).filter(node -> node.world().equals(selected.world())).orElse(null);
         if (first == null) {
             clear(connector);
-            notify(player, "原选择已失效，请重新选择。", false);
+            notify(player, "text.quick_build.183", false);
             return InteractionResult.SUCCESS;
         }
         if (first.key().equals(clicked.key())) {
             clear(connector);
-            notify(player, "已取消本次连接。", false);
+            notify(player, "text.quick_build.170", false);
             return InteractionResult.SUCCESS;
         }
         RedstoneEnergyState.LinkResult result = state.toggleLink(serverWorld, first, clicked);
@@ -107,7 +107,7 @@ public final class RedstoneEnergyConnectorItem extends Item {
             user.getCooldowns().addCooldown(stack, CLICK_COOLDOWN_TICKS);
             if (readSelection(stack) != null) {
                 clear(stack);
-                notify(user, "已取消本次连接。", false);
+                notify(user, "text.quick_build.170", false);
             }
         }
         return InteractionResult.SUCCESS;
@@ -131,8 +131,8 @@ public final class RedstoneEnergyConnectorItem extends Item {
         return null;
     }
 
-    private static void notify(Player player, String message, boolean success) {
-        if (player instanceof ServerPlayer serverPlayer) serverPlayer.displayClientMessage(Component.literal(message), true);
+    private static void notify(Player player, String message, boolean success, Object... args) {
+        if (player instanceof ServerPlayer serverPlayer) serverPlayer.displayClientMessage(Component.translatable(message, args), true);
         if (player.level() instanceof ServerLevel world) {
             SoundEvent sound = success ? SoundEvents.EXPERIENCE_ORB_PICKUP : SoundEvents.NOTE_BLOCK_BASS.value();
             world.playSound(null, player.blockPosition(), sound,
@@ -164,21 +164,21 @@ public final class RedstoneEnergyConnectorItem extends Item {
 
     private static String displayName(EnergyNode node) {
         return switch (node.type()) {
-            case SWITCH -> "红石能量远程开关";
-            case SENSOR -> "红石能量感应器";
-            case EMITTER -> "红石能量发射器";
+            case SWITCH -> "text.quick_build.064";
+            case SENSOR -> "text.quick_build.063";
+            case EMITTER -> "text.quick_build.062";
         };
     }
 
     private static String message(RedstoneEnergyState.LinkResult result) {
         return switch (result) {
-            case ADDED -> "连接成功。";
-            case REMOVED -> "已断开重复连接。";
-            case COLOR_CONFLICT -> "连接失败：网络中已有其他颜色的开关。";
-            case DIFFERENT_DIMENSION -> "连接失败：不能跨维度连接。";
-            case INVALID_PAIR -> "连接失败：这两个设备不能连接。";
-            case INVALID_SENSOR_LINE -> "连接失败：两个感应器必须同轴，中间为1至10格无障碍空间。";
-            case SAME_NODE -> "连接失败：不能连接同一个方块。";
+            case ADDED -> "text.quick_build.083";
+            case REMOVED -> "text.quick_build.167";
+            case COLOR_CONFLICT -> "text.quick_build.087";
+            case DIFFERENT_DIMENSION -> "text.quick_build.084";
+            case INVALID_PAIR -> "text.quick_build.088";
+            case INVALID_SENSOR_LINE -> "text.quick_build.086";
+            case SAME_NODE -> "text.quick_build.085";
         };
     }
 

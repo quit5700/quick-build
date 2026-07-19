@@ -36,11 +36,11 @@ public final class BuildingWandItem extends Item {
     ) {
         Block selected = WandStackData.selectedBlock(stack);
         if (selected == Blocks.AIR) {
-            tooltip.accept(Component.literal("已选方块: 未选择").withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable("text.quick_build.173").withStyle(ChatFormatting.GRAY));
             return;
         }
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(selected);
-        tooltip.accept(Component.literal("已选方块: ")
+        tooltip.accept(Component.translatable("text.quick_build.172")
                 .append(Component.translatable(selected.getDescriptionId()))
                 .withStyle(ChatFormatting.AQUA));
         tooltip.accept(Component.literal("ID: " + id).withStyle(ChatFormatting.DARK_GRAY));

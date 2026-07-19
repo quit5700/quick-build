@@ -27,9 +27,9 @@ public final class MoveWandItem extends Item {
             List<Component> tooltip,
             TooltipFlag flag
     ) {
-        tooltip.add(Component.literal("左键选择并确认区域，Ctrl+右键显示投影。")
+        tooltip.add(Component.translatable("text.quick_build.194")
                 .withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.literal("方向键微调，Alt+左右旋转，左键确认移动。")
+        tooltip.add(Component.translatable("text.quick_build.050")
                 .withStyle(ChatFormatting.GRAY));
     }
 }

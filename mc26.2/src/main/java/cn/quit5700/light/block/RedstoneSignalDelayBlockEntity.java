@@ -82,7 +82,7 @@ public final class RedstoneSignalDelayBlockEntity extends BlockEntity implements
         setChanged();
     }
 
-    @Override public Component getDisplayName() { return Component.literal("红石信号延时开关"); }
+    @Override public Component getDisplayName() { return Component.translatable("text.quick_build.066"); }
     @Override public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
         return new RedstoneDelayMenu(id, inventory, menuData, this);
     }

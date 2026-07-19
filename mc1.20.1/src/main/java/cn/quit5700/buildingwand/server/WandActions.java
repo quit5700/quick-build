@@ -64,11 +64,11 @@ public final class WandActions {
         }
         BlockState state = player.level().getBlockState(pos);
         if (state.isAir()) {
-            fail(player, "不能选择空气。");
+            fail(player, "text.quick_build.036");
             return;
         }
         WandStackData.setSelectedBlock(stack, state.getBlock());
-        player.displayClientMessage(Component.literal("已选方块: ")
+        player.displayClientMessage(Component.translatable("text.quick_build.172")
                 .append(Component.translatable(state.getBlock().getDescriptionId()))
                 .withStyle(ChatFormatting.AQUA), true);
     }
@@ -80,7 +80,7 @@ public final class WandActions {
         }
         Block block = WandStackData.selectedBlock(stack);
         if (block == Blocks.AIR) {
-            fail(player, "请先按 Alt+左键选择方块。");
+            fail(player, "text.quick_build.109");
             return;
         }
 
@@ -93,22 +93,22 @@ public final class WandActions {
         int dimensions = mode == ShapeMode.PLANE ? 2 : ShapeBuilder.dimensions(first, second);
         int limit = dimensions <= 2 ? settings.planeLimit() : settings.cubeLimit();
         if (positions.size() > limit) {
-            fail(player, "结构过大，当前上限: " + limit + " 个方块。");
+            fail(player, "message.quick_build.structure_too_large", limit);
             return;
         }
 
         ServerLevel level = (ServerLevel) player.level();
         boolean creative = player.getAbilities().instabuild;
         if (!creative && !targetsReplaceable(level, positions)) {
-            fail(player, "目标区域已有不能替换的方块。");
+            fail(player, "text.quick_build.100");
             return;
         }
         if (!creative && !hasSupport(level, positions)) {
-            fail(player, "整个结构没有与外部支撑方块相连。");
+            fail(player, "text.quick_build.184");
             return;
         }
         if (!creative && countInventoryBlocks(player, block) < positions.size()) {
-            fail(player, "材料不足，需要 " + positions.size() + " 个已选方块；本次不会放置任何方块。");
+            fail(player, "message.quick_build.materials_insufficient", positions.size());
             return;
         }
 
@@ -127,22 +127,22 @@ public final class WandActions {
         }
         Block block = WandStackData.selectedBlock(stack);
         if (block == Blocks.AIR) {
-            fail(player, "请先按 Alt+左键选择方块。");
+            fail(player, "text.quick_build.109");
             return;
         }
 
         ServerLevel level = (ServerLevel) player.level();
         boolean creative = player.getAbilities().instabuild;
         if (!creative && !isReplaceable(level.getBlockState(pos))) {
-            fail(player, "目标位置已有不能替换的方块。");
+            fail(player, "text.quick_build.102");
             return;
         }
         if (!creative && !hasSupport(level, List.of(pos))) {
-            fail(player, "目标位置没有支撑。");
+            fail(player, "text.quick_build.101");
             return;
         }
         if (!creative && countInventoryBlocks(player, block) < 1) {
-            fail(player, "背包中没有已选方块。");
+            fail(player, "text.quick_build.033");
             return;
         }
 
@@ -166,7 +166,7 @@ public final class WandActions {
         }
         int limit = WandSettingsState.get(server).moveLimit();
         if (positions.size() > limit) {
-            fail(player, "选择区域过大，当前上限: " + limit + " 格。");
+            fail(player, "message.quick_build.selection_too_large", limit);
             sendSelectionResult(player, false);
             return;
         }
@@ -177,7 +177,7 @@ public final class WandActions {
         for (BlockPos pos : positions) {
             BlockState state = level.getBlockState(pos);
             if (FORBIDDEN_MOVE_BLOCKS.contains(state.getBlock())) {
-                fail(player, "选区包含不能移动的方块: " + BuiltInRegistries.BLOCK.getKey(state.getBlock()));
+                fail(player, "message.quick_build.forbidden_move_block", BuiltInRegistries.BLOCK.getKey(state.getBlock()));
                 sendSelectionResult(player, false);
                 return;
             }
@@ -189,14 +189,14 @@ public final class WandActions {
             }
         }
         if (movableBlockCount == 0) {
-            fail(player, "选区内没有可以移动的方块。");
+            fail(player, "text.quick_build.149");
             sendSelectionResult(player, false);
             return;
         }
 
         MOVE_SESSIONS.put(player.getUUID(), new MoveSession(
                 first.immutable(), second.immutable(), level.dimension(), List.copyOf(blocks), centerX(blocks), centerZ(blocks)));
-        player.displayClientMessage(Component.literal("移动魔杖: 已保存 " + movableBlockCount + " 个方块，移动投影后左键确认。")
+        player.displayClientMessage(Component.translatable("message.quick_build.move_saved", movableBlockCount)
                 .withStyle(ChatFormatting.AQUA), true);
         sendSelectionResult(player, true);
     }
@@ -208,12 +208,12 @@ public final class WandActions {
         }
         MoveSession session = MOVE_SESSIONS.get(player.getUUID());
         if (session == null) {
-            fail(player, "没有已记录的移动选区。");
+            fail(player, "text.quick_build.094");
             sendExecutionResult(player, false);
             return;
         }
         if (player.level().dimension() != session.dimension) {
-            fail(player, "不能跨维度移动方块。");
+            fail(player, "text.quick_build.035");
             sendExecutionResult(player, false);
             return;
         }
@@ -225,7 +225,7 @@ public final class WandActions {
             sourcePositions.add(block.source);
         }
         if (targetBlocks.keySet().equals(sourcePositions) && (rotation & 3) == 0) {
-            fail(player, "投影位置没有变化，请先移动或旋转投影。");
+            fail(player, "text.quick_build.133");
             sendExecutionResult(player, false);
             return;
         }
@@ -233,7 +233,7 @@ public final class WandActions {
         boolean creative = player.getAbilities().instabuild;
         for (BlockPos target : targetBlocks.keySet()) {
             if (!level.isInWorldBounds(target)) {
-                fail(player, "目标区域超出世界可用范围。");
+                fail(player, "text.quick_build.099");
                 sendExecutionResult(player, false);
                 return;
             }
@@ -242,12 +242,12 @@ public final class WandActions {
             }
             BlockState existing = level.getBlockState(target);
             if (FORBIDDEN_MOVE_BLOCKS.contains(existing.getBlock())) {
-                fail(player, "目标区域包含不能替换的特殊方块。");
+                fail(player, "text.quick_build.098");
                 sendExecutionResult(player, false);
                 return;
             }
             if (!creative && !isReplaceable(existing)) {
-                fail(player, "生存模式不能覆盖目标区域已有方块。");
+                fail(player, "text.quick_build.117");
                 sendExecutionResult(player, false);
                 return;
             }
@@ -278,12 +278,12 @@ public final class WandActions {
             RouteMoveStatus routeStatus = WorldRouteManager.validateMove(
                     routeSnapshot, routeMovements, affectedRoutePositions);
             if (routeStatus == RouteMoveStatus.DUPLICATE_XZ) {
-                fail(player, "移动后会有同编号寻路方块位于相同 X/Z 列。");
+                fail(player, "text.quick_build.161");
                 sendExecutionResult(player, false);
                 return;
             }
             if (routeStatus != RouteMoveStatus.SUCCESS) {
-                fail(player, "寻路线路数据无法安全移动，请取消选择后重试。");
+                fail(player, "text.quick_build.153");
                 sendExecutionResult(player, false);
                 return;
             }
@@ -302,7 +302,7 @@ public final class WandActions {
             if (updatesRoutes) {
                 WorldRouteManager.restoreSnapshot(level, routeSnapshot);
             }
-            fail(player, "目标结构放置失败，原区域已恢复，请调整位置后重试。");
+            fail(player, "text.quick_build.097");
             sendExecutionResult(player, false);
             return;
         }
@@ -311,13 +311,13 @@ public final class WandActions {
         }
 
         MOVE_SESSIONS.remove(player.getUUID());
-        player.displayClientMessage(Component.literal("移动完成。").withStyle(ChatFormatting.GREEN), true);
+        player.displayClientMessage(Component.translatable("text.quick_build.165").withStyle(ChatFormatting.GREEN), true);
         sendExecutionResult(player, true);
     }
 
     public static void cancelMove(ServerPlayer player) {
         MOVE_SESSIONS.remove(player.getUUID());
-        player.displayClientMessage(Component.literal("移动魔杖: 已忘记选择内容。")
+        player.displayClientMessage(Component.translatable("text.quick_build.163")
                 .withStyle(ChatFormatting.YELLOW), true);
         sendMoveMemory(player);
     }
@@ -341,14 +341,13 @@ public final class WandActions {
         }
         WandSettingsState settings = WandSettingsState.get(server);
         if (!WandSettingsStationBlock.canEdit(player)) {
-            fail(player, "只有单人玩家或服务器 OP 可以修改魔杖设置。");
+            fail(player, "text.quick_build.187");
             sendSettingsSaved(player, false, settings);
             return;
         }
         settings.setLimits(planeLimit, cubeLimit, moveLimit);
         sendSettingsSaved(player, true, settings);
-        player.sendSystemMessage(Component.literal("魔杖设置已保存: 平面 " + settings.planeLimit()
-                + "，建筑体 " + settings.cubeLimit() + "，移动 " + settings.moveLimit() + "。")
+        player.sendSystemMessage(Component.translatable("message.quick_build.settings_saved", settings.planeLimit(), settings.cubeLimit(), settings.moveLimit())
                 .withStyle(ChatFormatting.GREEN));
     }
 
@@ -525,8 +524,8 @@ public final class WandActions {
         WandNetworking.send(player, WandNetworking.MOVE_EXECUTION_RESULT, new WandNetworking.MoveExecutionResultPayload(completed));
     }
 
-    private static void fail(ServerPlayer player, String message) {
-        player.displayClientMessage(Component.literal(message).withStyle(ChatFormatting.RED), true);
+    private static void fail(ServerPlayer player, String message, Object... args) {
+        player.displayClientMessage(Component.translatable(message, args).withStyle(ChatFormatting.RED), true);
     }
 
     private record MoveSession(

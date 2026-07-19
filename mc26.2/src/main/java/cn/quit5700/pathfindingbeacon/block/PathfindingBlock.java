@@ -41,7 +41,7 @@ public final class PathfindingBlock extends Block {
                 && WorldRouteManager.hasNumberAtColumn(world, number, context.getClickedPos().getX(), context.getClickedPos().getZ())) {
             if (context.getPlayer() != null) {
                 context.getPlayer().sendOverlayMessage(
-                        Component.literal("已有同号码方块,不得放置").withStyle(style -> style.withColor(0xFF5555))
+                        Component.translatable("text.quick_build.176").withStyle(style -> style.withColor(0xFF5555))
                 );
             }
             return null;

@@ -25,7 +25,7 @@ public final class IdCancelCommand {
                                     int number = IntegerArgumentType.getInteger(context, "number");
                                     int removed = WorldRouteManager.clearColor((net.minecraft.server.level.ServerLevel) player.level(), number);
                                     context.getSource().sendSuccess(
-                                            () -> Component.literal("已删除本维度" + number + "号寻路方块：" + removed + "个"),
+                                            () -> Component.translatable("message.quick_build.route_cancelled", number, removed),
                                             false
                                     );
                                     return removed;
