@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "紅色紅石能量遠程開關",
     "item.light.redstone_energy_remote_switch_yellow":  "黃色紅石能量遠程開關",
     "item.light.redstone_energy_sensor":  "紅石能量感應器",
-    "item.light.redstone_signal_delay":  "紅石訊號延遲開關"
+    "item.light.redstone_signal_delay":  "紅石訊號延遲開關",
+    "block.light.variable_constant_light": "可變恆亮燈",
+    "item.light.variable_constant_light": "可變恆亮燈",
+    "screen.quick_build.variable_light_title": "可變恆亮燈",
+    "screen.quick_build.variable_light_radius": "光源布置半徑：%s 格",
+    "screen.quick_build.variable_light_spacing": "光源間隔：%s 格（1 最均勻，7 最省資源）",
+    "screen.quick_build.variable_light_mode": "照明模式：%s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "原版無形光源方案",
+    "screen.quick_build.variable_light_mode.local_daylight": "局部白晝方案",
+    "screen.quick_build.variable_light_mode.hybrid": "混合方案",
+    "screen.quick_build.variable_light_daylight_warning": "此方案不會阻止怪物生成，也不會促進作物生長",
+    "screen.quick_build.variable_light_size": "照明範圍：%s × %s × %s",
+    "screen.quick_build.variable_light_powered": "紅石狀態：%s",
+    "screen.quick_build.variable_light_help_1": "右鍵開啟滑桿，等比設定 X、Y、Z 三軸照明半徑。",
+    "screen.quick_build.variable_light_help_2": "半徑範圍為 1～64 格，以燈為中心形成正方體。",
+    "screen.quick_build.variable_light_help_3": "任意一面收到大於 0 的訊號後，均以最大亮度照明。"
 }

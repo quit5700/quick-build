@@ -18,6 +18,7 @@ import java.util.Map;
 
 public final class LightItems {
     public static final BlockItem CONSTANT_LIGHT_BLOCK_ITEM = block("constant_light_block", LightBlocks.CONSTANT_LIGHT_BLOCK);
+    public static final BlockItem VARIABLE_CONSTANT_LIGHT_ITEM = block("variable_constant_light", LightBlocks.VARIABLE_CONSTANT_LIGHT);
     public static final BlockItem REDSTONE_ENERGY_EMITTER_ITEM = block("redstone_energy_emitter", LightBlocks.REDSTONE_ENERGY_EMITTER);
     public static final Map<EnergyColor, BlockItem> REMOTE_SWITCH_ITEMS = new EnumMap<>(EnergyColor.class);
     public static final BlockItem REDSTONE_ENERGY_REMOTE_SWITCH_ITEM;

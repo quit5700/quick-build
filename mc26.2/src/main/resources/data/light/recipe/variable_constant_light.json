@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "R",
+    "L"
+  ],
+  "key": {
+    "R": "minecraft:repeater",
+    "L": "light:constant_light_block"
+  },
+  "result": {
+    "id": "light:variable_constant_light",
+    "count": 1
+  }
+}

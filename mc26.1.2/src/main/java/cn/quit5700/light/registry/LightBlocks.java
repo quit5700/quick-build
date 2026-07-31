@@ -15,6 +15,7 @@ import java.util.Map;
 
 public final class LightBlocks {
     public static final ConstantLightBlock CONSTANT_LIGHT_BLOCK = register("constant_light_block", ConstantLightBlock::new);
+    public static final VariableConstantLightBlock VARIABLE_CONSTANT_LIGHT = register("variable_constant_light", VariableConstantLightBlock::new);
     public static final RedstoneEnergyEmitterBlock REDSTONE_ENERGY_EMITTER = register("redstone_energy_emitter", RedstoneEnergyEmitterBlock::new);
     public static final Map<EnergyColor, RedstoneEnergyRemoteSwitchBlock> REMOTE_SWITCHES = new EnumMap<>(EnergyColor.class);
     public static final RedstoneEnergyRemoteSwitchBlock REDSTONE_ENERGY_REMOTE_SWITCH;

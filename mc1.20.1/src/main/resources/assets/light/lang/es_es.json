@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "Interruptor remoto de energía redstone rojo",
     "item.light.redstone_energy_remote_switch_yellow":  "Interruptor remoto de energía redstone amarillo",
     "item.light.redstone_energy_sensor":  "sensor de energía de piedra roja",
-    "item.light.redstone_signal_delay":  "Interruptor de retardo de señal de Redstone"
+    "item.light.redstone_signal_delay":  "Interruptor de retardo de señal de Redstone",
+    "block.light.variable_constant_light": "Luz constante variable",
+    "item.light.variable_constant_light": "Luz constante variable",
+    "screen.quick_build.variable_light_title": "Luz constante variable",
+    "screen.quick_build.variable_light_radius": "Radio de colocación de luz: %s bloques",
+    "screen.quick_build.variable_light_spacing": "Separación de luz: %s bloques (1 uniforme, 7 eficiente)",
+    "screen.quick_build.variable_light_mode": "Modo de luz: %s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "Luz invisible original",
+    "screen.quick_build.variable_light_mode.local_daylight": "Luz diurna local",
+    "screen.quick_build.variable_light_mode.hybrid": "Iluminación híbrida",
+    "screen.quick_build.variable_light_daylight_warning": "Este modo no impide monstruos ni favorece los cultivos",
+    "screen.quick_build.variable_light_size": "Área iluminada: %s × %s × %s",
+    "screen.quick_build.variable_light_powered": "Redstone: %s",
+    "screen.quick_build.variable_light_help_1": "Haz clic derecho para abrir el control que iguala los radios X, Y y Z.",
+    "screen.quick_build.variable_light_help_2": "El radio va de 1 a 64 bloques y forma un cubo centrado en la luz.",
+    "screen.quick_build.variable_light_help_3": "Una señal superior a 0 en cualquier cara activa la iluminación máxima."
 }

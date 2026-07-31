@@ -25,6 +25,7 @@ public final class ModItemGroup {
                         cn.quit5700.pathfindingbeacon.registry.ModItems.ROUTE_BLOCK_ITEMS.forEach(entries::accept);
                         entries.accept(cn.quit5700.pathfindingbeacon.registry.ModItems.SEQUENCE_REORDERER);
                         entries.accept(LightItems.CONSTANT_LIGHT_BLOCK_ITEM);
+                        entries.accept(LightItems.VARIABLE_CONSTANT_LIGHT_ITEM);
                         entries.accept(LightItems.REDSTONE_ENERGY_SENSOR_ITEM);
                         entries.accept(LightItems.REDSTONE_ENERGY_CONNECTOR_ITEM);
                         entries.accept(LightItems.REDSTONE_ENERGY_EMITTER_ITEM);

@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "레드 레드스톤 에너지 원격 스위치",
     "item.light.redstone_energy_remote_switch_yellow":  "노란색 레드스톤 에너지 원격 스위치",
     "item.light.redstone_energy_sensor":  "레드스톤 에너지 센서",
-    "item.light.redstone_signal_delay":  "레드스톤 신호 지연 스위치"
+    "item.light.redstone_signal_delay":  "레드스톤 신호 지연 스위치",
+    "block.light.variable_constant_light": "가변 상시등",
+    "item.light.variable_constant_light": "가변 상시등",
+    "screen.quick_build.variable_light_title": "가변 상시등",
+    "screen.quick_build.variable_light_radius": "광원 배치 반경: %s 블록",
+    "screen.quick_build.variable_light_spacing": "광원 간격: %s 블록 (1 균일, 7 절약)",
+    "screen.quick_build.variable_light_mode": "조명 모드: %s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "바닐라 비가시 광원",
+    "screen.quick_build.variable_light_mode.local_daylight": "국소 주간광",
+    "screen.quick_build.variable_light_mode.hybrid": "혼합 조명",
+    "screen.quick_build.variable_light_daylight_warning": "이 모드는 몬스터 생성을 막거나 작물 성장을 촉진하지 않습니다",
+    "screen.quick_build.variable_light_size": "조명 범위: %s × %s × %s",
+    "screen.quick_build.variable_light_powered": "레드스톤: %s",
+    "screen.quick_build.variable_light_help_1": "우클릭하여 슬라이더를 열고 X, Y, Z 조명 반경을 동일하게 설정합니다.",
+    "screen.quick_build.variable_light_help_2": "반경은 1~64블록이며 조명을 중심으로 정육면체를 이룹니다.",
+    "screen.quick_build.variable_light_help_3": "어느 면에서든 0보다 큰 신호를 받으면 최대 밝기로 켜집니다."
 }

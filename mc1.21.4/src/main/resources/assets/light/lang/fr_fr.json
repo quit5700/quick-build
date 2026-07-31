@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "Interrupteur à distance d\u0027énergie Redstone rouge",
     "item.light.redstone_energy_remote_switch_yellow":  "Interrupteur à distance d\u0027énergie en pierre rouge jaune",
     "item.light.redstone_energy_sensor":  "capteur d\u0027énergie redstone",
-    "item.light.redstone_signal_delay":  "Commutateur de retard de signal Redstone"
+    "item.light.redstone_signal_delay":  "Commutateur de retard de signal Redstone",
+    "block.light.variable_constant_light": "Lumière constante variable",
+    "item.light.variable_constant_light": "Lumière constante variable",
+    "screen.quick_build.variable_light_title": "Lumière constante variable",
+    "screen.quick_build.variable_light_radius": "Rayon de placement lumineux : %s blocs",
+    "screen.quick_build.variable_light_spacing": "Espacement lumineux : %s blocs (1 uniforme, 7 économe)",
+    "screen.quick_build.variable_light_mode": "Mode lumineux : %s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "Lumière invisible vanilla",
+    "screen.quick_build.variable_light_mode.local_daylight": "Lumière du jour locale",
+    "screen.quick_build.variable_light_mode.hybrid": "Éclairage hybride",
+    "screen.quick_build.variable_light_daylight_warning": "Ce mode n'empêche pas les monstres et ne favorise pas les cultures",
+    "screen.quick_build.variable_light_size": "Zone éclairée : %s × %s × %s",
+    "screen.quick_build.variable_light_powered": "Redstone : %s",
+    "screen.quick_build.variable_light_help_1": "Un clic droit ouvre le curseur qui règle également les rayons X, Y et Z.",
+    "screen.quick_build.variable_light_help_2": "Le rayon va de 1 à 64 blocs et forme un cube centré sur la lumière.",
+    "screen.quick_build.variable_light_help_3": "Un signal supérieur à 0 sur n’importe quelle face active la luminosité maximale."
 }

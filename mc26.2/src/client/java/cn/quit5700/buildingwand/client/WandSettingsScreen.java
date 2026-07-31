@@ -355,6 +355,10 @@ public final class WandSettingsScreen extends Screen {
 
         add(result, LightItems.CONSTANT_LIGHT_BLOCK_ITEM, LimitProfile.NONE, false,
                 "text.quick_build.180", "text.quick_build.123");
+        add(result, LightItems.VARIABLE_CONSTANT_LIGHT_ITEM, LimitProfile.NONE, false,
+                "screen.quick_build.variable_light_help_1",
+                "screen.quick_build.variable_light_help_2",
+                "screen.quick_build.variable_light_help_3");
         add(result, LightItems.REDSTONE_ENERGY_EMITTER_ITEM, LimitProfile.NONE, false,
                 "text.quick_build.130", "text.quick_build.138", "text.quick_build.079");
         for (Item item : LightItems.REMOTE_SWITCH_ITEMS.values()) {

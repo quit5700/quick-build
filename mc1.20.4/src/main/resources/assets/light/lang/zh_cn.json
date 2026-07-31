@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "红色红石能量远程开关",
     "item.light.redstone_energy_remote_switch_yellow":  "黄色红石能量远程开关",
     "item.light.redstone_energy_sensor":  "红石能量感应器",
-    "item.light.redstone_signal_delay":  "红石信号延时开关"
+    "item.light.redstone_signal_delay":  "红石信号延时开关",
+    "block.light.variable_constant_light": "可变恒亮灯",
+    "item.light.variable_constant_light": "可变恒亮灯",
+    "screen.quick_build.variable_light_title": "可变恒亮灯",
+    "screen.quick_build.variable_light_radius": "光源布置半径：%s 格",
+    "screen.quick_build.variable_light_spacing": "光源间隔：%s 格（1 最均匀，7 最省资源）",
+    "screen.quick_build.variable_light_mode": "照明模式：%s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "原版无形光源方案",
+    "screen.quick_build.variable_light_mode.local_daylight": "局部白昼方案",
+    "screen.quick_build.variable_light_mode.hybrid": "混合方案",
+    "screen.quick_build.variable_light_daylight_warning": "此方案不会阻止怪物生成，也不会促进作物生长",
+    "screen.quick_build.variable_light_size": "照明范围：%s × %s × %s",
+    "screen.quick_build.variable_light_powered": "红石状态：%s",
+    "screen.quick_build.variable_light_help_1": "右键打开滑块，等比设置 X、Y、Z 三轴照明半径。",
+    "screen.quick_build.variable_light_help_2": "半径范围为 1～64 格，以灯为中心形成正方体。",
+    "screen.quick_build.variable_light_help_3": "任意一面收到大于 0 的信号后，均以最大亮度照明。"
 }

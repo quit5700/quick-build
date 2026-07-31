@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "Red redstone energy remote switch",
     "item.light.redstone_energy_remote_switch_yellow":  "Yellow redstone energy remote switch",
     "item.light.redstone_energy_sensor":  "redstone energy sensor",
-    "item.light.redstone_signal_delay":  "Redstone signal delay switch"
+    "item.light.redstone_signal_delay":  "Redstone signal delay switch",
+    "block.light.variable_constant_light": "Variable Constant Light",
+    "item.light.variable_constant_light": "Variable Constant Light",
+    "screen.quick_build.variable_light_title": "Variable Constant Light",
+    "screen.quick_build.variable_light_radius": "Light placement radius: %s blocks",
+    "screen.quick_build.variable_light_spacing": "Light spacing: %s blocks (1 smoothest, 7 lightest)",
+    "screen.quick_build.variable_light_mode": "Lighting mode: %s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "Vanilla Invisible Light",
+    "screen.quick_build.variable_light_mode.local_daylight": "Local Daylight",
+    "screen.quick_build.variable_light_mode.hybrid": "Hybrid Lighting",
+    "screen.quick_build.variable_light_daylight_warning": "This mode does not prevent mob spawning or promote crop growth",
+    "screen.quick_build.variable_light_size": "Lighting area: %s × %s × %s",
+    "screen.quick_build.variable_light_powered": "Redstone: %s",
+    "screen.quick_build.variable_light_help_1": "Right-click to set an equal X/Y/Z lighting radius with the slider.",
+    "screen.quick_build.variable_light_help_2": "The radius is 1–64 blocks and forms a cube centered on the light.",
+    "screen.quick_build.variable_light_help_3": "A signal above 0 from any face enables full-brightness lighting."
 }

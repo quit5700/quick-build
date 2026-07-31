@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "赤いレッドストーンエネルギーリモートスイッチ",
     "item.light.redstone_energy_remote_switch_yellow":  "黄色のレッドストーン エネルギー リモート スイッチ",
     "item.light.redstone_energy_sensor":  "レッドストーンエネルギーセンサー",
-    "item.light.redstone_signal_delay":  "レッドストーン信号遅延スイッチ"
+    "item.light.redstone_signal_delay":  "レッドストーン信号遅延スイッチ",
+    "block.light.variable_constant_light": "可変常時ライト",
+    "item.light.variable_constant_light": "可変常時ライト",
+    "screen.quick_build.variable_light_title": "可変常時ライト",
+    "screen.quick_build.variable_light_radius": "光源配置半径：%s ブロック",
+    "screen.quick_build.variable_light_spacing": "光源間隔：%s ブロック（1 は均一、7 は軽量）",
+    "screen.quick_build.variable_light_mode": "照明モード：%s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "バニラ不可視光源",
+    "screen.quick_build.variable_light_mode.local_daylight": "局所昼光",
+    "screen.quick_build.variable_light_mode.hybrid": "ハイブリッド照明",
+    "screen.quick_build.variable_light_daylight_warning": "このモードはモブの出現を防がず、作物の成長も促進しません",
+    "screen.quick_build.variable_light_size": "照明範囲：%s × %s × %s",
+    "screen.quick_build.variable_light_powered": "レッドストーン：%s",
+    "screen.quick_build.variable_light_help_1": "右クリックでスライダーを開き、X・Y・Z の照明半径を均等に設定します。",
+    "screen.quick_build.variable_light_help_2": "半径は 1～64 ブロックで、ライトを中心とした立方体になります。",
+    "screen.quick_build.variable_light_help_3": "いずれかの面から 0 より大きい信号を受けると最大輝度で点灯します。"
 }

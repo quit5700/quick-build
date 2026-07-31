@@ -4,6 +4,7 @@ import cn.quit5700.light.LightMod;
 import cn.quit5700.light.block.RedstoneEnergyEmitterBlockEntity;
 import cn.quit5700.light.block.RedstoneEnergySensorBlockEntity;
 import cn.quit5700.light.block.RedstoneSignalDelayBlockEntity;
+import cn.quit5700.light.block.VariableConstantLightBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,6 +22,9 @@ public final class LightBlockEntities {
     public static final BlockEntityType<RedstoneSignalDelayBlockEntity> REDSTONE_SIGNAL_DELAY = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, LightMod.id("redstone_signal_delay"),
             FabricBlockEntityTypeBuilder.create(RedstoneSignalDelayBlockEntity::new, LightBlocks.REDSTONE_SIGNAL_DELAY).build());
+    public static final BlockEntityType<VariableConstantLightBlockEntity> VARIABLE_CONSTANT_LIGHT = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, LightMod.id("variable_constant_light"),
+            FabricBlockEntityTypeBuilder.create(VariableConstantLightBlockEntity::new, LightBlocks.VARIABLE_CONSTANT_LIGHT).build());
 
     private LightBlockEntities() {
     }

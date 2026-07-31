@@ -39,5 +39,20 @@
     "item.light.redstone_energy_remote_switch_red":  "Roter Redstone-Energiefernschalter",
     "item.light.redstone_energy_remote_switch_yellow":  "Gelber Redstone-Energiefernschalter",
     "item.light.redstone_energy_sensor":  "Redstone-Energiesensor",
-    "item.light.redstone_signal_delay":  "Redstone-Signalverzögerungsschalter"
+    "item.light.redstone_signal_delay":  "Redstone-Signalverzögerungsschalter",
+    "block.light.variable_constant_light": "Variables Dauerlicht",
+    "item.light.variable_constant_light": "Variables Dauerlicht",
+    "screen.quick_build.variable_light_title": "Variables Dauerlicht",
+    "screen.quick_build.variable_light_radius": "Lichtplatzierungsradius: %s Blöcke",
+    "screen.quick_build.variable_light_spacing": "Lichtabstand: %s Blöcke (1 gleichmäßig, 7 sparsam)",
+    "screen.quick_build.variable_light_mode": "Lichtmodus: %s ▼",
+    "screen.quick_build.variable_light_mode.vanilla_invisible": "Unsichtbares Vanilla-Licht",
+    "screen.quick_build.variable_light_mode.local_daylight": "Lokales Tageslicht",
+    "screen.quick_build.variable_light_mode.hybrid": "Hybridbeleuchtung",
+    "screen.quick_build.variable_light_daylight_warning": "Dieser Modus verhindert keine Monster und fördert kein Pflanzenwachstum",
+    "screen.quick_build.variable_light_size": "Beleuchtungsbereich: %s × %s × %s",
+    "screen.quick_build.variable_light_powered": "Redstone: %s",
+    "screen.quick_build.variable_light_help_1": "Rechtsklick öffnet den Regler für einen gleichen X-, Y- und Z-Radius.",
+    "screen.quick_build.variable_light_help_2": "Der Radius beträgt 1–64 Blöcke und bildet einen Würfel um das Licht.",
+    "screen.quick_build.variable_light_help_3": "Ein Signal über 0 an einer beliebigen Seite aktiviert die volle Helligkeit."
 }
