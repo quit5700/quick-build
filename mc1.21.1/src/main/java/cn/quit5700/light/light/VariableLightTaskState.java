@@ -77,7 +77,17 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     public void registerExisting(BlockPos source, int radius, int spacing, VariableLightMode mode) {
-        replaceSource(source, radius, spacing, mode);
+        if (hasSource(source, radius, spacing, mode)) return;
+        reconcile(source, radius, spacing, mode, true);
+    }
+
+    private boolean hasSource(BlockPos source, int radius, int spacing, VariableLightMode mode) {
+        int clampedRadius = VariableConstantLightSettings.clampRadius(radius);
+        int clampedSpacing = VariableConstantLightSettings.clampSpacing(spacing);
+        return sources.stream().anyMatch(entry -> entry.source() == source.asLong()
+                && entry.radius() == clampedRadius
+                && entry.spacing() == clampedSpacing
+                && entry.mode() == mode.ordinal());
     }
 
     public void cleanup(BlockPos source, int radius, int spacing, VariableLightMode mode) {
@@ -133,11 +143,11 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     private void appendPlan(long source, VariableLightTaskPlan.Plan plan) {
-        for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
-            tasks.add(new TaskData(source, configuration.radius(), configuration.spacing(), false, 0));
-        }
         if (plan.install() != null) {
             tasks.add(new TaskData(source, plan.install().radius(), plan.install().spacing(), true, 0));
+        }
+        for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
+            tasks.add(new TaskData(source, configuration.radius(), configuration.spacing(), false, 0));
         }
     }
 
@@ -159,11 +169,11 @@ public final class VariableLightTaskState extends SavedData {
                     ? VariableLightTaskPlan.reconfigure(historical,
                     new VariableLightTaskPlan.Configuration(desiredSource.radius(), desiredSource.spacing()))
                     : VariableLightTaskPlan.remove(historical));
-            for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
-                normalized.add(new TaskData(sourceKey, configuration.radius(), configuration.spacing(), false, 0));
-            }
             if (plan.install() != null) {
                 normalized.add(new TaskData(sourceKey, plan.install().radius(), plan.install().spacing(), true, 0));
+            }
+            for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
+                normalized.add(new TaskData(sourceKey, configuration.radius(), configuration.spacing(), false, 0));
             }
         }
         return normalized;

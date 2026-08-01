@@ -6,11 +6,15 @@
     "L"
   ],
   "key": {
-    "R": "minecraft:repeater",
-    "L": "light:constant_light_block"
+    "R": {
+      "item": "minecraft:repeater"
+    },
+    "L": {
+      "item": "light:constant_light_block"
+    }
   },
   "result": {
-    "id": "light:variable_constant_light",
+    "item": "light:variable_constant_light",
     "count": 1
   }
 }

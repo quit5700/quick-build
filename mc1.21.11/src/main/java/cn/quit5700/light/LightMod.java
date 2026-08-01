@@ -1,6 +1,7 @@
 package cn.quit5700.light;
 
 import cn.quit5700.light.light.ConstantLightTaskQueue;
+import cn.quit5700.light.light.VariableLightTaskState;
 import cn.quit5700.light.network.VariableLightNetworking;
 import cn.quit5700.light.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -23,6 +24,7 @@ public final class LightMod implements ModInitializer {
         VariableLightNetworking.initialize();
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             ConstantLightTaskQueue.tick();
+            server.getAllLevels().forEach(world -> VariableLightTaskState.get(world).tick(world));
             RedstoneEnergyNotifier.tickQueuedChunkSyncs();
         });
         ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> RedstoneEnergyNotifier.queueChunkSync(world, chunk.getPos()));

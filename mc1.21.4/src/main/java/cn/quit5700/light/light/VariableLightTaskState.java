@@ -133,11 +133,11 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     private void appendPlan(long source, VariableLightTaskPlan.Plan plan) {
-        for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
-            tasks.add(new TaskData(source, configuration.radius(), configuration.spacing(), false, 0));
-        }
         if (plan.install() != null) {
             tasks.add(new TaskData(source, plan.install().radius(), plan.install().spacing(), true, 0));
+        }
+        for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
+            tasks.add(new TaskData(source, configuration.radius(), configuration.spacing(), false, 0));
         }
     }
 
@@ -159,11 +159,11 @@ public final class VariableLightTaskState extends SavedData {
                     ? VariableLightTaskPlan.reconfigure(historical,
                     new VariableLightTaskPlan.Configuration(desiredSource.radius(), desiredSource.spacing()))
                     : VariableLightTaskPlan.remove(historical));
-            for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
-                normalized.add(new TaskData(sourceKey, configuration.radius(), configuration.spacing(), false, 0));
-            }
             if (plan.install() != null) {
                 normalized.add(new TaskData(sourceKey, plan.install().radius(), plan.install().spacing(), true, 0));
+            }
+            for (VariableLightTaskPlan.Configuration configuration : plan.cleanup()) {
+                normalized.add(new TaskData(sourceKey, configuration.radius(), configuration.spacing(), false, 0));
             }
         }
         return normalized;

@@ -1,4 +1,4 @@
-﻿# 快捷建筑
+# 快捷建筑
 
 “快捷建筑（Quick Build）”把建筑魔杖、移动魔杖、寻路信标和 Light（照明）整合为一个 Fabric（织物）模组。玩家只需安装一个运行 JAR（Java 归档）。
 
@@ -43,7 +43,7 @@
 - Yarn Mappings（Yarn 命名映射）：不使用
 - Mappings（命名映射）：Mojang Official Mappings（Mojang 官方命名映射）
 
-当前正式版本为 `1.0.0`。按用户要求暂停 GitHub（代码托管平台）提交、PR（合并请求）和 Release（发行版）。
+当前正式版本为 `1.1.1`。`fabric.mod.json` 已正式声明客户端 Mixin 配置，使局部白昼的 Indigo、原版方块、实体和方块实体渲染入口真正加载。
 
 ## 语言支持
 

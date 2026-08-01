@@ -512,3 +512,25 @@
 - 验证方式：该版本执行 clean build（清理并完整构建），自动测试、主 JAR 与 sources JAR 生成任务全部通过。
 - 下次避免：不得把 26.2 的 GuiGraphicsExtractor、PayloadTypeRegistry 或 BlockModelLighter.Cache 直接复制到旧版；不得只看编译通过而忽略 Mixin 目标解析警告。
 - 已尝试失败：目录同步首次使用 LiteralPath（字面路径）加通配符未复制目录内容；已改为逐文件枚举，禁止重复使用该组合。
+
+## 2026-08-01：Mixin 配置带 UTF-8 BOM 导致客户端无法启动
+
+- 问题类型：中文环境/编码问题、客户端启动问题、资源验证遗漏。
+- 问题现象：Fabric Loader（Fabric 模组加载器）读取 `quick_build.client.mixins.json` 时报告 `Expected BEGIN_OBJECT but was STRING at line 1 column 1`，客户端在主线程启动阶段退出。
+- 根本原因：配置文件以 `EF BB BF` UTF-8 BOM（字节顺序标记）开头；当前 Mixin（混入）内置 JSON（结构化配置）解析器不接受该前缀。原回归测试只搜索 Mixin 名称，没有验证配置首字节。
+- 修改文件：`quick_build.client.mixins.json`、`LocalDaylightRenderCoverageTest.java`、README、VERSION_INFO、版本号和本记录。
+- 修复方式：将配置重写为 UTF-8 无 BOM，内容与 Mixin 列表不变；测试读取原始字节并要求首字节必须为对象起始符 `{`。
+- 验证方式：新测试在旧配置上稳定失败，重写后通过；完整构建后还需检查 JAR（Java 归档）内配置首字节、严格 JSON 解析及游戏目录副本散列。
+- 下次避免：JSON 资源不能只检查文本内容或构建成功，必须同时检查编码前缀和严格解析；禁止生成带 BOM 的 Mixin 配置。
+- 已尝试失败：仅用 `Files.readString`（读取字符串）后搜索类名无法发现 BOM，禁止将其作为 Mixin 配置的完整有效性验证。
+
+## 2026-08-01：原版无形光源范围任务已保存但从未执行
+
+- 问题类型：旧版本 API（应用程序接口）迁移问题、服务器 Tick（游戏刻）注册问题、持久任务问题。
+- 问题现象：可变恒亮灯设置半径 `64`、间隔 `1` 并选择原版无形光源后，实际只看到灯方块自身约 `14` 格的自然衰减；新放置的灯也一样。1.21.8 与 1.21.4 已由游戏实测复现。
+- 根本原因：跨版本移植保留了 `VariableLightTaskState.tick(world)` 持久任务处理器，却只在服务器 Tick 中调用旧的 `ConstantLightTaskQueue.tick()`；范围任务能够保存和排队，但没有任何入口推进坐标处理。26.2 与 26.1.2 已有正确调用，不受影响。
+- 修改文件：`LightMod.java`、`VariableLightTickRegistrationTest.java`、README、VERSION_INFO、版本号和本记录。
+- 修复方式：在服务器结束 Tick 时遍历全部世界，对每个世界取得 `VariableLightTaskState` 并调用 `tick(world)`；旧普通恒亮灯队列与红石通知顺序保持不变。现有存档中的未完成任务在加载后自动继续。
+- 验证方式：先加入 Tick 注册回归检查并确认旧实现稳定失败；补齐调用后针对性测试通过。完整构建、成品检查与游戏内半径 `64` 回归继续用于部署验证。
+- 下次避免：移植持久任务类型时必须同时核对任务创建、保存、载入和服务器 Tick 消费四个入口；不能因类和测试均存在就假定任务会运行。
+- 已尝试失败：只调用旧内存 `ConstantLightTaskQueue.tick()` 无法推进 `VariableLightTaskState` 中的范围任务，禁止再次作为完整照明 Tick 注册。

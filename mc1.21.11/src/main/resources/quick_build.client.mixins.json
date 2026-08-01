@@ -1,9 +1,13 @@
-﻿{
+{
   "required": true,
   "package": "cn.quit5700.light.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "BlockEntityRenderStateMixin",
     "BlockModelLighterCacheMixin",
+    "BrushableBlockRendererMixin",
+    "ChestRendererMixin",
+    "EntityRendererMixin",
     "SodiumLightDataAccessMixin"
   ],
   "injectors": {

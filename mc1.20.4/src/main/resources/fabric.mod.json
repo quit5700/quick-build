@@ -9,6 +9,7 @@
   "environment": "*",
   "provides": ["building_wand", "pathfinding_beacon", "light"],
   "accessWidener": "light.accesswidener",
+  "mixins": ["quick_build.client.mixins.json"],
   "entrypoints": {
     "main": [
       "cn.quit5700.buildingwand.BuildingWandMod",
