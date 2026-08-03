@@ -1,7 +1,10 @@
 package cn.quit5700.light.logic;
 
 public final class VariableConstantLightSettings {
-    private static final int CONFIGURATION_BUTTON_OFFSET = 1_000;
+    private static final int RADIUS_BUTTON_OFFSET = 0;
+    private static final int SPACING_BUTTON_OFFSET = 64;
+    private static final int MODE_BUTTON_OFFSET = 71;
+    public static final int APPLY_BUTTON_ID = 74;
     public static final int MIN_RADIUS = 1;
     public static final int DEFAULT_RADIUS = 14;
     public static final int MAX_RADIUS = 64;
@@ -42,34 +45,13 @@ public final class VariableConstantLightSettings {
         return MIN_SPACING + (int) Math.round(clamped * (MAX_SPACING - MIN_SPACING));
     }
 
-    public static int configurationButtonId(int radius, int spacing, VariableLightMode mode) {
-        int radiusIndex = clampRadius(radius) - MIN_RADIUS;
-        int spacingIndex = clampSpacing(spacing) - MIN_SPACING;
-        return CONFIGURATION_BUTTON_OFFSET
-                + (radiusIndex * (MAX_SPACING - MIN_SPACING + 1) + spacingIndex)
-                * VariableLightMode.values().length
-                + mode.ordinal();
-    }
-
-    public static boolean isConfigurationButtonId(int id) {
-        return id >= configurationButtonId(MIN_RADIUS, MIN_SPACING, VariableLightMode.VANILLA_INVISIBLE)
-                && id <= configurationButtonId(MAX_RADIUS, MAX_SPACING, VariableLightMode.HYBRID);
-    }
-
-    public static int radiusFromConfigurationButtonId(int id) {
-        int index = Math.max(0, id - CONFIGURATION_BUTTON_OFFSET);
-        int configurationIndex = index / VariableLightMode.values().length;
-        return clampRadius(MIN_RADIUS + configurationIndex / (MAX_SPACING - MIN_SPACING + 1));
-    }
-
-    public static int spacingFromConfigurationButtonId(int id) {
-        int index = Math.max(0, id - CONFIGURATION_BUTTON_OFFSET);
-        int configurationIndex = index / VariableLightMode.values().length;
-        return clampSpacing(MIN_SPACING + configurationIndex % (MAX_SPACING - MIN_SPACING + 1));
-    }
-
-    public static VariableLightMode modeFromConfigurationButtonId(int id) {
-        int index = Math.max(0, id - CONFIGURATION_BUTTON_OFFSET);
-        return VariableLightMode.fromOrdinal(index % VariableLightMode.values().length);
-    }
+    public static int radiusButtonId(int radius) { return RADIUS_BUTTON_OFFSET + clampRadius(radius) - MIN_RADIUS; }
+    public static boolean isRadiusButtonId(int id) { return id >= RADIUS_BUTTON_OFFSET && id < SPACING_BUTTON_OFFSET; }
+    public static int radiusFromButtonId(int id) { return clampRadius(MIN_RADIUS + id - RADIUS_BUTTON_OFFSET); }
+    public static int spacingButtonId(int spacing) { return SPACING_BUTTON_OFFSET + clampSpacing(spacing) - MIN_SPACING; }
+    public static boolean isSpacingButtonId(int id) { return id >= SPACING_BUTTON_OFFSET && id < MODE_BUTTON_OFFSET; }
+    public static int spacingFromButtonId(int id) { return clampSpacing(MIN_SPACING + id - SPACING_BUTTON_OFFSET); }
+    public static int modeButtonId(VariableLightMode mode) { return MODE_BUTTON_OFFSET + mode.ordinal(); }
+    public static boolean isModeButtonId(int id) { return id >= MODE_BUTTON_OFFSET && id < APPLY_BUTTON_ID; }
+    public static VariableLightMode modeFromButtonId(int id) { return VariableLightMode.fromOrdinal(id - MODE_BUTTON_OFFSET); }
 }

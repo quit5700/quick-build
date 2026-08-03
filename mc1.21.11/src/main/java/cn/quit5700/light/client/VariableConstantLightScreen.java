@@ -128,10 +128,14 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
 
     private void submitConfiguration(boolean closeAfterSubmit) {
         if (minecraft != null && minecraft.gameMode != null) {
-            minecraft.gameMode.handleInventoryButtonClick(
-                    menu.containerId,
-                    VariableConstantLightMenu.configurationButtonId(
-                            radiusSlider.radius(), spacingSlider.spacing(), selectedMode));
+            minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
+                    VariableConstantLightSettings.radiusButtonId(radiusSlider.radius()));
+            minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
+                    VariableConstantLightSettings.spacingButtonId(spacingSlider.spacing()));
+            minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
+                    VariableConstantLightSettings.modeButtonId(selectedMode));
+            minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
+                    VariableConstantLightSettings.APPLY_BUTTON_ID);
         }
         if (closeAfterSubmit) onClose();
     }

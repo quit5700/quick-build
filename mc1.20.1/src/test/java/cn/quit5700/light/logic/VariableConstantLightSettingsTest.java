@@ -3,6 +3,7 @@ package cn.quit5700.light.logic;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class VariableConstantLightSettingsTest {
     @Test
@@ -54,20 +55,26 @@ class VariableConstantLightSettingsTest {
     }
 
     @Test
-    void radiusAndSpacingRoundTripThroughOneConfigurationButtonId() {
+    void remoteMenuProtocolRoundTripsWithinOneByte() {
         for (int radius = VariableConstantLightSettings.MIN_RADIUS;
              radius <= VariableConstantLightSettings.MAX_RADIUS;
              radius++) {
+            int radiusId = VariableConstantLightSettings.radiusButtonId(radius);
+            assertEquals(radius, VariableConstantLightSettings.radiusFromButtonId(radiusId));
+            assertTrue(radiusId <= 127);
             for (int spacing = VariableConstantLightSettings.MIN_SPACING;
                  spacing <= VariableConstantLightSettings.MAX_SPACING;
                  spacing++) {
+                int spacingId = VariableConstantLightSettings.spacingButtonId(spacing);
+                assertEquals(spacing, VariableConstantLightSettings.spacingFromButtonId(spacingId));
+                assertTrue(spacingId <= 127);
                 for (VariableLightMode mode : VariableLightMode.values()) {
-                    int id = VariableConstantLightSettings.configurationButtonId(radius, spacing, mode);
-                    assertEquals(radius, VariableConstantLightSettings.radiusFromConfigurationButtonId(id));
-                    assertEquals(spacing, VariableConstantLightSettings.spacingFromConfigurationButtonId(id));
-                    assertEquals(mode, VariableConstantLightSettings.modeFromConfigurationButtonId(id));
+                    int modeId = VariableConstantLightSettings.modeButtonId(mode);
+                    assertEquals(mode, VariableConstantLightSettings.modeFromButtonId(modeId));
+                    assertTrue(modeId <= 127);
                 }
             }
         }
+        assertTrue(VariableConstantLightSettings.APPLY_BUTTON_ID <= 127);
     }
 }

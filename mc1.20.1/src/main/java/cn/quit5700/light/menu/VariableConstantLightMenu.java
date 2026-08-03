@@ -17,6 +17,9 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
     private final ContainerData data;
     private final ContainerLevelAccess access;
     private final VariableConstantLightBlockEntity blockEntity;
+    private int pendingRadius;
+    private int pendingSpacing;
+    private VariableLightMode pendingMode;
 
     public VariableConstantLightMenu(int id, Inventory inventory) {
         this(id, inventory, new SimpleContainerData(4), null);
@@ -32,6 +35,9 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
                 : ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
         checkContainerDataCount(data, 4);
         addDataSlots(data);
+        pendingRadius = VariableConstantLightSettings.clampRadius(data.get(0));
+        pendingSpacing = VariableConstantLightSettings.clampSpacing(data.get(2));
+        pendingMode = VariableLightMode.fromOrdinal(data.get(3));
     }
 
     public int radius() {
@@ -50,25 +56,30 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        if (VariableConstantLightSettings.isConfigurationButtonId(id)) {
-            int radius = VariableConstantLightSettings.radiusFromConfigurationButtonId(id);
-            int spacing = VariableConstantLightSettings.spacingFromConfigurationButtonId(id);
-            VariableLightMode mode = VariableConstantLightSettings.modeFromConfigurationButtonId(id);
+        if (VariableConstantLightSettings.isRadiusButtonId(id)) {
+            pendingRadius = VariableConstantLightSettings.radiusFromButtonId(id);
+            return true;
+        }
+        if (VariableConstantLightSettings.isSpacingButtonId(id)) {
+            pendingSpacing = VariableConstantLightSettings.spacingFromButtonId(id);
+            return true;
+        }
+        if (VariableConstantLightSettings.isModeButtonId(id)) {
+            pendingMode = VariableConstantLightSettings.modeFromButtonId(id);
+            return true;
+        }
+        if (id == VariableConstantLightSettings.APPLY_BUTTON_ID) {
             if (blockEntity != null) {
-                blockEntity.setConfiguration(radius, spacing, mode);
+                blockEntity.setConfiguration(pendingRadius, pendingSpacing, pendingMode);
             } else {
-                data.set(0, radius);
-                data.set(2, spacing);
-                data.set(3, mode.ordinal());
+                data.set(0, pendingRadius);
+                data.set(2, pendingSpacing);
+                data.set(3, pendingMode.ordinal());
             }
             broadcastChanges();
             return true;
         }
         return false;
-    }
-
-    public static int configurationButtonId(int radius, int spacing, VariableLightMode mode) {
-        return VariableConstantLightSettings.configurationButtonId(radius, spacing, mode);
     }
 
     @Override
