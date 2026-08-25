@@ -1,21 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "tools",
+  "category": "equipment",
   "pattern": [
     "G",
     "S",
     "G"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "G": "minecraft:gold_ingot",
+    "S": "minecraft:stick"
   },
   "result": {
-    "item": "building_wand:building_wand",
-    "count": 1
+    "count": 1,
+    "id": "building_wand:building_wand"
   }
 }
