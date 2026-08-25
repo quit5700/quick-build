@@ -9,6 +9,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import cn.quit5700.persistence.SavedDataFileName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public final class RoutePersistentState extends SavedData {
             RoutePersistentState::toDynamic
     );
     public static final SavedDataType<RoutePersistentState> TYPE = new SavedDataType<>(
-            PathfindingBeaconMod.id(ID).toString(),
+            SavedDataFileName.requireSafe(ID),
             RoutePersistentState::new,
             CODEC,
             null

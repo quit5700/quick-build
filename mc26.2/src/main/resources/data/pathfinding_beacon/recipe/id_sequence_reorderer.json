@@ -1,0 +1,18 @@
+{
+    "key":  {
+                "C":  {
+                          "item":  "minecraft:cobblestone"
+                      }
+            },
+    "category":  "equipment",
+    "pattern":  [
+                    "CC ",
+                    "CC ",
+                    " C "
+                ],
+    "result":  {
+                   "count":  1,
+                   "item":  "pathfinding_beacon:id_sequence_reorderer"
+               },
+    "type":  "minecraft:crafting_shaped"
+}

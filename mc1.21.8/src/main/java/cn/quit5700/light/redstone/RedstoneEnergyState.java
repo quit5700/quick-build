@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import cn.quit5700.persistence.SavedDataFileName;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
@@ -25,7 +26,7 @@ public final class RedstoneEnergyState extends SavedData {
             EnergyEdge.CODEC.listOf().optionalFieldOf("edges", List.of()).forGetter(state -> new ArrayList<>(state.edges))
     ).apply(instance, RedstoneEnergyState::new));
     private static final SavedDataType<RedstoneEnergyState> TYPE = new SavedDataType<>(
-            cn.quit5700.light.LightMod.id(SAVE_ID).toString(), RedstoneEnergyState::new, CODEC, DataFixTypes.SAVED_DATA_RANDOM_SEQUENCES);
+            SavedDataFileName.requireSafe(SAVE_ID), RedstoneEnergyState::new, CODEC, DataFixTypes.SAVED_DATA_RANDOM_SEQUENCES);
 
     private final Map<String, EnergyNode> nodes = new HashMap<>();
     private final Set<EnergyEdge> edges = new HashSet<>();

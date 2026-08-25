@@ -1,5 +1,27 @@
 # 问题与修复记录
 
+## 2026-08-26：1.21.8 与 1.21.11 动态生成带冒号的 SavedData 文件名
+
+- 问题类型：版本适配问题、Windows 路径问题、数据保存/读取问题。
+- 问题现象：1.21.8 退出世界时日志报告 `InvalidPathException: Illegal char <:>`，涉及 `light:light_redstone_networks.dat` 与 `pathfinding_beacon:pathfinding_beacon_routes.dat`，随后出现服务器停止异常；磁盘上看不到这些文件，因为 Windows 在创建前已拒绝路径。
+- 根本原因：1.21.8 与 1.21.11 的 `SavedDataType` 构造函数接收普通字符串，但代码把 `ResourceLocation`（资源位置）的 `namespace:path` 字符串传入，冒号被直接当作文件名字符。1.20.1 至 1.21.4 原本直接传普通字符串，不受影响；26.1.2 与 26.2 使用接收 `ResourceLocation` 对象的新版 API，由 Minecraft 分离命名空间与路径，也不受影响。
+- 修改文件：1.21.8、1.21.11 的 `RedstoneEnergyState.java`、`RoutePersistentState.java`、新增 `SavedDataFileName.java` 与 `SavedDataFileNameTest.java`，以及本记录和 `PORTING_NOTES.md`。
+- 具体修复方式：两个受影响版本改为使用既有扁平 ID `light_redstone_networks` 与 `pathfinding_beacon_routes`；实际构造点统一经过 Windows 安全文件名校验，拒绝控制字符、`<>:\"/\\|?*`、尾随点和尾随空格。没有采用重复前缀的 `light_light_redstone_networks` 或 `pathfinding_beacon_pathfinding_beacon_routes`，以保持名称简洁并兼容已经存在的 `pathfinding_beacon_routes.dat`。
+- 验证方式：1.21.8 真实日志复现两个非法名称与服务器停止异常；新增单元测试验证两个当前 ID 通过、带冒号及其他 Windows 非法字符均被拒绝；两个版本定向测试通过，随后执行受影响版本完整构建。
+- 下次避免：不能用“磁盘上没有冒号文件”排除创建前失败；必须检查字符串的运行时生成路径。接受字符串文件名的 SavedData API 不得传入 `ResourceLocation.toString()`。
+- 已尝试失败：第一次只搜索完整字符串和磁盘文件，漏掉动态拼接；第一次反射加载 `SavedDataType` 的测试因纯单元测试类路径不含 Minecraft 类而出现 `NoClassDefFoundError`。禁止重复使用这两种不完整检查方式。
+
+## 2026-08-20：设置台、法杖与寻路方块配方未出现在 JEI
+
+- 问题类型：版本适配问题、资源目录迁移问题。
+- 问题现象：Minecraft 26.2 中，设置台、两个法杖、ID 顺序重排器和 30 个寻路方块可正常注册为物品，但 JEI（Just Enough Items，物品管理器）不显示其配方。
+- 根本原因：这 34 个配方仍放在旧版 `data/<命名空间>/recipes`（复数）目录；Minecraft 26.2 只从 `data/<命名空间>/recipe`（单数）加载配方。同一模组已使用单数目录的灯类配方不受影响；运行日志确认 JEI 正常启动并注册原版配方。
+- 修改文件：`building_wand` 与 `pathfinding_beacon` 命名空间下的 34 个配方 JSON 路径、`RecipeResourceLayoutTest.java`、本记录。
+- 具体修复方式：只把 34 个既有配方从 `recipes` 移至 `recipe`，不改变配方内容；新增回归测试，禁止 26.2 资源中再次出现位于复数目录的配方 JSON。
+- 验证方式：回归测试在旧目录布局下稳定失败，路径修正后通过；随后执行 26.2 完整测试与构建，并检查生成 JAR 内配方路径。
+- 下次避免：从旧版移植数据包资源时，不能只迁移部分命名空间；应自动扫描整个 `data` 树，确保同一目标版本使用统一的资源目录规则。
+- 已尝试失败：把 JEI 本身或配方内容当作首要原因与日志证据不符；不得用 JEI 专用插件绕过 Minecraft 根本没有加载配方的问题。
+
 ## 2026-08-01：全版本部署扫描命令失败
 
 - 问题类型：部署验证脚本问题、PowerShell（命令行）语法问题。
