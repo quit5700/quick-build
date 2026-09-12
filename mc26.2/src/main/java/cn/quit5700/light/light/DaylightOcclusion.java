@@ -1,116 +1,133 @@
 package cn.quit5700.light.light;
 
+import cn.quit5700.light.logic.ConnectedLightVolume;
 import cn.quit5700.light.logic.DaylightCoverage;
-import cn.quit5700.light.logic.DaylightVisibility;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.shapes.Shapes;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-/** Lazy, bounded visibility caches. Never loads chunks or creates light blocks. */
+/** World reads occur only in tick(), never in renderer worker queries. */
 public final class DaylightOcclusion {
     private static final Map<Level, WorldCache> WORLDS = new WeakHashMap<>();
-    private static final int MAX_SECTIONS = 128;
-
     private DaylightOcclusion() { }
-
     private static synchronized WorldCache cache(Level level) {
         return WORLDS.computeIfAbsent(level, ignored -> new WorldCache());
     }
-
+    private static SourceCache ensure(WorldCache world, BlockPos pos, int radius) {
+        SourceCache result = world.sources.get(pos.asLong());
+        if (result == null || result.radius != radius) {
+            result = new SourceCache(pos.immutable(), radius);
+            world.sources.put(pos.asLong(), result);
+        }
+        return result;
+    }
     public static boolean visible(Level level, BlockPos source, int radius, BlockPos target) {
-        if (!DaylightCoverage.contains(source.getX(), source.getY(), source.getZ(), radius,
-                target.getX(), target.getY(), target.getZ())) return false;
+        if (!DaylightCoverage.contains(source.getX(),source.getY(),source.getZ(),radius,
+                target.getX(),target.getY(),target.getZ())) return false;
         WorldCache world = cache(level);
         synchronized (world) {
-            SourceCache sourceCache = world.sources.computeIfAbsent(source.asLong(),
-                    ignored -> new SourceCache(source.immutable(), radius));
-            if (sourceCache.radius != radius) {
-                sourceCache = new SourceCache(source.immutable(), radius);
-                world.sources.put(source.asLong(), sourceCache);
-            }
-            long sectionKey = BlockPos.asLong(target.getX() >> 4, target.getY() >> 4, target.getZ() >> 4);
-            byte[] section = sourceCache.sections.get(sectionKey);
-            if (section == null) {
-                if (sourceCache.sections.size() >= MAX_SECTIONS)
-                    sourceCache.sections.remove(sourceCache.sections.keySet().iterator().next());
-                section = new byte[4096];
-                sourceCache.sections.put(sectionKey, section);
-            }
-            int index = (target.getX() & 15) | ((target.getZ() & 15) << 4) | ((target.getY() & 15) << 8);
-            if (section[index] != 0) return section[index] == 1;
-            Vec3 from = Vec3.atCenterOf(source);
-            Vec3 to = Vec3.atCenterOf(target);
-            boolean[] unloaded = {false};
-            boolean result = DaylightVisibility.visible(source.getX(), source.getY(), source.getZ(),
-                    target.getX(), target.getY(), target.getZ(), (x, y, z) -> {
-                        BlockPos pos = new BlockPos(x, y, z);
-                        if (!level.hasChunk(x >> 4, z >> 4)) {
-                            unloaded[0] = true;
-                            return true;
-                        }
-                        var shape = level.getBlockState(pos).getCollisionShape(level, pos);
-                        return !shape.isEmpty() && shape.clip(from, to, pos) != null;
-                    });
-            // Missing chunks must be reconsidered when they become available.
-            if (!unloaded[0]) section[index] = (byte) (result ? 1 : 2);
-            return result;
+            SourceCache entry = ensure(world, source, radius);
+            return entry.volume != null && entry.volume.contains(target.getX()-source.getX(),
+                    target.getY()-source.getY(), target.getZ()-source.getZ());
         }
     }
-
+    public static boolean ready(Level level, BlockPos source, int radius) {
+        WorldCache world = cache(level);
+        synchronized (world) {
+            SourceCache entry = ensure(world, source, radius);
+            return entry.volume != null && entry.volume.complete();
+        }
+    }
+    public static void tick(Level level) {
+        WorldCache world = cache(level);
+        synchronized (world) {
+            int budget = 8192;
+            for (SourceCache source : world.sources.values()) {
+                if (budget <= 0) break;
+                if (source.volume == null) source.volume = new ConnectedLightVolume(source.radius);
+                if (source.volume.complete()) continue;
+                budget -= source.volume.advance(budget, (x,y,z,nx,ny,nz) ->
+                        passage(level, source.pos, source.pos.offset(x,y,z), source.pos.offset(nx,ny,nz)));
+                if (source.volume.complete()) world.revision++;
+            }
+        }
+    }
+    private static boolean passage(Level level, BlockPos lamp, BlockPos from, BlockPos to) {
+        if (level.isOutsideBuildHeight(to) || !level.hasChunk(to.getX() >> 4,to.getZ() >> 4)
+                || !level.hasChunk(from.getX() >> 4,from.getZ() >> 4)) return false;
+        BlockState b = level.getBlockState(to);
+        if (b.isSolidRender() || closedDoor(b)) return false;
+        if (from.equals(lamp)) return true;
+        BlockState a = level.getBlockState(from);
+        if (closedDoor(a)) return false;
+        Direction direction = to.getX() > from.getX() ? Direction.EAST : to.getX() < from.getX() ? Direction.WEST
+                : to.getY() > from.getY() ? Direction.UP : to.getY() < from.getY() ? Direction.DOWN
+                : to.getZ() > from.getZ() ? Direction.SOUTH : Direction.NORTH;
+        var shapeA = a.canOcclude() ? a.getOcclusionShape() : Shapes.empty();
+        var shapeB = b.canOcclude() ? b.getOcclusionShape() : Shapes.empty();
+        if (a.getBlock() instanceof net.minecraft.world.level.block.TrapDoorBlock) shapeA = a.getCollisionShape(level, from);
+        if (b.getBlock() instanceof net.minecraft.world.level.block.TrapDoorBlock) shapeB = b.getCollisionShape(level, to);
+        return !Shapes.faceShapeOccludes(shapeA.getFaceShape(direction), shapeB.getFaceShape(direction.getOpposite()));
+    }
+    private static boolean closedDoor(BlockState state) {
+        return state.getBlock() instanceof DoorBlock && !state.getValue(BlockStateProperties.OPEN);
+    }
     public static void changed(Level level, BlockPos pos) {
         WorldCache world;
         synchronized (DaylightOcclusion.class) { world = WORLDS.get(level); }
         if (world == null) return;
         synchronized (world) {
             for (SourceCache source : world.sources.values()) {
-                if (DaylightCoverage.contains(source.pos.getX(), source.pos.getY(), source.pos.getZ(),
-                        source.radius, pos.getX(), pos.getY(), pos.getZ())) {
-                    source.sections.clear();
+                if (DaylightCoverage.contains(source.pos.getX(),source.pos.getY(),source.pos.getZ(),
+                        source.radius+1,pos.getX(),pos.getY(),pos.getZ())) {
+                    source.volume = null;
                     world.revision++;
                 }
             }
         }
     }
-
-    public static long revision(Level level) {
-        WorldCache world = cache(level);
-        synchronized (world) { return world.revision; }
-    }
-
-    public static void chunkChanged(Level level, int chunkX, int chunkZ) {
+    public static void chunkChanged(Level level, int x, int z) {
         WorldCache world;
         synchronized (DaylightOcclusion.class) { world = WORLDS.get(level); }
         if (world == null) return;
         synchronized (world) {
             for (SourceCache source : world.sources.values()) {
-                if (chunkX >= (source.pos.getX() - source.radius) >> 4
-                        && chunkX <= (source.pos.getX() + source.radius) >> 4
-                        && chunkZ >= (source.pos.getZ() - source.radius) >> 4
-                        && chunkZ <= (source.pos.getZ() + source.radius) >> 4) {
-                    source.sections.clear();
-                    world.revision++;
+                if (x >= ((source.pos.getX()-source.radius)>>4) && x <= ((source.pos.getX()+source.radius)>>4)
+                        && z >= ((source.pos.getZ()-source.radius)>>4) && z <= ((source.pos.getZ()+source.radius)>>4)) {
+                    source.volume = null; world.revision++;
                 }
             }
         }
     }
-
+    public static long revision(Level level) {
+        WorldCache world = cache(level);
+        synchronized (world) { return world.revision; }
+    }
     public static void clear(Level level) {
         synchronized (DaylightOcclusion.class) { WORLDS.remove(level); }
     }
-
+    public static void remove(Level level, BlockPos pos) {
+        WorldCache world;
+        synchronized (DaylightOcclusion.class) { world = WORLDS.get(level); }
+        if (world != null) synchronized (world) {
+            world.sources.remove(pos.asLong()); world.revision++;
+        }
+    }
     private static final class WorldCache {
-        final Map<Long, SourceCache> sources = new LinkedHashMap<>();
+        final Map<Long,SourceCache> sources = new LinkedHashMap<>();
         long revision;
     }
-
     private static final class SourceCache {
         final BlockPos pos;
         final int radius;
-        final Map<Long, byte[]> sections = new LinkedHashMap<>(16, 0.75f, true);
-        SourceCache(BlockPos pos, int radius) { this.pos = pos; this.radius = radius; }
+        ConnectedLightVolume volume;
+        SourceCache(BlockPos pos,int radius) { this.pos=pos; this.radius=radius; }
     }
 }

@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "Copie de la lampe constante variable",
+    "item.light.copy_variable_constant_light": "Copie de la lampe constante variable",
+    "screen.quick_build.variable_light_boost": "Luminosité visuelle : %s",
+    "screen.quick_build.variable_light_legacy_warning": "Ancien mode : apparitions et cultures inchangées",
     "block.light.constant_light_block":  "Lumière constante",
     "block.light.redstone_energy_emitter":  "émetteur d\u0027énergie redstone",
     "block.light.redstone_energy_remote_switch":  "Interrupteur à distance d\u0027énergie en pierre rouge blanche",

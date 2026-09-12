@@ -30,7 +30,6 @@ public final class VariableLightNetworking {
     }
 
     public static void syncWorld(ServerLevel world) {
-        cn.quit5700.light.light.DaylightOcclusion.clear(world);
         SnapshotPayload payload = snapshot(world);
         for (ServerPlayer player : PlayerLookup.level(world)) {
             ServerPlayNetworking.send(player, payload);

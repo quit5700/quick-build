@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "可変常時点灯ランプのコピー",
+    "item.light.copy_variable_constant_light": "可変常時点灯ランプのコピー",
+    "screen.quick_build.variable_light_boost": "表示の増光：%s",
+    "screen.quick_build.variable_light_legacy_warning": "旧昼光は出現を防止せず、作物を変更しません",
     "block.light.constant_light_block":  "一定の光",
     "block.light.redstone_energy_emitter":  "レッドストーンエネルギーエミッター",
     "block.light.redstone_energy_remote_switch":  "白いレッドストーンエネルギーリモートスイッチ",

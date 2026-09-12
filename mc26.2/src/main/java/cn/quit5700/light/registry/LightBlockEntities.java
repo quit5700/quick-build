@@ -24,7 +24,7 @@ public final class LightBlockEntities {
             FabricBlockEntityTypeBuilder.create(RedstoneSignalDelayBlockEntity::new, LightBlocks.REDSTONE_SIGNAL_DELAY).build());
     public static final BlockEntityType<VariableConstantLightBlockEntity> VARIABLE_CONSTANT_LIGHT = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, LightMod.id("variable_constant_light"),
-            FabricBlockEntityTypeBuilder.create(VariableConstantLightBlockEntity::new, LightBlocks.VARIABLE_CONSTANT_LIGHT).build());
+            FabricBlockEntityTypeBuilder.create(VariableConstantLightBlockEntity::new, LightBlocks.VARIABLE_CONSTANT_LIGHT, LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT).build());
 
     private LightBlockEntities() {
     }

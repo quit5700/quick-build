@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "Copia de luz constante variable",
+    "item.light.copy_variable_constant_light": "Copia de luz constante variable",
+    "screen.quick_build.variable_light_boost": "Brillo visual: %s",
+    "screen.quick_build.variable_light_legacy_warning": "Modo anterior: no cambia aparición ni cultivos",
     "block.light.constant_light_block":  "Luz constante",
     "block.light.redstone_energy_emitter":  "emisor de energía de piedra roja",
     "block.light.redstone_energy_remote_switch":  "Interruptor remoto de energía redstone blanco",

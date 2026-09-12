@@ -32,6 +32,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
                 case 1 -> getBlockState().getValue(VariableConstantLightBlock.POWERED) ? 1 : 0;
                 case 2 -> spacing;
                 case 3 -> mode.ordinal();
+                case 4 -> isLegacy() ? 1 : 0;
                 default -> 0;
             };
         }
@@ -44,7 +45,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
     };
 
@@ -61,6 +62,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
     }
 
     public VariableLightMode mode() { return mode; }
+    public boolean isLegacy() { return getBlockState().is(cn.quit5700.light.registry.LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT); }
 
     @Override
     public void setLevel(Level level) {
@@ -69,6 +71,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
                 && getBlockState().getValue(VariableConstantLightBlock.POWERED)) {
             VariableLightTaskState taskState = VariableLightTaskState.get(serverLevel);
             taskState.registerExisting(worldPosition, radius, spacing, mode);
+            taskState.setLegacy(worldPosition, isLegacy());
             if (mode.usesDaylightRendering()) taskState.syncClients(serverLevel);
         }
     }
@@ -83,7 +86,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
 
     public void setConfiguration(int requestedRadius, int requestedSpacing, VariableLightMode requestedMode) {
         int updatedRadius = VariableConstantLightSettings.clampRadius(requestedRadius);
-        int updatedSpacing = VariableConstantLightSettings.clampSpacing(requestedSpacing);
+        int updatedSpacing = isLegacy() ? VariableConstantLightSettings.clampSpacing(requestedSpacing) : 1;
         VariableLightMode updatedMode = requestedMode == null ? VariableLightMode.VANILLA_INVISIBLE : requestedMode;
         if (updatedRadius == radius && updatedSpacing == spacing && updatedMode == mode) return;
         int oldRadius = radius;
@@ -103,7 +106,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("screen.quick_build.variable_light_title");
+        return Component.translatable(isLegacy() ? "block.light.copy_variable_constant_light" : "screen.quick_build.variable_light_title");
     }
 
     @Override
@@ -126,6 +129,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
                 data.getIntOr("radius", VariableConstantLightSettings.DEFAULT_RADIUS));
         spacing = VariableConstantLightSettings.clampSpacing(
                 data.getIntOr("spacing", 4));
+        if (!isLegacy()) spacing = 1;
         mode = VariableLightMode.fromOrdinal(data.getIntOr("mode", 0));
     }
 

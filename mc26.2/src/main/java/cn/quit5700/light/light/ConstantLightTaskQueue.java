@@ -40,10 +40,12 @@ public final class ConstantLightTaskQueue {
     public static void installVariable(ServerLevel world, BlockPos sourcePos, int radius, int spacing, VariableLightMode mode) {
         VariableLightTaskState state = VariableLightTaskState.get(world);
         state.install(sourcePos, radius, spacing, mode);
+        state.setLegacy(sourcePos, world.getBlockState(sourcePos).is(cn.quit5700.light.registry.LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT));
         if (mode.usesDaylightRendering()) state.syncClients(world);
     }
 
     public static void cleanupVariable(ServerLevel world, BlockPos sourcePos, int radius, int spacing, VariableLightMode mode) {
+        DaylightOcclusion.remove(world, sourcePos);
         VariableLightTaskState state = VariableLightTaskState.get(world);
         state.cleanup(sourcePos, radius, spacing, mode);
         if (mode.usesDaylightRendering()) state.syncClients(world);
@@ -55,6 +57,7 @@ public final class ConstantLightTaskQueue {
         VariableLightTaskState state = VariableLightTaskState.get(world);
         state.reconfigure(
                 sourcePos, oldRadius, oldSpacing, oldMode, newRadius, newSpacing, newMode);
+        state.setLegacy(sourcePos, world.getBlockState(sourcePos).is(cn.quit5700.light.registry.LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT));
         if (VariableLightModeTransition.needsDaylightSync(oldMode, newMode)) state.syncClients(world);
     }
 

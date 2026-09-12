@@ -2,6 +2,7 @@ package cn.quit5700.light.client;
 
 import cn.quit5700.light.logic.VariableConstantLightSettings;
 import cn.quit5700.light.logic.VariableLightMode;
+import cn.quit5700.light.logic.VariableLightPresentation;
 import cn.quit5700.light.menu.VariableConstantLightMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractSliderButton;
@@ -18,6 +19,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
     private VariableLightMode selectedMode;
     private boolean modeEdited;
     private Button modeButton;
+    private Button brightButton;
     private final Button[] modeOptions = new Button[VariableLightMode.values().length];
 
     public VariableConstantLightScreen(VariableConstantLightMenu menu, Inventory inventory, Component title) {
@@ -44,6 +46,11 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             option.visible = false;
             modeOptions[mode.ordinal()] = option;
         }
+        brightButton = addRenderableWidget(Button.builder(Component.empty(), button -> {
+            selectedMode = VariableLightPresentation.toggleBoost(selectedMode);
+            modeEdited = true;
+            updateModeControls();
+        }).bounds(8, 80, 150, 20).build());
         updateModeControls();
         addRenderableWidget(Button.builder(Component.translatable("text.quick_build.114"),
                 button -> save()).bounds(x + 20, y + 112, 75, 20).build());
@@ -68,6 +75,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             selectedMode = menu.mode();
             updateModeControls();
         }
+        updateModeControls();
     }
 
     private void save() {
@@ -98,7 +106,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
                 centerX, y + 96, 0xC8C8C8);
         if (selectedMode == VariableLightMode.LOCAL_DAYLIGHT) {
             graphics.centeredText(font,
-                    Component.translatable("screen.quick_build.variable_light_daylight_warning"),
+                    Component.translatable(menu.isLegacy() ? "screen.quick_build.variable_light_legacy_warning" : "screen.quick_build.variable_light_daylight_warning"),
                     centerX, y + 140, 0xFFB040);
         }
     }
@@ -112,12 +120,12 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
     }
 
     private Component modeMessage() {
-        return Component.translatable("screen.quick_build.variable_light_mode", modeName(selectedMode));
+        return Component.translatable("screen.quick_build.variable_light_mode", modeName(VariableLightPresentation.primaryMode(menu.isLegacy(), selectedMode)));
     }
 
     private void toggleModeOptions() {
         boolean show = !modeOptions[0].visible;
-        for (Button option : modeOptions) option.visible = show;
+        for (int i = 0; i < modeOptions.length; i++) modeOptions[i].visible = show && VariableLightPresentation.showsMode(menu.isLegacy(), VariableLightMode.values()[i]);
     }
 
     private void selectMode(VariableLightMode mode) {
@@ -133,7 +141,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
                     VariableConstantLightSettings.radiusButtonId(radiusSlider.radius()));
             minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
-                    VariableConstantLightSettings.spacingButtonId(spacingSlider.spacing()));
+                    VariableConstantLightSettings.spacingButtonId(menu.isLegacy() ? spacingSlider.spacing() : 1));
             minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
                     VariableConstantLightSettings.modeButtonId(selectedMode));
             minecraft.gameMode.handleInventoryButtonClick(menu.containerId,
@@ -144,7 +152,12 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
 
     private void updateModeControls() {
         if (modeButton != null) modeButton.setMessage(modeMessage());
-        if (spacingSlider != null) spacingSlider.active = selectedMode != VariableLightMode.LOCAL_DAYLIGHT;
+        if (spacingSlider != null) spacingSlider.active = menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT;
+        if (brightButton != null) {
+            brightButton.visible = !menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT;
+            brightButton.setMessage(Component.translatable("screen.quick_build.variable_light_boost",
+                    Component.translatable(selectedMode == VariableLightMode.HYBRID ? "text.quick_build.075" : "text.quick_build.056")));
+        }
     }
 
     private static final class RadiusSlider extends AbstractSliderButton {

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "light:variable_constant_light"
+  ],
+  "result": {
+    "id": "light:copy_variable_constant_light",
+    "count": 1
+  }
+}

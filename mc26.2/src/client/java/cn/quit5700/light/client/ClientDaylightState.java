@@ -50,6 +50,7 @@ public final class ClientDaylightState {
     }
 
     private static void applyPending(Minecraft minecraft) {
+        if (minecraft.level != null) DaylightOcclusion.tick(minecraft.level);
         List<VariableLightNetworking.Entry> updated = MAILBOX.drain();
         if (updated == null) {
             if (minecraft.level != null) {

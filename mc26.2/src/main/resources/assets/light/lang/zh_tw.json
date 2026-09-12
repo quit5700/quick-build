@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "複製可變恆亮燈",
+    "item.light.copy_variable_constant_light": "複製可變恆亮燈",
+    "screen.quick_build.variable_light_boost": "畫面增亮：%s",
+    "screen.quick_build.variable_light_legacy_warning": "舊版局部白晝不阻止刷怪，不影響作物",
     "block.light.constant_light_block":  "恆亮燈",
     "block.light.redstone_energy_emitter":  "紅石能量發射器",
     "block.light.redstone_energy_remote_switch":  "白色紅石能量遠程開關",

@@ -20,7 +20,10 @@ public abstract class DaylightChunkMixin {
         // Air, invisible light and fluids have no collision: do not invalidate for light installation.
         var oldShape = previous.getCollisionShape(world, pos);
         var newShape = updated.getCollisionShape(world, pos);
-        if (oldShape != newShape && (!oldShape.isEmpty() || !newShape.isEmpty()))
+        if ((oldShape != newShape && (!oldShape.isEmpty() || !newShape.isEmpty()))
+                || previous.isSolidRender() != updated.isSolidRender()
+                || previous.canOcclude() != updated.canOcclude()
+                || (previous.canOcclude() && previous.getOcclusionShape() != updated.getOcclusionShape()))
             DaylightOcclusion.changed(world, pos);
     }
 }

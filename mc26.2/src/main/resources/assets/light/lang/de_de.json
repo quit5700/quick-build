@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "Kopie des variablen Dauerlichts",
+    "item.light.copy_variable_constant_light": "Kopie des variablen Dauerlichts",
+    "screen.quick_build.variable_light_boost": "Bildaufhellung: %s",
+    "screen.quick_build.variable_light_legacy_warning": "Altes Tageslicht beeinflusst weder Spawns noch Pflanzen",
     "block.light.constant_light_block":  "Konstantes Licht",
     "block.light.redstone_energy_emitter":  "Redstone-Energieemitter",
     "block.light.redstone_energy_remote_switch":  "Weißer Redstone-Energiefernschalter",

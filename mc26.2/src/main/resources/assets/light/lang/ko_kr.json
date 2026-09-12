@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "가변 상시 조명 복제",
+    "item.light.copy_variable_constant_light": "가변 상시 조명 복제",
+    "screen.quick_build.variable_light_boost": "화면 밝기: %s",
+    "screen.quick_build.variable_light_legacy_warning": "구형 주간광은 생성 및 작물에 영향을 주지 않습니다",
     "block.light.constant_light_block":  "일정한 빛",
     "block.light.redstone_energy_emitter":  "레드스톤 에너지 방출기",
     "block.light.redstone_energy_remote_switch":  "흰색 레드스톤 에너지 원격 스위치",

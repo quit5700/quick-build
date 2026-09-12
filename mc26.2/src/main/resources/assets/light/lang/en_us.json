@@ -1,4 +1,8 @@
 {
+    "block.light.copy_variable_constant_light": "Copy of Variable Constant Light",
+    "item.light.copy_variable_constant_light": "Copy of Variable Constant Light",
+    "screen.quick_build.variable_light_boost": "Visual brightness: %s",
+    "screen.quick_build.variable_light_legacy_warning": "Legacy daylight does not prevent spawning or change crops",
     "block.light.constant_light_block":  "Constant light",
     "block.light.redstone_energy_emitter":  "redstone energy emitter",
     "block.light.redstone_energy_remote_switch":  "White redstone energy remote switch",

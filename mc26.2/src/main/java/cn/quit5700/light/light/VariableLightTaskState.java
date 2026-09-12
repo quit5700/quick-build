@@ -31,7 +31,8 @@ public final class VariableLightTaskState extends SavedData {
             Codec.LONG.fieldOf("source").forGetter(SourceData::source),
             Codec.INT.fieldOf("radius").forGetter(SourceData::radius),
             Codec.INT.fieldOf("spacing").forGetter(SourceData::spacing),
-            Codec.INT.optionalFieldOf("mode", 0).forGetter(SourceData::mode)
+            Codec.INT.optionalFieldOf("mode", 0).forGetter(SourceData::mode),
+            Codec.BOOL.optionalFieldOf("legacy", false).forGetter(SourceData::legacy)
     ).apply(instance, SourceData::new));
 
     public static final Codec<VariableLightTaskState> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -48,6 +49,17 @@ public final class VariableLightTaskState extends SavedData {
 
     private final List<TaskData> tasks;
     private final List<SourceData> sources;
+    private long connectedRevision = -1;
+
+    public void setLegacy(BlockPos pos, boolean legacy) {
+        for (int i = 0; i < sources.size(); i++) {
+            SourceData source = sources.get(i);
+            if (source.source() == pos.asLong() && source.legacy() != legacy) {
+                sources.set(i, new SourceData(source.source(), source.radius(), source.spacing(), source.mode(), legacy));
+                setDirty();
+            }
+        }
+    }
 
     public VariableLightTaskState() {
         this(List.of(), List.of());
@@ -160,10 +172,11 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     private void replaceSource(BlockPos source, int radius, int spacing, VariableLightMode mode) {
+        boolean legacy = sources.stream().anyMatch(entry -> entry.source() == source.asLong() && entry.legacy());
         sources.removeIf(entry -> entry.source() == source.asLong());
         sources.add(new SourceData(source.asLong(),
                 VariableConstantLightSettings.clampRadius(radius),
-                VariableConstantLightSettings.clampSpacing(spacing), mode.ordinal()));
+                VariableConstantLightSettings.clampSpacing(spacing), mode.ordinal(), legacy));
         setDirty();
     }
 
@@ -178,9 +191,28 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     public void tick(ServerLevel world) {
+        boolean ready = true;
+        for (SourceData source : sources) {
+            if (!source.legacy()) ready &= DaylightOcclusion.ready(world, BlockPos.of(source.source()), source.radius());
+        }
+        long revision = DaylightOcclusion.revision(world);
+        if (ready && revision != connectedRevision) {
+            connectedRevision = revision;
+            for (SourceData source : List.copyOf(sources)) {
+                if (source.legacy() || !VariableLightMode.fromOrdinal(source.mode()).usesInvisibleLight()) continue;
+                tasks.removeIf(task -> task.source() == source.source() && task.install());
+                tasks.addFirst(new TaskData(source.source(), source.radius(), 1, true, 0));
+                if (tasks.stream().noneMatch(task -> task.source() == source.source() && !task.install()
+                        && task.radius() == source.radius() && task.spacing() == 1))
+                    tasks.add(new TaskData(source.source(), source.radius(), 1, false, 0));
+            }
+        }
         int operations = 0;
         while (operations < MAX_OPERATIONS_PER_TICK && !tasks.isEmpty()) {
             TaskData task = tasks.getFirst();
+            SourceData owner = sources.stream().filter(source -> source.source() == task.source()).findFirst().orElse(null);
+            boolean connected = owner != null && !owner.legacy();
+            if (connected && task.install() && !DaylightOcclusion.ready(world, BlockPos.of(owner.source()), owner.radius())) break;
             List<VariableConstantLightPositions.Offset> offsets =
                     VariableConstantLightPositions.relativeOffsets(task.radius(), task.spacing());
             int nextIndex = task.nextIndex();
@@ -190,10 +222,11 @@ public final class VariableLightTaskState extends SavedData {
                 if (!world.isOutsideBuildHeight(lightPos)) {
                     world.getChunkAt(lightPos);
                     if (task.install()) {
-                        ConstantLightTaskQueue.installVariableLight(world, lightPos);
+                        if (!connected || DaylightOcclusion.visible(world, BlockPos.of(owner.source()), owner.radius(), lightPos))
+                            ConstantLightTaskQueue.installVariableLight(world, lightPos);
                     } else {
                         ConstantLightTaskQueue.cleanupVariableLight(
-                                world, lightPos, isCoveredByActiveSource(lightPos));
+                                world, lightPos, isCoveredByActiveSource(world, lightPos));
                     }
                 }
                 operations++;
@@ -207,10 +240,14 @@ public final class VariableLightTaskState extends SavedData {
         }
     }
 
-    private boolean isCoveredByActiveSource(BlockPos lightPos) {
+    private boolean isCoveredByActiveSource(ServerLevel world, BlockPos lightPos) {
         for (SourceData source : sources) {
             if (!VariableLightMode.fromOrdinal(source.mode()).usesInvisibleLight()) continue;
             BlockPos center = BlockPos.of(source.source());
+            if (!source.legacy()) {
+                if (DaylightOcclusion.visible(world, center, source.radius(), lightPos)) return true;
+                continue;
+            }
             if (VariableConstantLightPositions.containsOffset(
                     source.radius(), source.spacing(),
                     lightPos.getX() - center.getX(),
@@ -232,7 +269,7 @@ public final class VariableLightTaskState extends SavedData {
         return sources.stream()
                 .filter(source -> VariableLightMode.fromOrdinal(source.mode()).usesDaylightRendering())
                 .map(source -> new DaylightSource(BlockPos.of(source.source()), source.radius(),
-                        VariableLightMode.fromOrdinal(source.mode()) == VariableLightMode.LOCAL_DAYLIGHT))
+                        !source.legacy()))
                 .toList();
     }
 
@@ -242,7 +279,7 @@ public final class VariableLightTaskState extends SavedData {
 
     public boolean preventsNaturalMonsterSpawn(ServerLevel world, BlockPos pos) {
         for (SourceData source : sources) {
-            if (VariableLightMode.fromOrdinal(source.mode()) == VariableLightMode.LOCAL_DAYLIGHT
+            if (!source.legacy() && VariableLightMode.fromOrdinal(source.mode()) == VariableLightMode.LOCAL_DAYLIGHT
                     && DaylightOcclusion.visible(world, BlockPos.of(source.source()), source.radius(), pos))
                 return true;
         }
@@ -251,6 +288,6 @@ public final class VariableLightTaskState extends SavedData {
 
     public record DaylightSource(BlockPos pos, int radius, boolean occluded) { }
 
-    private record SourceData(long source, int radius, int spacing, int mode) {
+    private record SourceData(long source, int radius, int spacing, int mode, boolean legacy) {
     }
 }

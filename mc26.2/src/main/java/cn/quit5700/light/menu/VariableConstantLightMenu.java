@@ -22,7 +22,7 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
     private VariableLightMode pendingMode;
 
     public VariableConstantLightMenu(int id, Inventory inventory) {
-        this(id, inventory, new SimpleContainerData(4), null);
+        this(id, inventory, new SimpleContainerData(5), null);
     }
 
     public VariableConstantLightMenu(int id, Inventory inventory, ContainerData data,
@@ -33,7 +33,7 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
         this.access = blockEntity == null || blockEntity.getLevel() == null
                 ? ContainerLevelAccess.NULL
                 : ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
-        checkContainerDataCount(data, 4);
+        checkContainerDataCount(data, 5);
         addDataSlots(data);
         pendingRadius = VariableConstantLightSettings.clampRadius(data.get(0));
         pendingSpacing = VariableConstantLightSettings.clampSpacing(data.get(2));
@@ -53,6 +53,7 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
     }
 
     public VariableLightMode mode() { return VariableLightMode.fromOrdinal(data.get(3)); }
+    public boolean isLegacy() { return data.get(4) != 0; }
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
@@ -89,6 +90,6 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(access, player, LightBlocks.VARIABLE_CONSTANT_LIGHT);
+        return stillValid(access, player, isLegacy() ? LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT : LightBlocks.VARIABLE_CONSTANT_LIGHT);
     }
 }
