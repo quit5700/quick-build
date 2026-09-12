@@ -49,7 +49,7 @@
     "screen.quick_build.variable_light_mode.vanilla_invisible": "原版無形光源方案",
     "screen.quick_build.variable_light_mode.local_daylight": "局部白晝方案",
     "screen.quick_build.variable_light_mode.hybrid": "混合方案",
-    "screen.quick_build.variable_light_daylight_warning": "此方案不會阻止怪物生成，也不會促進作物生長",
+    "screen.quick_build.variable_light_daylight_warning": "未被遮擋處禁止自然刷怪，作物生長不變",
     "screen.quick_build.variable_light_size": "照明範圍：%s × %s × %s",
     "screen.quick_build.variable_light_powered": "紅石狀態：%s",
     "screen.quick_build.variable_light_help_1": "右鍵開啟滑桿，等比設定 X、Y、Z 三軸照明半徑。",

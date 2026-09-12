@@ -49,7 +49,7 @@
     "screen.quick_build.variable_light_mode.vanilla_invisible": "Unsichtbares Vanilla-Licht",
     "screen.quick_build.variable_light_mode.local_daylight": "Lokales Tageslicht",
     "screen.quick_build.variable_light_mode.hybrid": "Hybridbeleuchtung",
-    "screen.quick_build.variable_light_daylight_warning": "Dieser Modus verhindert keine Monster und fördert kein Pflanzenwachstum",
+    "screen.quick_build.variable_light_daylight_warning": "Freie Sicht: keine natürlichen Monster; Pflanzen unverändert",
     "screen.quick_build.variable_light_size": "Beleuchtungsbereich: %s × %s × %s",
     "screen.quick_build.variable_light_powered": "Redstone: %s",
     "screen.quick_build.variable_light_help_1": "Rechtsklick öffnet den Regler für einen gleichen X-, Y- und Z-Radius.",

@@ -49,7 +49,7 @@
     "screen.quick_build.variable_light_mode.vanilla_invisible": "Lumière invisible vanilla",
     "screen.quick_build.variable_light_mode.local_daylight": "Lumière du jour locale",
     "screen.quick_build.variable_light_mode.hybrid": "Éclairage hybride",
-    "screen.quick_build.variable_light_daylight_warning": "Ce mode n'empêche pas les monstres et ne favorise pas les cultures",
+    "screen.quick_build.variable_light_daylight_warning": "Sans obstacle : monstres naturels bloqués, cultures inchangées",
     "screen.quick_build.variable_light_size": "Zone éclairée : %s × %s × %s",
     "screen.quick_build.variable_light_powered": "Redstone : %s",
     "screen.quick_build.variable_light_help_1": "Un clic droit ouvre le curseur qui règle également les rayons X, Y et Z.",

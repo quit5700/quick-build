@@ -49,7 +49,7 @@
     "screen.quick_build.variable_light_mode.vanilla_invisible": "バニラ不可視光源",
     "screen.quick_build.variable_light_mode.local_daylight": "局所昼光",
     "screen.quick_build.variable_light_mode.hybrid": "ハイブリッド照明",
-    "screen.quick_build.variable_light_daylight_warning": "このモードはモブの出現を防がず、作物の成長も促進しません",
+    "screen.quick_build.variable_light_daylight_warning": "遮蔽されない範囲の敵の自然出現を防止。作物は変更なし",
     "screen.quick_build.variable_light_size": "照明範囲：%s × %s × %s",
     "screen.quick_build.variable_light_powered": "レッドストーン：%s",
     "screen.quick_build.variable_light_help_1": "右クリックでスライダーを開き、X・Y・Z の照明半径を均等に設定します。",

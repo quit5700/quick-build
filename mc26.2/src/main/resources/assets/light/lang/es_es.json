@@ -49,7 +49,7 @@
     "screen.quick_build.variable_light_mode.vanilla_invisible": "Luz invisible original",
     "screen.quick_build.variable_light_mode.local_daylight": "Luz diurna local",
     "screen.quick_build.variable_light_mode.hybrid": "Iluminación híbrida",
-    "screen.quick_build.variable_light_daylight_warning": "Este modo no impide monstruos ni favorece los cultivos",
+    "screen.quick_build.variable_light_daylight_warning": "Sin obstáculos: bloquea monstruos naturales, cultivos sin cambios",
     "screen.quick_build.variable_light_size": "Área iluminada: %s × %s × %s",
     "screen.quick_build.variable_light_powered": "Redstone: %s",
     "screen.quick_build.variable_light_help_1": "Haz clic derecho para abrir el control que iguala los radios X, Y y Z.",

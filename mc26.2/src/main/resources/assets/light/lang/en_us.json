@@ -49,7 +49,7 @@
     "screen.quick_build.variable_light_mode.vanilla_invisible": "Vanilla Invisible Light",
     "screen.quick_build.variable_light_mode.local_daylight": "Local Daylight",
     "screen.quick_build.variable_light_mode.hybrid": "Hybrid Lighting",
-    "screen.quick_build.variable_light_daylight_warning": "This mode does not prevent mob spawning or promote crop growth",
+    "screen.quick_build.variable_light_daylight_warning": "Unobstructed area blocks natural monsters; crops unchanged",
     "screen.quick_build.variable_light_size": "Lighting area: %s × %s × %s",
     "screen.quick_build.variable_light_powered": "Redstone: %s",
     "screen.quick_build.variable_light_help_1": "Right-click to set an equal X/Y/Z lighting radius with the slider.",

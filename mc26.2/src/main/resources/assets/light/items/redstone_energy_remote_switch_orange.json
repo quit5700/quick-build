@@ -1,3 +1,19 @@
 {
-  "model": { "type": "minecraft:model", "model": "light:item/redstone_energy_remote_switch_orange" }
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "light:item/redstone_energy_remote_switch_orange_inventory"
+        },
+        "when": "gui"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "light:block/redstone_energy_remote_switch_orange_off"
+    },
+    "property": "minecraft:display_context"
+  }
 }

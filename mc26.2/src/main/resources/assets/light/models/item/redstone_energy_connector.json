@@ -1,13 +1,13 @@
 {
   "textures": {
-    "handle": "minecraft:block/red_concrete",
-    "grip": "minecraft:block/black_concrete",
+    "handle": "minecraft:block/deepslate_tiles",
+    "accent": "minecraft:block/cyan_concrete",
     "metal": "minecraft:block/iron_block",
-    "particle": "minecraft:block/iron_block"
+    "particle": "minecraft:block/cyan_concrete"
   },
   "elements": [
     {
-      "from": [4.5, 1, 5.5], "to": [11.5, 7, 10.5],
+      "from": [6, 0, 6], "to": [10, 8, 10],
       "faces": {
         "down":{"texture":"#handle"}, "up":{"texture":"#handle"},
         "north":{"texture":"#handle"}, "south":{"texture":"#handle"},
@@ -15,15 +15,15 @@
       }
     },
     {
-      "from": [4, 3, 5], "to": [12, 5, 11],
+      "from": [5.5, 3, 5.5], "to": [10.5, 5, 10.5],
       "faces": {
-        "down":{"texture":"#grip"}, "up":{"texture":"#grip"},
-        "north":{"texture":"#grip"}, "south":{"texture":"#grip"},
-        "west":{"texture":"#grip"}, "east":{"texture":"#grip"}
+        "down":{"texture":"#accent"}, "up":{"texture":"#accent"},
+        "north":{"texture":"#accent"}, "south":{"texture":"#accent"},
+        "west":{"texture":"#accent"}, "east":{"texture":"#accent"}
       }
     },
     {
-      "from": [7.25, 7, 7.25], "to": [8.75, 15, 8.75],
+      "from": [7.25, 8, 7.25], "to": [8.75, 12, 8.75],
       "faces": {
         "down":{"texture":"#metal"}, "up":{"texture":"#metal"},
         "north":{"texture":"#metal"}, "south":{"texture":"#metal"},
@@ -31,7 +31,23 @@
       }
     },
     {
-      "from": [6.5, 15, 7.5], "to": [9.5, 16, 8.5],
+      "from": [3, 12, 6], "to": [7, 16, 10],
+      "faces": {
+        "down":{"texture":"#accent"}, "up":{"texture":"#accent"},
+        "north":{"texture":"#accent"}, "south":{"texture":"#accent"},
+        "west":{"texture":"#accent"}, "east":{"texture":"#accent"}
+      }
+    },
+    {
+      "from": [9, 12, 6], "to": [13, 16, 10],
+      "faces": {
+        "down":{"texture":"#accent"}, "up":{"texture":"#accent"},
+        "north":{"texture":"#accent"}, "south":{"texture":"#accent"},
+        "west":{"texture":"#accent"}, "east":{"texture":"#accent"}
+      }
+    },
+    {
+      "from": [6, 13, 7], "to": [10, 15, 9],
       "faces": {
         "down":{"texture":"#metal"}, "up":{"texture":"#metal"},
         "north":{"texture":"#metal"}, "south":{"texture":"#metal"},

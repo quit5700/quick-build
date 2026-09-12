@@ -28,6 +28,8 @@ public final class LightMod implements ModInitializer {
             RedstoneEnergyNotifier.tickQueuedChunkSyncs();
         });
         ServerChunkEvents.CHUNK_LOAD.register((world, chunk, newChunk) -> RedstoneEnergyNotifier.queueChunkSync(world, chunk.getPos()));
+        ServerChunkEvents.CHUNK_LOAD.register((world, chunk, newChunk) -> cn.quit5700.light.light.DaylightOcclusion.chunkChanged(world, chunk.getPos().x(), chunk.getPos().z()));
+        ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) -> cn.quit5700.light.light.DaylightOcclusion.chunkChanged(world, chunk.getPos().x(), chunk.getPos().z()));
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             RedstoneEnergyNotifier.clear();
         });

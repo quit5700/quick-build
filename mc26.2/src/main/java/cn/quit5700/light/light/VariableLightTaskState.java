@@ -231,7 +231,8 @@ public final class VariableLightTaskState extends SavedData {
     public List<DaylightSource> daylightSources() {
         return sources.stream()
                 .filter(source -> VariableLightMode.fromOrdinal(source.mode()).usesDaylightRendering())
-                .map(source -> new DaylightSource(BlockPos.of(source.source()), source.radius()))
+                .map(source -> new DaylightSource(BlockPos.of(source.source()), source.radius(),
+                        VariableLightMode.fromOrdinal(source.mode()) == VariableLightMode.LOCAL_DAYLIGHT))
                 .toList();
     }
 
@@ -239,7 +240,16 @@ public final class VariableLightTaskState extends SavedData {
         VariableLightNetworking.syncWorld(world);
     }
 
-    public record DaylightSource(BlockPos pos, int radius) { }
+    public boolean preventsNaturalMonsterSpawn(ServerLevel world, BlockPos pos) {
+        for (SourceData source : sources) {
+            if (VariableLightMode.fromOrdinal(source.mode()) == VariableLightMode.LOCAL_DAYLIGHT
+                    && DaylightOcclusion.visible(world, BlockPos.of(source.source()), source.radius(), pos))
+                return true;
+        }
+        return false;
+    }
+
+    public record DaylightSource(BlockPos pos, int radius, boolean occluded) { }
 
     private record SourceData(long source, int radius, int spacing, int mode) {
     }
