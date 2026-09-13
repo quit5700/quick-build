@@ -193,7 +193,8 @@ public final class VariableLightTaskState extends SavedData {
     public void tick(ServerLevel world) {
         boolean ready = true;
         for (SourceData source : sources) {
-            if (!source.legacy()) ready &= DaylightOcclusion.ready(world, BlockPos.of(source.source()), source.radius());
+            if (!source.legacy() && VariableLightMode.fromOrdinal(source.mode())!=VariableLightMode.AREA_FULL_BRIGHT)
+                ready &= DaylightOcclusion.ready(world, BlockPos.of(source.source()), source.radius());
         }
         long revision = DaylightOcclusion.revision(world);
         if (ready && revision != connectedRevision) {
@@ -267,7 +268,8 @@ public final class VariableLightTaskState extends SavedData {
 
     public List<DaylightSource> daylightSources() {
         return sources.stream()
-                .filter(source -> VariableLightMode.fromOrdinal(source.mode()).usesDaylightRendering())
+                .filter(source -> VariableLightMode.fromOrdinal(source.mode()).usesDaylightRendering()
+                        && VariableLightMode.fromOrdinal(source.mode())!=VariableLightMode.AREA_FULL_BRIGHT)
                 .map(source -> new DaylightSource(BlockPos.of(source.source()), source.radius(),
                         !source.legacy()))
                 .toList();
@@ -278,6 +280,7 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     public boolean preventsNaturalMonsterSpawn(ServerLevel world, BlockPos pos) {
+        if (AreaLightState.get(world).contains(pos)) return true;
         for (SourceData source : sources) {
             if (!source.legacy() && VariableLightMode.fromOrdinal(source.mode()) == VariableLightMode.LOCAL_DAYLIGHT
                     && DaylightOcclusion.visible(world, BlockPos.of(source.source()), source.radius(), pos))

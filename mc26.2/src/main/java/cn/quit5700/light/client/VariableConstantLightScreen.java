@@ -20,6 +20,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
     private boolean modeEdited;
     private Button modeButton;
     private Button brightButton;
+    private Button areaButton;
     private final Button[] modeOptions = new Button[VariableLightMode.values().length];
 
     public VariableConstantLightScreen(VariableConstantLightMenu menu, Inventory inventory, Component title) {
@@ -51,6 +52,12 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             modeEdited = true;
             updateModeControls();
         }).bounds(8, 80, 150, 20).build());
+        areaButton=addRenderableWidget(Button.builder(Component.translatable("screen.quick_build.area_select"),button->{
+            if(minecraft!=null && minecraft.gameMode!=null) {
+                minecraft.gameMode.handleInventoryButtonClick(menu.containerId,VariableConstantLightSettings.SELECT_AREA_BUTTON_ID);
+                onClose();
+            }
+        }).bounds(x,y+56,200,20).build());
         updateModeControls();
         addRenderableWidget(Button.builder(Component.translatable("text.quick_build.114"),
                 button -> save()).bounds(x + 20, y + 112, 75, 20).build());
@@ -98,7 +105,8 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
         graphics.pose().popMatrix();
         int side = VariableConstantLightSettings.sideLength(radiusSlider.radius());
         graphics.centeredText(font,
-                Component.translatable("screen.quick_build.variable_light_size", side, side, side),
+                selectedMode==VariableLightMode.AREA_FULL_BRIGHT ? Component.translatable("screen.quick_build.area_help")
+                        : Component.translatable("screen.quick_build.variable_light_size", side, side, side),
                 centerX, y + 82, 0xD8EFFF);
         graphics.centeredText(font,
                 Component.translatable("screen.quick_build.variable_light_powered",
@@ -116,6 +124,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             case VANILLA_INVISIBLE -> "screen.quick_build.variable_light_mode.vanilla_invisible";
             case LOCAL_DAYLIGHT -> "screen.quick_build.variable_light_mode.local_daylight";
             case HYBRID -> "screen.quick_build.variable_light_mode.hybrid";
+            case AREA_FULL_BRIGHT -> "screen.quick_build.variable_light_mode.area";
         });
     }
 
@@ -152,9 +161,12 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
 
     private void updateModeControls() {
         if (modeButton != null) modeButton.setMessage(modeMessage());
-        if (spacingSlider != null) spacingSlider.active = menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT;
+        boolean area=selectedMode==VariableLightMode.AREA_FULL_BRIGHT && !menu.isLegacy();
+        if(radiusSlider!=null){radiusSlider.active=!area;radiusSlider.visible=!area;}
+        if(areaButton!=null)areaButton.visible=area;
+        if (spacingSlider != null) {spacingSlider.active = menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT; spacingSlider.visible=!area;}
         if (brightButton != null) {
-            brightButton.visible = !menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT;
+            brightButton.visible = !menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT && !area;
             brightButton.setMessage(Component.translatable("screen.quick_build.variable_light_boost",
                     Component.translatable(selectedMode == VariableLightMode.HYBRID ? "text.quick_build.075" : "text.quick_build.056")));
         }

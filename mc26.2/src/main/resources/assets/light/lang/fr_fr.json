@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "Pleine lumière à deux points",
+    "screen.quick_build.area_select": "Choisir / modifier la zone",
+    "screen.quick_build.area_start": "Cliquez deux coins à gauche. Échap annule ; ancienne zone conservée.",
+    "screen.quick_build.area_second": "Premier coin enregistré. Cliquez le second à gauche.",
+    "screen.quick_build.area_saved": "Zone enregistrée : %s x %s x %s",
+    "screen.quick_build.area_too_large": "Maximum %s blocs par côté. Choisissez un autre second coin.",
+    "screen.quick_build.area_missing_lamp": "Lampe absente ou non chargée. Rouvrez ses réglages.",
+    "screen.quick_build.area_help": "Deux coins ; murs ignorés, cultures inchangées",
     "block.light.copy_variable_constant_light": "Copie de la lampe constante variable",
     "item.light.copy_variable_constant_light": "Copie de la lampe constante variable",
     "screen.quick_build.variable_light_boost": "Luminosité visuelle : %s",

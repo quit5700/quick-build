@@ -16,6 +16,7 @@ import java.util.List;
 public final class ClientDaylightState {
     private static volatile List<VariableLightNetworking.Entry> entries = List.of();
     private static long occlusionRevision;
+    private static final java.util.ArrayDeque<SectionRefresh> REFRESHES=new java.util.ArrayDeque<>();
     private static final DaylightSnapshotMailbox<VariableLightNetworking.Entry> MAILBOX =
             new DaylightSnapshotMailbox<>();
 
@@ -36,6 +37,10 @@ public final class ClientDaylightState {
 
     public static boolean isFullBright(int x, int y, int z) {
         for (VariableLightNetworking.Entry entry : entries) {
+            if(entry.box()!=null) {
+                if(entry.box().contains(x,y,z)) return true;
+                continue;
+            }
             BlockPos center = entry.pos();
             int radius = entry.radius();
             if (DaylightCoverage.contains(center.getX(), center.getY(), center.getZ(), radius,
@@ -50,6 +55,16 @@ public final class ClientDaylightState {
     }
 
     private static void applyPending(Minecraft minecraft) {
+        if(minecraft.level==null) REFRESHES.clear();
+        else for(int budget=0,scanned=0;budget<128 && scanned<2048 && !REFRESHES.isEmpty();scanned++) {
+            SectionRefresh next=REFRESHES.peek();
+            if(!minecraft.level.hasChunk(next.x,next.z)) {
+                next.y=next.maxY;
+            } else {
+                minecraft.level.setSectionRangeDirty(next.x,next.y,next.z,next.x,next.y,next.z); budget++;
+            }
+            if(!next.advance()) REFRESHES.remove();
+        }
         if (minecraft.level != null) DaylightOcclusion.tick(minecraft.level);
         List<VariableLightNetworking.Entry> updated = MAILBOX.drain();
         if (updated == null) {
@@ -65,23 +80,26 @@ public final class ClientDaylightState {
         List<VariableLightNetworking.Entry> previous = entries;
         entries = List.copyOf(updated);
         if (minecraft.level == null) return;
-        DaylightOcclusion.clear(minecraft.level);
-        occlusionRevision = 0;
-        markRangesDirty(minecraft, previous);
-        markRangesDirty(minecraft, entries);
+        if(!previous.stream().filter(VariableLightNetworking.Entry::occluded).toList().equals(entries.stream().filter(VariableLightNetworking.Entry::occluded).toList())) {
+            DaylightOcclusion.clear(minecraft.level); occlusionRevision=0;
+        }
+        markRangesDirty(minecraft, previous.stream().filter(e->!entries.contains(e)).toList());
+        markRangesDirty(minecraft, entries.stream().filter(e->!previous.contains(e)).toList());
     }
 
     private static void markRangesDirty(Minecraft minecraft, List<VariableLightNetworking.Entry> ranges) {
         for (VariableLightNetworking.Entry entry : ranges) {
             BlockPos center = entry.pos();
             int radius = entry.radius();
-            minecraft.level.setSectionRangeDirty(
-                    (center.getX() - radius) >> 4,
-                    (center.getY() - radius) >> 4,
-                    (center.getZ() - radius) >> 4,
-                    (center.getX() + radius) >> 4,
-                    (center.getY() + radius) >> 4,
-                    (center.getZ() + radius) >> 4);
+            var box=entry.box();
+            REFRESHES.add(box==null ? new SectionRefresh(center.getX()-radius,center.getY()-radius,center.getZ()-radius,
+                    center.getX()+radius,center.getY()+radius,center.getZ()+radius)
+                    : new SectionRefresh(box.minX(),box.minY(),box.minZ(),box.maxX(),box.maxY(),box.maxZ()));
         }
+    }
+    private static final class SectionRefresh {
+        final int minX,minY,minZ,maxX,maxY,maxZ; int x,y,z;
+        SectionRefresh(int a,int b,int c,int d,int e,int f){minX=(a-1)>>4;minY=(b-1)>>4;minZ=(c-1)>>4;maxX=(d+1)>>4;maxY=(e+1)>>4;maxZ=(f+1)>>4;x=minX;y=minY;z=minZ;}
+        boolean advance(){if(++y<=maxY)return true;y=minY;if(++x<=maxX)return true;x=minX;return ++z<=maxZ;}
     }
 }

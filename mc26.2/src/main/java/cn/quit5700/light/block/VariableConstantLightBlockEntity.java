@@ -21,6 +21,18 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 public final class VariableConstantLightBlockEntity extends BlockEntity implements MenuProvider {
+    private cn.quit5700.light.logic.LightBox area;
+    public cn.quit5700.light.logic.LightBox area() { return area; }
+    public void selectArea(cn.quit5700.light.logic.LightBox selected) {
+        if (isLegacy()) return;
+        area = selected;
+        setConfiguration(radius,spacing,VariableLightMode.AREA_FULL_BRIGHT);
+        setChanged();
+        if(level instanceof ServerLevel server) {
+            cn.quit5700.light.light.AreaLightState.get(server).update(server,worldPosition);
+            cn.quit5700.light.network.VariableLightNetworking.syncWorld(server);
+        }
+    }
     private int radius = VariableConstantLightSettings.DEFAULT_RADIUS;
     private int spacing = VariableConstantLightSettings.DEFAULT_SPACING;
     private VariableLightMode mode = VariableLightMode.VANILLA_INVISIBLE;
@@ -72,6 +84,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
             VariableLightTaskState taskState = VariableLightTaskState.get(serverLevel);
             taskState.registerExisting(worldPosition, radius, spacing, mode);
             taskState.setLegacy(worldPosition, isLegacy());
+            cn.quit5700.light.light.AreaLightState.get(serverLevel).update(serverLevel,worldPosition);
             if (mode.usesDaylightRendering()) taskState.syncClients(serverLevel);
         }
     }
@@ -88,6 +101,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
         int updatedRadius = VariableConstantLightSettings.clampRadius(requestedRadius);
         int updatedSpacing = isLegacy() ? VariableConstantLightSettings.clampSpacing(requestedSpacing) : 1;
         VariableLightMode updatedMode = requestedMode == null ? VariableLightMode.VANILLA_INVISIBLE : requestedMode;
+        if (isLegacy() && updatedMode == VariableLightMode.AREA_FULL_BRIGHT) return;
         if (updatedRadius == radius && updatedSpacing == spacing && updatedMode == mode) return;
         int oldRadius = radius;
         int oldSpacing = spacing;
@@ -120,6 +134,11 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
         data.putInt("radius", radius);
         data.putInt("spacing", spacing);
         data.putInt("mode", mode.ordinal());
+        if (area != null) {
+            data.putInt("area_defined",1);
+            data.putInt("area_min_x",area.minX()); data.putInt("area_min_y",area.minY()); data.putInt("area_min_z",area.minZ());
+            data.putInt("area_max_x",area.maxX()); data.putInt("area_max_y",area.maxY()); data.putInt("area_max_z",area.maxZ());
+        }
     }
 
     @Override
@@ -131,6 +150,14 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
                 data.getIntOr("spacing", 4));
         if (!isLegacy()) spacing = 1;
         mode = VariableLightMode.fromOrdinal(data.getIntOr("mode", 0));
+        area = null;
+        if (!isLegacy() && data.getIntOr("area_defined",0)==1) {
+            try {
+                area = cn.quit5700.light.logic.LightBox.of(data.getIntOr("area_min_x",0),data.getIntOr("area_min_y",0),
+                        data.getIntOr("area_min_z",0),data.getIntOr("area_max_x",0),data.getIntOr("area_max_y",0),data.getIntOr("area_max_z",0));
+            } catch (IllegalArgumentException invalid) { area = null; }
+        }
+        if (isLegacy() && mode==VariableLightMode.AREA_FULL_BRIGHT) mode=VariableLightMode.VANILLA_INVISIBLE;
     }
 
     @Override

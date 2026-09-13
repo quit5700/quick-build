@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "2点範囲の最大明度",
+    "screen.quick_build.area_select": "照明範囲を選択・変更",
+    "screen.quick_build.area_start": "左クリックで2点を選択。Escで取消。旧範囲は維持します。",
+    "screen.quick_build.area_second": "1点目を記録しました。2点目を左クリックしてください。",
+    "screen.quick_build.area_saved": "照明範囲を保存：%s × %s × %s",
+    "screen.quick_build.area_too_large": "各辺は最大%sブロックです。2点目を選び直してください。",
+    "screen.quick_build.area_missing_lamp": "ランプが存在しないか未読込です。設定を開き直してください。",
+    "screen.quick_build.area_help": "2点を選択。遮蔽を無視し、作物は変更しません",
     "block.light.copy_variable_constant_light": "可変常時点灯ランプのコピー",
     "item.light.copy_variable_constant_light": "可変常時点灯ランプのコピー",
     "screen.quick_build.variable_light_boost": "表示の増光：%s",

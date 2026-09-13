@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "Zwei-Punkt-Vollhelligkeit",
+    "screen.quick_build.area_select": "Bereich neu auswählen",
+    "screen.quick_build.area_start": "Zwei Ecken linksklicken. Esc bricht ab; alter Bereich bleibt.",
+    "screen.quick_build.area_second": "Erste Ecke gespeichert. Zweite Ecke linksklicken.",
+    "screen.quick_build.area_saved": "Lichtbereich gespeichert: %s x %s x %s",
+    "screen.quick_build.area_too_large": "Maximal %s Blöcke je Seite. Zweite Ecke neu wählen.",
+    "screen.quick_build.area_missing_lamp": "Lampe fehlt oder ist nicht geladen. Einstellungen erneut öffnen.",
+    "screen.quick_build.area_help": "Zwei Ecken wählen; Wände ignoriert, Pflanzen unverändert",
     "block.light.copy_variable_constant_light": "Kopie des variablen Dauerlichts",
     "item.light.copy_variable_constant_light": "Kopie des variablen Dauerlichts",
     "screen.quick_build.variable_light_boost": "Bildaufhellung: %s",

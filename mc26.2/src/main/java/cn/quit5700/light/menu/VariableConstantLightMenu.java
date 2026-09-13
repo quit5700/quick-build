@@ -57,6 +57,12 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
+        if (!stillValid(player)) return false;
+        if (id==VariableConstantLightSettings.SELECT_AREA_BUTTON_ID && blockEntity!=null && !isLegacy()
+                && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            cn.quit5700.light.network.AreaSelectionNetworking.begin(serverPlayer,blockEntity);
+            return true;
+        }
         if (VariableConstantLightSettings.isRadiusButtonId(id)) {
             pendingRadius = VariableConstantLightSettings.radiusFromButtonId(id);
             return true;

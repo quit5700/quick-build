@@ -3,13 +3,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VariableLightPresentationTest {
-    @Test void originalHasTwoModesAndCopyKeepsThree() {
+    @Test void originalAddsAreaModeAndCopyKeepsOnlyItsOriginalThree() {
         int original = 0, copy = 0;
         for (var mode : VariableLightMode.values()) {
             if (VariableLightPresentation.showsMode(false, mode)) original++;
             if (VariableLightPresentation.showsMode(true, mode)) copy++;
         }
-        assertEquals(2, original); assertEquals(3, copy);
+        assertEquals(3, original); assertEquals(3, copy);
+        assertTrue(VariableLightPresentation.showsMode(false,VariableLightMode.AREA_FULL_BRIGHT));
+        assertFalse(VariableLightPresentation.showsMode(true,VariableLightMode.AREA_FULL_BRIGHT));
     }
     @Test void savedHybridRemainsBoostedVanillaWithoutChangingItsOrdinal() {
         assertEquals(VariableLightMode.VANILLA_INVISIBLE, VariableLightPresentation.primaryMode(false, VariableLightMode.fromOrdinal(2)));

@@ -5,6 +5,8 @@ public final class VariableConstantLightSettings {
     private static final int SPACING_BUTTON_OFFSET = 64;
     private static final int MODE_BUTTON_OFFSET = 71;
     public static final int APPLY_BUTTON_ID = 74;
+    public static final int AREA_MODE_BUTTON_ID = 75;
+    public static final int SELECT_AREA_BUTTON_ID = 76;
     public static final int MIN_RADIUS = 1;
     public static final int DEFAULT_RADIUS = 14;
     public static final int MAX_RADIUS = 64;
@@ -51,7 +53,7 @@ public final class VariableConstantLightSettings {
     public static int spacingButtonId(int spacing) { return SPACING_BUTTON_OFFSET + clampSpacing(spacing) - MIN_SPACING; }
     public static boolean isSpacingButtonId(int id) { return id >= SPACING_BUTTON_OFFSET && id < MODE_BUTTON_OFFSET; }
     public static int spacingFromButtonId(int id) { return clampSpacing(MIN_SPACING + id - SPACING_BUTTON_OFFSET); }
-    public static int modeButtonId(VariableLightMode mode) { return MODE_BUTTON_OFFSET + mode.ordinal(); }
-    public static boolean isModeButtonId(int id) { return id >= MODE_BUTTON_OFFSET && id < APPLY_BUTTON_ID; }
-    public static VariableLightMode modeFromButtonId(int id) { return VariableLightMode.fromOrdinal(id - MODE_BUTTON_OFFSET); }
+    public static int modeButtonId(VariableLightMode mode) { return mode == VariableLightMode.AREA_FULL_BRIGHT ? AREA_MODE_BUTTON_ID : MODE_BUTTON_OFFSET + mode.ordinal(); }
+    public static boolean isModeButtonId(int id) { return (id >= MODE_BUTTON_OFFSET && id < APPLY_BUTTON_ID) || id == AREA_MODE_BUTTON_ID; }
+    public static VariableLightMode modeFromButtonId(int id) { return id == AREA_MODE_BUTTON_ID ? VariableLightMode.AREA_FULL_BRIGHT : VariableLightMode.fromOrdinal(id - MODE_BUTTON_OFFSET); }
 }

@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "兩點區域滿亮",
+    "screen.quick_build.area_select": "選擇／重選照亮範圍",
+    "screen.quick_build.area_start": "左鍵選第一點，再選第二點；Esc 取消，舊範圍保持",
+    "screen.quick_build.area_second": "第一點已記錄，請左鍵選擇第二點",
+    "screen.quick_build.area_saved": "已儲存照明範圍：%s × %s × %s",
+    "screen.quick_build.area_too_large": "每條邊最多 %s 格，請重新選擇第二點",
+    "screen.quick_build.area_missing_lamp": "燈已移除或所在區塊未載入，請重新開啟設定",
+    "screen.quick_build.area_help": "左鍵選兩點；不看遮擋，不影響作物",
     "block.light.copy_variable_constant_light": "複製可變恆亮燈",
     "item.light.copy_variable_constant_light": "複製可變恆亮燈",
     "screen.quick_build.variable_light_boost": "畫面增亮：%s",

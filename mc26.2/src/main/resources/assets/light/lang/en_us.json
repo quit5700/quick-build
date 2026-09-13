@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "Two-point Full Bright",
+    "screen.quick_build.area_select": "Select / reselect area",
+    "screen.quick_build.area_start": "Left-click two corners. Esc cancels; the old area stays active.",
+    "screen.quick_build.area_second": "First corner saved. Left-click the second corner.",
+    "screen.quick_build.area_saved": "Light area saved: %s x %s x %s",
+    "screen.quick_build.area_too_large": "Each side is limited to %s blocks. Choose the second corner again.",
+    "screen.quick_build.area_missing_lamp": "Lamp missing or unloaded. Open its settings again.",
+    "screen.quick_build.area_help": "Pick two corners; ignores walls, crops unchanged",
     "block.light.copy_variable_constant_light": "Copy of Variable Constant Light",
     "item.light.copy_variable_constant_light": "Copy of Variable Constant Light",
     "screen.quick_build.variable_light_boost": "Visual brightness: %s",

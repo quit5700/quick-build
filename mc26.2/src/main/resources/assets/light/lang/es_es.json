@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "Brillo pleno entre dos puntos",
+    "screen.quick_build.area_select": "Seleccionar / cambiar área",
+    "screen.quick_build.area_start": "Clic izquierdo en dos esquinas. Esc cancela; se conserva el área anterior.",
+    "screen.quick_build.area_second": "Primera esquina guardada. Selecciona la segunda.",
+    "screen.quick_build.area_saved": "Área guardada: %s x %s x %s",
+    "screen.quick_build.area_too_large": "Máximo %s bloques por lado. Selecciona otra segunda esquina.",
+    "screen.quick_build.area_missing_lamp": "Lámpara ausente o no cargada. Abre sus ajustes de nuevo.",
+    "screen.quick_build.area_help": "Dos esquinas; ignora paredes, no cambia cultivos",
     "block.light.copy_variable_constant_light": "Copia de luz constante variable",
     "item.light.copy_variable_constant_light": "Copia de luz constante variable",
     "screen.quick_build.variable_light_boost": "Brillo visual: %s",

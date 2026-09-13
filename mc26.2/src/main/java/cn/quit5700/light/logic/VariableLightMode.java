@@ -3,7 +3,8 @@ package cn.quit5700.light.logic;
 public enum VariableLightMode {
     VANILLA_INVISIBLE(true, false),
     LOCAL_DAYLIGHT(false, true),
-    HYBRID(true, true);
+    HYBRID(true, true),
+    AREA_FULL_BRIGHT(false, true);
 
     private final boolean invisibleLight;
     private final boolean daylightRendering;

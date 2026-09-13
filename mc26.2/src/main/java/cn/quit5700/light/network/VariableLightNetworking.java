@@ -27,6 +27,7 @@ public final class VariableLightNetworking {
         PayloadTypeRegistry.clientboundPlay().register(SnapshotPayload.ID, SnapshotPayload.CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> syncPlayer(handler.player));
         ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register((player, origin, destination) -> syncPlayer(player));
+        AreaSelectionNetworking.initialize();
     }
 
     public static void syncWorld(ServerLevel world) {
@@ -41,13 +42,17 @@ public final class VariableLightNetworking {
     }
 
     private static SnapshotPayload snapshot(ServerLevel world) {
-        List<Entry> entries = VariableLightTaskState.get(world).daylightSources().stream()
+        List<Entry> entries = new ArrayList<>(VariableLightTaskState.get(world).daylightSources().stream()
                 .map(source -> new Entry(source.pos(), source.radius(), source.occluded()))
-                .toList();
+                .toList());
+        for (var area : cn.quit5700.light.light.AreaLightState.get(world).entries())
+            entries.add(new Entry(BlockPos.of(area.source()),0,false,area.box()));
         return new SnapshotPayload(entries);
     }
 
-    public record Entry(BlockPos pos, int radius, boolean occluded) { }
+    public record Entry(BlockPos pos, int radius, boolean occluded, cn.quit5700.light.logic.LightBox box) {
+        public Entry(BlockPos pos,int radius,boolean occluded) { this(pos,radius,occluded,null); }
+    }
 
     public record SnapshotPayload(List<Entry> entries) implements CustomPacketPayload {
         public static final Type<SnapshotPayload> ID = new Type<>(SNAPSHOT);
@@ -62,6 +67,11 @@ public final class VariableLightNetworking {
                 buf.writeBlockPos(entry.pos());
                 buf.writeVarInt(entry.radius());
                 buf.writeBoolean(entry.occluded());
+                buf.writeBoolean(entry.box()!=null);
+                if(entry.box()!=null) {
+                    var b=entry.box(); buf.writeBlockPos(new BlockPos(b.minX(),b.minY(),b.minZ()));
+                    buf.writeBlockPos(new BlockPos(b.maxX(),b.maxY(),b.maxZ()));
+                }
             }
         }
 
@@ -69,7 +79,13 @@ public final class VariableLightNetworking {
             int count = buf.readVarInt();
             List<Entry> entries = new ArrayList<>(count);
             for (int index = 0; index < count; index++) {
-                entries.add(new Entry(buf.readBlockPos(), buf.readVarInt(), buf.readBoolean()));
+                BlockPos pos=buf.readBlockPos(); int radius=buf.readVarInt(); boolean occluded=buf.readBoolean();
+                cn.quit5700.light.logic.LightBox box=null;
+                if(buf.readBoolean()) {
+                    BlockPos a=buf.readBlockPos(),b=buf.readBlockPos();
+                    box=cn.quit5700.light.logic.LightBox.of(a.getX(),a.getY(),a.getZ(),b.getX(),b.getY(),b.getZ());
+                }
+                entries.add(new Entry(pos,radius,occluded,box));
             }
             return new SnapshotPayload(List.copyOf(entries));
         }

@@ -1,4 +1,12 @@
 {
+    "screen.quick_build.variable_light_mode.area": "두 지점 영역 최대 밝기",
+    "screen.quick_build.area_select": "조명 영역 선택 / 변경",
+    "screen.quick_build.area_start": "왼쪽 클릭으로 두 점 선택. Esc로 취소하며 기존 영역은 유지됩니다.",
+    "screen.quick_build.area_second": "첫 점 저장 완료. 두 번째 점을 왼쪽 클릭하세요.",
+    "screen.quick_build.area_saved": "조명 영역 저장: %s x %s x %s",
+    "screen.quick_build.area_too_large": "각 변은 최대 %s블록입니다. 두 번째 점을 다시 선택하세요.",
+    "screen.quick_build.area_missing_lamp": "램프가 없거나 로드되지 않았습니다. 설정을 다시 여세요.",
+    "screen.quick_build.area_help": "두 점 선택. 벽 무시, 작물 변화 없음",
     "block.light.copy_variable_constant_light": "가변 상시 조명 복제",
     "item.light.copy_variable_constant_light": "가변 상시 조명 복제",
     "screen.quick_build.variable_light_boost": "화면 밝기: %s",
