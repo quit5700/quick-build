@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "Bereich anzeigen",
+  "screen.quick_build.boost_option": "Darstellung aufhellen",
     "screen.quick_build.variable_light_mode.area": "Zwei-Punkt-Vollhelligkeit",
     "screen.quick_build.area_select": "Bereich neu auswählen",
     "screen.quick_build.area_start": "Zwei Ecken linksklicken. Esc bricht ab; alter Bereich bleibt.",

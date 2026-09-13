@@ -39,6 +39,13 @@ public final class AreaSelectionNetworking {
                 old==null?null:new BlockPos(old.maxX(),old.maxY(),old.maxZ())));
         player.sendSystemMessage(Component.translatable("screen.quick_build.area_start"));
     }
+    public static void showRange(ServerPlayer player,VariableConstantLightBlockEntity lamp,boolean show) {
+        if(lamp.isLegacy()) return;
+        LightBox box=show ? lamp.area() : null;
+        ServerPlayNetworking.send(player,new Preview(false,
+                box==null?null:new BlockPos(box.minX(),box.minY(),box.minZ()),
+                box==null?null:new BlockPos(box.maxX(),box.maxY(),box.maxZ()),box!=null));
+    }
     private static void pick(ServerPlayer player,Pick packet) {
         Session session=SESSIONS.get(player.getUUID());
         if(session==null) return;
@@ -80,11 +87,12 @@ public final class AreaSelectionNetworking {
         private static Pick read(RegistryFriendlyByteBuf b){return new Pick(b.readBlockPos(),b.readBoolean());}
         public Type<? extends CustomPacketPayload> type(){return ID;}
     }
-    public record Preview(boolean selecting,BlockPos first,BlockPos second) implements CustomPacketPayload {
+    public record Preview(boolean selecting,BlockPos first,BlockPos second,boolean pinned) implements CustomPacketPayload {
+        public Preview(boolean selecting,BlockPos first,BlockPos second){this(selecting,first,second,false);}
         public static final Type<Preview> ID=new Type<>(LightMod.id("area_light_preview"));
         public static final StreamCodec<RegistryFriendlyByteBuf,Preview> CODEC=CustomPacketPayload.codec(Preview::write,Preview::read);
-        private void write(RegistryFriendlyByteBuf b){b.writeBoolean(selecting);b.writeBoolean(first!=null);if(first!=null)b.writeBlockPos(first);b.writeBoolean(second!=null);if(second!=null)b.writeBlockPos(second);}
-        private static Preview read(RegistryFriendlyByteBuf b){boolean active=b.readBoolean();BlockPos first=b.readBoolean()?b.readBlockPos():null;BlockPos second=b.readBoolean()?b.readBlockPos():null;return new Preview(active,first,second);}
+        private void write(RegistryFriendlyByteBuf b){b.writeBoolean(selecting);b.writeBoolean(first!=null);if(first!=null)b.writeBlockPos(first);b.writeBoolean(second!=null);if(second!=null)b.writeBlockPos(second);b.writeBoolean(pinned);}
+        private static Preview read(RegistryFriendlyByteBuf b){boolean active=b.readBoolean();BlockPos first=b.readBoolean()?b.readBlockPos():null;BlockPos second=b.readBoolean()?b.readBlockPos():null;return new Preview(active,first,second,b.readBoolean());}
         public Type<? extends CustomPacketPayload> type(){return ID;}
     }
 }

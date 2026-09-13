@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "显示范围",
+  "screen.quick_build.boost_option": "画面增亮",
     "screen.quick_build.variable_light_mode.area": "两点区域满亮",
     "screen.quick_build.area_select": "选择／重选照亮范围",
     "screen.quick_build.area_start": "左键选第一点，再选第二点；Esc 取消，旧范围保持",

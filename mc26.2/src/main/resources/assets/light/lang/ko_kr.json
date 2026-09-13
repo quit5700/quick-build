@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "범위 표시",
+  "screen.quick_build.boost_option": "화면 밝기 강화",
     "screen.quick_build.variable_light_mode.area": "두 지점 영역 최대 밝기",
     "screen.quick_build.area_select": "조명 영역 선택 / 변경",
     "screen.quick_build.area_start": "왼쪽 클릭으로 두 점 선택. Esc로 취소하며 기존 영역은 유지됩니다.",

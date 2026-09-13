@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "範囲を表示",
+  "screen.quick_build.boost_option": "画面を明るくする",
     "screen.quick_build.variable_light_mode.area": "2点範囲の最大明度",
     "screen.quick_build.area_select": "照明範囲を選択・変更",
     "screen.quick_build.area_start": "左クリックで2点を選択。Escで取消。旧範囲は維持します。",

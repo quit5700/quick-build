@@ -7,6 +7,7 @@ import cn.quit5700.light.menu.VariableConstantLightMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,7 +20,8 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
     private VariableLightMode selectedMode;
     private boolean modeEdited;
     private Button modeButton;
-    private Button brightButton;
+    private Checkbox brightButton;
+    private Checkbox rangeCheckbox;
     private Button areaButton;
     private final Button[] modeOptions = new Button[VariableLightMode.values().length];
 
@@ -47,11 +49,9 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             option.visible = false;
             modeOptions[mode.ordinal()] = option;
         }
-        brightButton = addRenderableWidget(Button.builder(Component.empty(), button -> {
-            selectedMode = VariableLightPresentation.toggleBoost(selectedMode);
-            modeEdited = true;
-            updateModeControls();
-        }).bounds(8, 80, 150, 20).build());
+        rebuildBoostCheckbox();
+        AreaSelectionClient.hideRange();
+        rebuildRangeCheckbox();
         areaButton=addRenderableWidget(Button.builder(Component.translatable("screen.quick_build.area_select"),button->{
             if(minecraft!=null && minecraft.gameMode!=null) {
                 minecraft.gameMode.handleInventoryButtonClick(menu.containerId,VariableConstantLightSettings.SELECT_AREA_BUTTON_ID);
@@ -83,6 +83,29 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             updateModeControls();
         }
         updateModeControls();
+    }
+
+    private void rebuildBoostCheckbox() {
+        if(brightButton!=null)removeWidget(brightButton);
+        brightButton=addRenderableWidget(Checkbox.builder(Component.translatable("screen.quick_build.boost_option"),font)
+                .pos(width/2-100,height/2+14).maxWidth(200).selected(selectedMode==VariableLightMode.HYBRID)
+                .onValueChange((checkbox,enabled)->{
+                    selectedMode=enabled?VariableLightMode.HYBRID:VariableLightMode.VANILLA_INVISIBLE;
+                    modeEdited=true;
+                    updateModeControls();
+                }).build());
+    }
+
+    private void rebuildRangeCheckbox() {
+        if(rangeCheckbox!=null)removeWidget(rangeCheckbox);
+        rangeCheckbox=addRenderableWidget(Checkbox.builder(Component.translatable("screen.quick_build.area_show"),font)
+                .pos(width/2-100,height/2-12).maxWidth(200).selected(AreaSelectionClient.rangeShown())
+                .onValueChange((checkbox,show)->{
+                    if(show)AreaSelectionClient.requestRange();else AreaSelectionClient.hideRange();
+                    if(minecraft!=null && minecraft.gameMode!=null)
+                        minecraft.gameMode.handleInventoryButtonClick(menu.containerId,show
+                                ? VariableConstantLightSettings.SHOW_AREA_BUTTON_ID : VariableConstantLightSettings.HIDE_AREA_BUTTON_ID);
+                }).build());
     }
 
     private void save() {
@@ -164,11 +187,14 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
         boolean area=selectedMode==VariableLightMode.AREA_FULL_BRIGHT && !menu.isLegacy();
         if(radiusSlider!=null){radiusSlider.active=!area;radiusSlider.visible=!area;}
         if(areaButton!=null)areaButton.visible=area;
-        if (spacingSlider != null) {spacingSlider.active = menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT; spacingSlider.visible=!area;}
+        if(rangeCheckbox!=null){
+            if(rangeCheckbox.selected()!=AreaSelectionClient.rangeShown())rebuildRangeCheckbox();
+            rangeCheckbox.visible=area;
+        }
+        if (spacingSlider != null) {spacingSlider.active = menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT; spacingSlider.visible=menu.isLegacy();}
         if (brightButton != null) {
+            if(brightButton.selected()!=(selectedMode==VariableLightMode.HYBRID))rebuildBoostCheckbox();
             brightButton.visible = !menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT && !area;
-            brightButton.setMessage(Component.translatable("screen.quick_build.variable_light_boost",
-                    Component.translatable(selectedMode == VariableLightMode.HYBRID ? "text.quick_build.075" : "text.quick_build.056")));
         }
     }
 

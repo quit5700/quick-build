@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "Mostrar área",
+  "screen.quick_build.boost_option": "Aumentar el brillo visual",
     "screen.quick_build.variable_light_mode.area": "Brillo pleno entre dos puntos",
     "screen.quick_build.area_select": "Seleccionar / cambiar área",
     "screen.quick_build.area_start": "Clic izquierdo en dos esquinas. Esc cancela; se conserva el área anterior.",

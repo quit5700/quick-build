@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "Show range",
+  "screen.quick_build.boost_option": "Visual brightness boost",
     "screen.quick_build.variable_light_mode.area": "Two-point Full Bright",
     "screen.quick_build.area_select": "Select / reselect area",
     "screen.quick_build.area_start": "Left-click two corners. Esc cancels; the old area stays active.",

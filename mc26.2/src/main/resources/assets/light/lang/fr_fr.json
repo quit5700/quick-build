@@ -1,4 +1,6 @@
 {
+  "screen.quick_build.area_show": "Afficher la zone",
+  "screen.quick_build.boost_option": "Augmenter la luminosité visuelle",
     "screen.quick_build.variable_light_mode.area": "Pleine lumière à deux points",
     "screen.quick_build.area_select": "Choisir / modifier la zone",
     "screen.quick_build.area_start": "Cliquez deux coins à gauche. Échap annule ; ancienne zone conservée.",

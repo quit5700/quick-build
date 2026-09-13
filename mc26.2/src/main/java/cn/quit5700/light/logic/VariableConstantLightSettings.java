@@ -7,6 +7,8 @@ public final class VariableConstantLightSettings {
     public static final int APPLY_BUTTON_ID = 74;
     public static final int AREA_MODE_BUTTON_ID = 75;
     public static final int SELECT_AREA_BUTTON_ID = 76;
+    public static final int SHOW_AREA_BUTTON_ID = 77;
+    public static final int HIDE_AREA_BUTTON_ID = 78;
     public static final int MIN_RADIUS = 1;
     public static final int DEFAULT_RADIUS = 14;
     public static final int MAX_RADIUS = 64;

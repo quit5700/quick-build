@@ -17,4 +17,16 @@ class AreaModeProtocolTest {
         assertFalse(VariableConstantLightSettings.isModeButtonId(VariableConstantLightSettings.APPLY_BUTTON_ID));
         assertEquals(74,VariableConstantLightSettings.APPLY_BUTTON_ID);
     }
+    @Test void previewCommandsCannotChangeLightingConfiguration() {
+        var ids=new HashSet<Integer>();
+        ids.add(VariableConstantLightSettings.APPLY_BUTTON_ID);
+        ids.add(VariableConstantLightSettings.SELECT_AREA_BUTTON_ID);
+        for(int id:new int[]{VariableConstantLightSettings.SHOW_AREA_BUTTON_ID,VariableConstantLightSettings.HIDE_AREA_BUTTON_ID}) {
+            assertTrue(ids.add(id));
+            assertTrue(id>=0 && id<=127);
+            assertFalse(VariableConstantLightSettings.isRadiusButtonId(id));
+            assertFalse(VariableConstantLightSettings.isSpacingButtonId(id));
+            assertFalse(VariableConstantLightSettings.isModeButtonId(id));
+        }
+    }
 }
