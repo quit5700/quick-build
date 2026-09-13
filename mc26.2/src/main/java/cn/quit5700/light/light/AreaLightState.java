@@ -34,8 +34,14 @@ public final class AreaLightState extends SavedData {
     public List<Entry> entries() { return List.copyOf(entries); }
     public void remove(BlockPos source) { if(entries.removeIf(e->e.source()==source.asLong())) setDirty(); }
     public void update(ServerLevel level,BlockPos source) {
+        if(level.getBlockEntity(source) instanceof VariableConstantLightBlockEntity lamp) update(lamp);
+        else remove(source);
+    }
+    /** Safe during setLevel: the entity has not yet been inserted into its chunk. */
+    public void update(VariableConstantLightBlockEntity lamp) {
+        BlockPos source = lamp.getBlockPos();
         remove(source);
-        if(level.getBlockEntity(source) instanceof VariableConstantLightBlockEntity lamp && !lamp.isLegacy()
+        if(!lamp.isLegacy()
                 && lamp.mode()==VariableLightMode.AREA_FULL_BRIGHT && lamp.area()!=null
                 && lamp.getBlockState().getValue(cn.quit5700.light.block.VariableConstantLightBlock.POWERED)) {
             entries.add(new Entry(source.asLong(),lamp.area())); setDirty();

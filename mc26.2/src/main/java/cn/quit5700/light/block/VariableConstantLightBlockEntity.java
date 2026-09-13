@@ -84,7 +84,7 @@ public final class VariableConstantLightBlockEntity extends BlockEntity implemen
             VariableLightTaskState taskState = VariableLightTaskState.get(serverLevel);
             taskState.registerExisting(worldPosition, radius, spacing, mode);
             taskState.setLegacy(worldPosition, isLegacy());
-            cn.quit5700.light.light.AreaLightState.get(serverLevel).update(serverLevel,worldPosition);
+            cn.quit5700.light.light.AreaLightState.get(serverLevel).update(this);
             if (mode.usesDaylightRendering()) taskState.syncClients(serverLevel);
         }
     }
