@@ -58,15 +58,10 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (!stillValid(player)) return false;
-        if ((id==VariableConstantLightSettings.SHOW_AREA_BUTTON_ID || id==VariableConstantLightSettings.HIDE_AREA_BUTTON_ID)
-                && blockEntity!=null && !isLegacy() && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-            cn.quit5700.light.network.AreaSelectionNetworking.showRange(serverPlayer,blockEntity,
-                    id==VariableConstantLightSettings.SHOW_AREA_BUTTON_ID);
-            return true;
-        }
-        if (id==VariableConstantLightSettings.SELECT_AREA_BUTTON_ID && blockEntity!=null && !isLegacy()
+        if ((id==VariableConstantLightSettings.SELECT_AREA_BUTTON_ID || id==VariableConstantLightSettings.SELECT_REAL_AREA_BUTTON_ID) && blockEntity!=null && !isLegacy()
                 && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-            cn.quit5700.light.network.AreaSelectionNetworking.begin(serverPlayer,blockEntity);
+            cn.quit5700.light.network.AreaSelectionNetworking.begin(serverPlayer,blockEntity,
+                    id==VariableConstantLightSettings.SELECT_REAL_AREA_BUTTON_ID?VariableLightMode.AREA_REAL_LIGHT:VariableLightMode.AREA_FULL_BRIGHT);
             return true;
         }
         if (VariableConstantLightSettings.isRadiusButtonId(id)) {
@@ -83,6 +78,12 @@ public final class VariableConstantLightMenu extends AbstractContainerMenu {
         }
         if (id == VariableConstantLightSettings.APPLY_BUTTON_ID) {
             if (blockEntity != null) {
+                if(pendingMode==VariableLightMode.AREA_REAL_LIGHT && blockEntity.area()!=null
+                        && !cn.quit5700.light.logic.RealAreaPolicy.accepts(blockEntity.area())) {
+                    if(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer)
+                        serverPlayer.sendSystemMessage(net.minecraft.network.chat.Component.translatable("screen.quick_build.real_area_limit",cn.quit5700.light.logic.RealAreaPolicy.MAX_VOLUME));
+                    return false;
+                }
                 blockEntity.setConfiguration(pendingRadius, pendingSpacing, pendingMode);
             } else {
                 data.set(0, pendingRadius);

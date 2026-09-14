@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "Two-point real lighting",
+  "screen.quick_build.real_area_warning": "Uses real light sources; large areas may cause lag when switching lights.",
+  "screen.quick_build.real_area_limit": "Real lighting allows at most %s cells. Select a smaller area.",
+  "screen.quick_build.area_wand_start": "Left-click two points or drag; release to preview, then left-click to confirm. Shift+right-click or Esc cancels.",
+  "screen.quick_build.area_wand_help": "Two points / drag > release to preview > click to confirm",
   "screen.quick_build.area_show": "Show range",
   "screen.quick_build.boost_option": "Visual brightness boost",
     "screen.quick_build.variable_light_mode.area": "Two-point Full Bright",

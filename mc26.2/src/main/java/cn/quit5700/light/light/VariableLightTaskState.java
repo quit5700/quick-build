@@ -98,7 +98,7 @@ public final class VariableLightTaskState extends SavedData {
         }
         long sourceKey = source.asLong();
         List<VariableLightTaskPlan.Configuration> historical = historicalConfigurations(
-                sourceKey, new VariableLightTaskPlan.Configuration(radius, spacing));
+                sourceKey, mode.usesRadiusLight() ? new VariableLightTaskPlan.Configuration(radius, spacing) : null);
         tasks.removeIf(task -> task.source() == sourceKey);
         sources.removeIf(entry -> entry.source() == sourceKey);
         appendPlan(sourceKey, VariableLightTaskPlan.remove(historical));
@@ -113,10 +113,10 @@ public final class VariableLightTaskState extends SavedData {
         VariableLightTaskPlan.Configuration desired =
                 new VariableLightTaskPlan.Configuration(newRadius, newSpacing);
         List<VariableLightTaskPlan.Configuration> historical =
-                historicalConfigurations(sourceKey, oldConfiguration);
+                historicalConfigurations(sourceKey, oldMode.usesRadiusLight() ? oldConfiguration : null);
         tasks.removeIf(task -> task.source() == sourceKey);
         replaceSource(source, desired.radius(), desired.spacing(), newMode);
-        appendPlan(sourceKey, newMode.usesInvisibleLight()
+        appendPlan(sourceKey, newMode.usesRadiusLight()
                 ? VariableLightTaskPlan.reconfigure(historical, desired)
                 : VariableLightTaskPlan.remove(historical));
         setDirty();
@@ -125,7 +125,7 @@ public final class VariableLightTaskState extends SavedData {
     private List<VariableLightTaskPlan.Configuration> historicalConfigurations(
             long source, VariableLightTaskPlan.Configuration fallback) {
         List<VariableLightTaskPlan.Configuration> configurations = new ArrayList<>();
-        configurations.add(fallback);
+        if(fallback!=null)configurations.add(fallback);
         for (TaskData task : tasks) {
             if (task.source() == source) {
                 configurations.add(new VariableLightTaskPlan.Configuration(task.radius(), task.spacing()));
@@ -157,7 +157,7 @@ public final class VariableLightTaskState extends SavedData {
                     .orElse(null);
             VariableLightTaskPlan.Plan plan = desiredSource == null
                     ? VariableLightTaskPlan.remove(historical)
-                    : (VariableLightMode.fromOrdinal(desiredSource.mode()).usesInvisibleLight()
+                    : (VariableLightMode.fromOrdinal(desiredSource.mode()).usesRadiusLight()
                     ? VariableLightTaskPlan.reconfigure(historical,
                     new VariableLightTaskPlan.Configuration(desiredSource.radius(), desiredSource.spacing()))
                     : VariableLightTaskPlan.remove(historical));
@@ -193,14 +193,14 @@ public final class VariableLightTaskState extends SavedData {
     public void tick(ServerLevel world) {
         boolean ready = true;
         for (SourceData source : sources) {
-            if (!source.legacy() && VariableLightMode.fromOrdinal(source.mode())!=VariableLightMode.AREA_FULL_BRIGHT)
+            if (!source.legacy() && !VariableLightMode.fromOrdinal(source.mode()).isAreaMode())
                 ready &= DaylightOcclusion.ready(world, BlockPos.of(source.source()), source.radius());
         }
         long revision = DaylightOcclusion.revision(world);
         if (ready && revision != connectedRevision) {
             connectedRevision = revision;
             for (SourceData source : List.copyOf(sources)) {
-                if (source.legacy() || !VariableLightMode.fromOrdinal(source.mode()).usesInvisibleLight()) continue;
+                if (source.legacy() || !VariableLightMode.fromOrdinal(source.mode()).usesRadiusLight()) continue;
                 tasks.removeIf(task -> task.source() == source.source() && task.install());
                 tasks.addFirst(new TaskData(source.source(), source.radius(), 1, true, 0));
                 if (tasks.stream().noneMatch(task -> task.source() == source.source() && !task.install()
@@ -242,8 +242,13 @@ public final class VariableLightTaskState extends SavedData {
     }
 
     private boolean isCoveredByActiveSource(ServerLevel world, BlockPos lightPos) {
+        return RealAreaLightState.get(world).contains(lightPos) || ConstantLightTaskQueue.isConstantLightTracked(world,lightPos)
+                || isCoveredByRadiusSource(world,lightPos);
+    }
+
+    public boolean isCoveredByRadiusSource(ServerLevel world, BlockPos lightPos) {
         for (SourceData source : sources) {
-            if (!VariableLightMode.fromOrdinal(source.mode()).usesInvisibleLight()) continue;
+            if (!VariableLightMode.fromOrdinal(source.mode()).usesRadiusLight()) continue;
             BlockPos center = BlockPos.of(source.source());
             if (!source.legacy()) {
                 if (DaylightOcclusion.visible(world, center, source.radius(), lightPos)) return true;

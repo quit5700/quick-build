@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "2点の実光源照明",
+  "screen.quick_build.real_area_warning": "実際の光源を使用します。広すぎる範囲は点灯・消灯時の遅延を招きます。",
+  "screen.quick_build.real_area_limit": "実光源照明は最大 %s マスです。範囲を縮小してください。",
+  "screen.quick_build.area_wand_start": "左クリックで2点指定またはドラッグし、離してプレビュー、再クリックで確定。Shift+右クリックかEscで取消。",
+  "screen.quick_build.area_wand_help": "2点／ドラッグ → 離して確認 → 左クリックで確定",
   "screen.quick_build.area_show": "範囲を表示",
   "screen.quick_build.boost_option": "画面を明るくする",
     "screen.quick_build.variable_light_mode.area": "2点範囲の最大明度",

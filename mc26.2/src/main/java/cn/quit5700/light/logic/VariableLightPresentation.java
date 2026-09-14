@@ -4,7 +4,7 @@ package cn.quit5700.light.logic;
 public final class VariableLightPresentation {
     private VariableLightPresentation() { }
     public static boolean showsMode(boolean legacy, VariableLightMode mode) {
-        return legacy ? mode != VariableLightMode.AREA_FULL_BRIGHT : mode != VariableLightMode.HYBRID;
+        return legacy ? !mode.isAreaMode() : mode != VariableLightMode.HYBRID;
     }
     public static VariableLightMode primaryMode(boolean legacy, VariableLightMode saved) {
         return !legacy && saved == VariableLightMode.HYBRID ? VariableLightMode.VANILLA_INVISIBLE : saved;

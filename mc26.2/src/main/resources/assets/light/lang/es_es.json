@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "Iluminación real de dos puntos",
+  "screen.quick_build.real_area_warning": "Usa fuentes de luz reales; las áreas grandes pueden causar retrasos al encender o apagar.",
+  "screen.quick_build.real_area_limit": "La iluminación real admite hasta %s celdas. Reduce el área.",
+  "screen.quick_build.area_wand_start": "Haz clic en dos puntos o arrastra; suelta para previsualizar y vuelve a hacer clic para confirmar. Mayús+clic derecho o Esc cancela.",
+  "screen.quick_build.area_wand_help": "Dos puntos / arrastrar > vista previa > clic para confirmar",
   "screen.quick_build.area_show": "Mostrar área",
   "screen.quick_build.boost_option": "Aumentar el brillo visual",
     "screen.quick_build.variable_light_mode.area": "Brillo pleno entre dos puntos",

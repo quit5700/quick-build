@@ -14,6 +14,9 @@ class AreaModeProtocolTest {
         }
         assertFalse(ids.contains(VariableConstantLightSettings.APPLY_BUTTON_ID));
         assertFalse(ids.contains(VariableConstantLightSettings.SELECT_AREA_BUTTON_ID));
+        assertFalse(ids.contains(VariableConstantLightSettings.SELECT_REAL_AREA_BUTTON_ID));
+        assertFalse(VariableConstantLightSettings.isModeButtonId(VariableConstantLightSettings.SELECT_REAL_AREA_BUTTON_ID));
+        assertNotEquals(VariableConstantLightSettings.SELECT_AREA_BUTTON_ID,VariableConstantLightSettings.SELECT_REAL_AREA_BUTTON_ID);
         assertFalse(VariableConstantLightSettings.isModeButtonId(VariableConstantLightSettings.APPLY_BUTTON_ID));
         assertEquals(74,VariableConstantLightSettings.APPLY_BUTTON_ID);
     }

@@ -122,6 +122,10 @@ public final class ClientWandController {
     }
 
     private static void tick(Minecraft client) {
+        if(cn.quit5700.light.client.AreaSelectionClient.isSelecting()) {
+            wasAttacking=client.options.keyAttack.isDown();wasUsing=client.options.keyUse.isDown();
+            return;
+        }
         if (client.player == null || client.level == null) {
             WandPreviewState.clear();
             wasAttacking = false;
@@ -620,6 +624,10 @@ public final class ClientWandController {
             return blockHit.getBlockPos();
         }
         return airPoint(client);
+    }
+
+    public static BlockPos buildingSelectionTarget(Minecraft client) {
+        return buildingTarget(client,client.player.pick(MAX_DISTANCE,0.0F,false));
     }
 
     private static BlockPos buildingTarget(Minecraft client, HitResult hit) {

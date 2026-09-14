@@ -21,7 +21,6 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
     private boolean modeEdited;
     private Button modeButton;
     private Checkbox brightButton;
-    private Checkbox rangeCheckbox;
     private Button areaButton;
     private final Button[] modeOptions = new Button[VariableLightMode.values().length];
 
@@ -51,10 +50,11 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
         }
         rebuildBoostCheckbox();
         AreaSelectionClient.hideRange();
-        rebuildRangeCheckbox();
+
         areaButton=addRenderableWidget(Button.builder(Component.translatable("screen.quick_build.area_select"),button->{
             if(minecraft!=null && minecraft.gameMode!=null) {
-                minecraft.gameMode.handleInventoryButtonClick(menu.containerId,VariableConstantLightSettings.SELECT_AREA_BUTTON_ID);
+                minecraft.gameMode.handleInventoryButtonClick(menu.containerId,selectedMode==VariableLightMode.AREA_REAL_LIGHT
+                        ? VariableConstantLightSettings.SELECT_REAL_AREA_BUTTON_ID : VariableConstantLightSettings.SELECT_AREA_BUTTON_ID);
                 onClose();
             }
         }).bounds(x,y+56,200,20).build());
@@ -96,17 +96,6 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
                 }).build());
     }
 
-    private void rebuildRangeCheckbox() {
-        if(rangeCheckbox!=null)removeWidget(rangeCheckbox);
-        rangeCheckbox=addRenderableWidget(Checkbox.builder(Component.translatable("screen.quick_build.area_show"),font)
-                .pos(width/2-100,height/2-12).maxWidth(200).selected(AreaSelectionClient.rangeShown())
-                .onValueChange((checkbox,show)->{
-                    if(show)AreaSelectionClient.requestRange();else AreaSelectionClient.hideRange();
-                    if(minecraft!=null && minecraft.gameMode!=null)
-                        minecraft.gameMode.handleInventoryButtonClick(menu.containerId,show
-                                ? VariableConstantLightSettings.SHOW_AREA_BUTTON_ID : VariableConstantLightSettings.HIDE_AREA_BUTTON_ID);
-                }).build());
-    }
 
     private void save() {
         submitConfiguration(true);
@@ -127,11 +116,18 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
         graphics.centeredText(font, title, 0, 0, 0xFFFFFF);
         graphics.pose().popMatrix();
         int side = VariableConstantLightSettings.sideLength(radiusSlider.radius());
-        graphics.centeredText(font,
-                selectedMode==VariableLightMode.AREA_FULL_BRIGHT ? Component.translatable("screen.quick_build.area_help")
+        if(selectedMode==VariableLightMode.AREA_REAL_LIGHT) {
+            int lineY=y+80;
+            for(var line:font.split(Component.translatable("screen.quick_build.real_area_warning"),220)) {
+                graphics.text(font,line,centerX-font.width(line)/2,lineY,0xFFB040);
+                lineY+=9;
+            }
+        } else graphics.centeredText(font,
+                selectedMode==VariableLightMode.AREA_REAL_LIGHT ? Component.translatable("screen.quick_build.real_area_warning")
+                        : selectedMode==VariableLightMode.AREA_FULL_BRIGHT ? Component.translatable("screen.quick_build.area_wand_help")
                         : Component.translatable("screen.quick_build.variable_light_size", side, side, side),
                 centerX, y + 82, 0xD8EFFF);
-        graphics.centeredText(font,
+        if(selectedMode!=VariableLightMode.AREA_REAL_LIGHT)graphics.centeredText(font,
                 Component.translatable("screen.quick_build.variable_light_powered",
                         Component.translatable(menu.powered() ? "text.quick_build.075" : "text.quick_build.056")),
                 centerX, y + 96, 0xC8C8C8);
@@ -148,6 +144,7 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
             case LOCAL_DAYLIGHT -> "screen.quick_build.variable_light_mode.local_daylight";
             case HYBRID -> "screen.quick_build.variable_light_mode.hybrid";
             case AREA_FULL_BRIGHT -> "screen.quick_build.variable_light_mode.area";
+            case AREA_REAL_LIGHT -> "screen.quick_build.variable_light_mode.real_area";
         });
     }
 
@@ -184,13 +181,9 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
 
     private void updateModeControls() {
         if (modeButton != null) modeButton.setMessage(modeMessage());
-        boolean area=selectedMode==VariableLightMode.AREA_FULL_BRIGHT && !menu.isLegacy();
+        boolean area=selectedMode.isAreaMode() && !menu.isLegacy();
         if(radiusSlider!=null){radiusSlider.active=!area;radiusSlider.visible=!area;}
         if(areaButton!=null)areaButton.visible=area;
-        if(rangeCheckbox!=null){
-            if(rangeCheckbox.selected()!=AreaSelectionClient.rangeShown())rebuildRangeCheckbox();
-            rangeCheckbox.visible=area;
-        }
         if (spacingSlider != null) {spacingSlider.active = menu.isLegacy() && selectedMode != VariableLightMode.LOCAL_DAYLIGHT; spacingSlider.visible=menu.isLegacy();}
         if (brightButton != null) {
             if(brightButton.selected()!=(selectedMode==VariableLightMode.HYBRID))rebuildBoostCheckbox();

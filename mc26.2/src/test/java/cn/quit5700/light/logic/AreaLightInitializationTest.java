@@ -44,4 +44,12 @@ class AreaLightInitializationTest {
             assertTrue(allowed.contains(call.name().stringValue()), "Review new call for lifecycle reentry: " + call);
         }
     }
+    @Test void realAreaInitializationAlsoUsesTheCurrentEntityWithoutWorldLookup() throws Exception {
+        String owner="cn/quit5700/light/light/RealAreaLightState";
+        var initializer=read(LAMP).methods().stream().filter(m->m.methodName().equalsString("setLevel")).findFirst().orElseThrow();
+        var update=calls(initializer).stream().filter(c->c.owner().asInternalName().equals(owner) && c.name().equalsString("update")).findFirst().orElseThrow();
+        assertEquals("(L"+LAMP+";)V",update.type().stringValue());
+        var method=read(owner).methods().stream().filter(m->m.methodName().equalsString("update")).findFirst().orElseThrow();
+        assertTrue(calls(method).stream().noneMatch(c->c.name().equalsString("getBlockEntity") || c.name().equalsString("getChunkAt")));
+    }
 }

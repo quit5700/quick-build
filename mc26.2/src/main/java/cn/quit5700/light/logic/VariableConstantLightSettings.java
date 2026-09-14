@@ -9,6 +9,8 @@ public final class VariableConstantLightSettings {
     public static final int SELECT_AREA_BUTTON_ID = 76;
     public static final int SHOW_AREA_BUTTON_ID = 77;
     public static final int HIDE_AREA_BUTTON_ID = 78;
+    public static final int REAL_AREA_MODE_BUTTON_ID = 79;
+    public static final int SELECT_REAL_AREA_BUTTON_ID = 80;
     public static final int MIN_RADIUS = 1;
     public static final int DEFAULT_RADIUS = 14;
     public static final int MAX_RADIUS = 64;
@@ -55,7 +57,7 @@ public final class VariableConstantLightSettings {
     public static int spacingButtonId(int spacing) { return SPACING_BUTTON_OFFSET + clampSpacing(spacing) - MIN_SPACING; }
     public static boolean isSpacingButtonId(int id) { return id >= SPACING_BUTTON_OFFSET && id < MODE_BUTTON_OFFSET; }
     public static int spacingFromButtonId(int id) { return clampSpacing(MIN_SPACING + id - SPACING_BUTTON_OFFSET); }
-    public static int modeButtonId(VariableLightMode mode) { return mode == VariableLightMode.AREA_FULL_BRIGHT ? AREA_MODE_BUTTON_ID : MODE_BUTTON_OFFSET + mode.ordinal(); }
-    public static boolean isModeButtonId(int id) { return (id >= MODE_BUTTON_OFFSET && id < APPLY_BUTTON_ID) || id == AREA_MODE_BUTTON_ID; }
-    public static VariableLightMode modeFromButtonId(int id) { return id == AREA_MODE_BUTTON_ID ? VariableLightMode.AREA_FULL_BRIGHT : VariableLightMode.fromOrdinal(id - MODE_BUTTON_OFFSET); }
+    public static int modeButtonId(VariableLightMode mode) { return mode == VariableLightMode.AREA_REAL_LIGHT ? REAL_AREA_MODE_BUTTON_ID : mode == VariableLightMode.AREA_FULL_BRIGHT ? AREA_MODE_BUTTON_ID : MODE_BUTTON_OFFSET + mode.ordinal(); }
+    public static boolean isModeButtonId(int id) { return (id >= MODE_BUTTON_OFFSET && id < APPLY_BUTTON_ID) || id == AREA_MODE_BUTTON_ID || id==REAL_AREA_MODE_BUTTON_ID; }
+    public static VariableLightMode modeFromButtonId(int id) { return id==REAL_AREA_MODE_BUTTON_ID ? VariableLightMode.AREA_REAL_LIGHT : id == AREA_MODE_BUTTON_ID ? VariableLightMode.AREA_FULL_BRIGHT : VariableLightMode.fromOrdinal(id - MODE_BUTTON_OFFSET); }
 }

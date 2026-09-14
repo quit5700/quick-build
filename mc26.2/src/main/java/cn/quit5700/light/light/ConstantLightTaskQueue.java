@@ -28,6 +28,13 @@ public final class ConstantLightTaskQueue {
 
     private ConstantLightTaskQueue() {
     }
+    public static boolean isConstantLightTracked(ServerLevel world,BlockPos pos) {
+        return LIGHT_COUNTS.getOrDefault(new TrackedLight(world,pos),0)>0;
+    }
+    private static void updateRealArea(ServerLevel world,BlockPos pos) {
+        if(world.getBlockEntity(pos) instanceof cn.quit5700.light.block.VariableConstantLightBlockEntity lamp)
+            RealAreaLightState.get(world).update(lamp);
+    }
 
     public static void install(ServerLevel world, BlockPos sourcePos) {
         TASKS.add(new Task(world, sourcePos.immutable(), constantOffsets(), true));
@@ -41,6 +48,7 @@ public final class ConstantLightTaskQueue {
         VariableLightTaskState state = VariableLightTaskState.get(world);
         state.install(sourcePos, radius, spacing, mode);
         AreaLightState.get(world).update(world,sourcePos);
+        updateRealArea(world,sourcePos);
         if(mode==VariableLightMode.AREA_FULL_BRIGHT) DaylightOcclusion.remove(world,sourcePos);
         state.setLegacy(sourcePos, world.getBlockState(sourcePos).is(cn.quit5700.light.registry.LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT));
         if (mode.usesDaylightRendering()) state.syncClients(world);
@@ -51,6 +59,7 @@ public final class ConstantLightTaskQueue {
         VariableLightTaskState state = VariableLightTaskState.get(world);
         state.cleanup(sourcePos, radius, spacing, mode);
         AreaLightState.get(world).remove(sourcePos);
+        RealAreaLightState.get(world).remove(sourcePos);
         if (mode.usesDaylightRendering()) state.syncClients(world);
     }
 
@@ -62,6 +71,7 @@ public final class ConstantLightTaskQueue {
                 sourcePos, oldRadius, oldSpacing, oldMode, newRadius, newSpacing, newMode);
         if(newMode==VariableLightMode.AREA_FULL_BRIGHT) DaylightOcclusion.remove(world,sourcePos);
         AreaLightState.get(world).update(world,sourcePos);
+        updateRealArea(world,sourcePos);
         state.setLegacy(sourcePos, world.getBlockState(sourcePos).is(cn.quit5700.light.registry.LightBlocks.COPY_VARIABLE_CONSTANT_LIGHT));
         if (VariableLightModeTransition.needsDaylightSync(oldMode, newMode)) state.syncClients(world);
     }
@@ -94,6 +104,11 @@ public final class ConstantLightTaskQueue {
             return;
         }
         LIGHT_COUNTS.remove(trackedLight);
+        if(RealAreaLightState.get(world).contains(pos)) {
+            RealAreaLightState.get(world).claimSharedLight(world,pos);
+            return;
+        }
+        if(VariableLightTaskState.get(world).isCoveredByRadiusSource(world,pos))return;
         BlockState currentState = world.getBlockState(pos);
         if (currentState.is(Blocks.LIGHT)) {
             world.setBlock(pos, currentState.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), UPDATE_FLAGS);
@@ -101,7 +116,10 @@ public final class ConstantLightTaskQueue {
     }
 
     static void cleanupVariableLight(ServerLevel world, BlockPos pos, boolean coveredByAnotherSource) {
-        if (coveredByAnotherSource) return;
+        if (coveredByAnotherSource) {
+            RealAreaLightState.get(world).claimSharedLight(world,pos);
+            return;
+        }
         BlockState currentState = world.getBlockState(pos);
         if (currentState.is(Blocks.LIGHT)) {
             world.setBlock(pos, currentState.getFluidState().is(Fluids.WATER)

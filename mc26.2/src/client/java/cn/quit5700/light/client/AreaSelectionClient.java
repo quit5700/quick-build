@@ -23,64 +23,77 @@ public final class AreaSelectionClient {
     private static BlockPos first;
     private static LightBox preview;
     private static int timeout;
+    private static boolean wasAttack,wasUse,dragging,confirmWaiting;
+    private static final cn.quit5700.light.logic.WandAreaGesture<BlockPos> GESTURE=new cn.quit5700.light.logic.WandAreaGesture<>();
     private static final java.util.concurrent.atomic.AtomicReference<AreaSelectionNetworking.Preview> PENDING=new java.util.concurrent.atomic.AtomicReference<>();
     private AreaSelectionClient() { }
+    public static boolean isSelecting(){return selecting;}
     public static boolean rangeShown(){return pinned;}
     public static void hideRange(){pinned=false;preview=null;}
     public static void requestRange(){pinned=true;}
     private static BlockPos target(Minecraft client) {
         if(client.player==null)return null;
-        if(client.hitResult instanceof BlockHitResult hit && hit.getType()==HitResult.Type.BLOCK)return hit.getBlockPos();
-        Vec3 eye=client.player.getEyePosition(0.0F),view=client.player.getViewVector(0.0F);
-        var point=AreaSelectionRules.airPoint(eye.x,eye.y,eye.z,view.x,view.y,view.z);
-        return new BlockPos(point.x(),point.y(),point.z());
+        return cn.quit5700.buildingwand.client.ClientWandController.buildingSelectionTarget(client);
     }
     public static void initialize() {
         ClientPlayNetworking.registerGlobalReceiver(AreaSelectionNetworking.Preview.ID,(payload,context)->PENDING.set(payload));
         ClientPlayConnectionEvents.DISCONNECT.register((handler,client)->PENDING.set(new AreaSelectionNetworking.Preview(false,null,null)));
-        ClientPreAttackCallback.EVENT.register((client,player,clicks)->{
-            if(!selecting)return false;
-            BlockPos point=target(client);
-            if(!waiting && clicks>0 && point!=null){
-                waiting=true; ClientPlayNetworking.send(new AreaSelectionNetworking.Pick(point,false));
-            }
-            return true;
-        });
+        ClientPreAttackCallback.EVENT.register((client,player,clicks)->selecting);
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player,world,hand,hit)->
+                world.isClientSide() && selecting ? net.minecraft.world.InteractionResult.FAIL:net.minecraft.world.InteractionResult.PASS);
+        net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((player,world,hand)->
+                world.isClientSide() && selecting ? net.minecraft.world.InteractionResult.FAIL:net.minecraft.world.InteractionResult.PASS);
         ClientTickEvents.END_CLIENT_TICK.register(client->{
             var payload=PENDING.getAndSet(null);
             if(payload!=null){
+                boolean beginning=payload.selecting() && !selecting;
+                if(beginning || !payload.selecting()) {GESTURE.clear();dragging=false;}
+                else if(confirmWaiting)GESTURE.reject();
+                confirmWaiting=false;
                 selecting=payload.selecting();pinned=AreaSelectionRules.pinPreview(selecting,payload.pinned(),payload.first()!=null && payload.second()!=null);waiting=false;timeout=selecting?12000:0;
                 first=selecting && payload.second()==null?payload.first():null;
                 preview=payload.first()!=null && payload.second()!=null ? box(payload.first(),payload.second()) : first==null?null:box(first,first);
             }
-            if(client.level==null){selecting=false;pinned=false;preview=null;return;}
+            if(client.level==null){selecting=false;pinned=false;preview=null;GESTURE.clear();cn.quit5700.buildingwand.client.WandPreviewState.clear();return;}
+            boolean attack=client.options.keyAttack.isDown(),use=client.options.keyUse.isDown();
+            boolean pressed=attack && !wasAttack,released=!attack && wasAttack;
+            boolean cancel=use && !wasUse && client.options.keyShift.isDown();
+            wasAttack=attack;wasUse=use;
             if(timeout>0)timeout--;
-            if(selecting && (org.lwjgl.glfw.GLFW.glfwGetKey(client.getWindow().handle(),org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE)==org.lwjgl.glfw.GLFW.GLFW_PRESS || timeout==0)) {
+            if(selecting && (cancel || org.lwjgl.glfw.GLFW.glfwGetKey(client.getWindow().handle(),org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE)==org.lwjgl.glfw.GLFW.GLFW_PRESS || timeout==0)) {
                 selecting=false;waiting=false;first=null;preview=null;
+                GESTURE.clear();cn.quit5700.buildingwand.client.WandPreviewState.clear();
                 ClientPlayNetworking.send(new AreaSelectionNetworking.Pick(BlockPos.ZERO,true));
             }
             if(!AreaSelectionRules.showPreview(selecting,pinned))preview=null;
             BlockPos point=target(client);
-            if(selecting && first!=null && point!=null) {
-                try {preview=box(first,point);}catch(IllegalArgumentException ignored){preview=box(first,first);}
+            if(selecting && point!=null) {
+                cn.quit5700.buildingwand.client.WandPreviewState.set(java.util.List.of(point),cn.quit5700.buildingwand.client.WandPreviewState.PreviewColor.WHITE);
+                if(pressed && !waiting) {
+                    var action=GESTURE.press(point);dragging=action!=cn.quit5700.light.logic.WandAreaGesture.Action.CONFIRM;
+                    if(action!=cn.quit5700.light.logic.WandAreaGesture.Action.NONE) {
+                        waiting=true;
+                        confirmWaiting=action==cn.quit5700.light.logic.WandAreaGesture.Action.CONFIRM;
+                        ClientPlayNetworking.send(new AreaSelectionNetworking.Pick(action==cn.quit5700.light.logic.WandAreaGesture.Action.FIRST?point:GESTURE.pending(),false));
+                    }
+                }
+                if(released && dragging){GESTURE.release(point);dragging=false;}
+                BlockPos start=GESTURE.first();
+                if(start!=null) {
+                    BlockPos end=GESTURE.pending()!=null?GESTURE.pending():point;
+                    try {preview=box(start,end);}catch(IllegalArgumentException ignored){preview=box(start,start);}
+                }
+            } else if(payload!=null) {
+                cn.quit5700.buildingwand.client.WandPreviewState.clear();
             }
         });
         LevelRenderEvents.BEFORE_TRANSLUCENT_TERRAIN.register(context->{
             LightBox box=preview;
             var client=Minecraft.getInstance();
-            BlockPos point=selecting?target(client):null;
-            Vec3 marker=point==null?null:Vec3.atCenterOf(point);
-            if(point!=null && client.hitResult instanceof BlockHitResult hit && hit.getType()==HitResult.Type.BLOCK)
-                marker=hit.getLocation();
-            Vec3 markerPosition=marker;
-            if((box==null && point==null) || context.poseStack()==null)return;
+            if(box==null || context.poseStack()==null)return;
             Vec3 camera=camera(client);
             var pose=context.poseStack();pose.pushPose();pose.translate(-camera.x,-camera.y,-camera.z);
             context.submitNodeCollector().submitCustomGeometry(pose,RenderTypes.debugQuads(),(p,buffer)->{
-                if(point!=null) {
-                    float px=(float)markerPosition.x,py=(float)markerPosition.y,pz=(float)markerPosition.z,t=.16f;
-                    cuboid(buffer,p.pose(),px-t,py-t,pz-t,px+t,py+t,pz+t,0xA0FFFFFF);
-                }
                 if(box==null)return;
                 float a=box.minX(),b=box.minY(),c=box.minZ(),d=box.maxX()+1,e=box.maxY()+1,f=box.maxZ()+1,t=.025f;
                 for(float y:new float[]{b,e})for(float z:new float[]{c,f})cuboid(buffer,p.pose(),a,y-t,z-t,d,y+t,z+t,0xDC1EF0FF);

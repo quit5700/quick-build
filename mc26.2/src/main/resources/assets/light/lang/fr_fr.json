@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "Éclairage réel à deux points",
+  "screen.quick_build.real_area_warning": "Sources lumineuses réelles : une grande zone peut ralentir l'allumage et l'extinction.",
+  "screen.quick_build.real_area_limit": "L'éclairage réel est limité à %s cases. Réduisez la zone.",
+  "screen.quick_build.area_wand_start": "Cliquez sur deux points ou faites glisser, relâchez pour prévisualiser puis cliquez pour valider. Maj+clic droit ou Échap annule.",
+  "screen.quick_build.area_wand_help": "Deux points / glisser > aperçu > clic pour valider",
   "screen.quick_build.area_show": "Afficher la zone",
   "screen.quick_build.boost_option": "Augmenter la luminosité visuelle",
     "screen.quick_build.variable_light_mode.area": "Pleine lumière à deux points",

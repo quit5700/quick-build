@@ -26,6 +26,7 @@ public final class LightMod implements ModInitializer {
             ConstantLightTaskQueue.tick();
             server.getAllLevels().forEach(cn.quit5700.light.light.DaylightOcclusion::tick);
             server.getAllLevels().forEach(world -> VariableLightTaskState.get(world).tick(world));
+            server.getAllLevels().forEach(world -> cn.quit5700.light.light.RealAreaLightState.get(world).tick(world));
             RedstoneEnergyNotifier.tickQueuedChunkSyncs();
         });
         ServerChunkEvents.CHUNK_LOAD.register((world, chunk, newChunk) -> RedstoneEnergyNotifier.queueChunkSync(world, chunk.getPos()));

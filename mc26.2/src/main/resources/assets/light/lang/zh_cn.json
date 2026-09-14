@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "两点真实照明",
+  "screen.quick_build.real_area_warning": "此模式采用真实光源，范围过大可能造成开关灯卡顿。",
+  "screen.quick_build.real_area_limit": "真实照明选区最多 %s 格，请缩小范围。",
+  "screen.quick_build.area_wand_start": "左键选两点或拖选，松开预览，再左键确认；Shift+右键或 Esc 取消。",
+  "screen.quick_build.area_wand_help": "两点／拖选 → 松开预览 → 左键确认",
   "screen.quick_build.area_show": "显示范围",
   "screen.quick_build.boost_option": "画面增亮",
     "screen.quick_build.variable_light_mode.area": "两点区域满亮",

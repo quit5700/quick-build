@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "두 지점 실제 조명",
+  "screen.quick_build.real_area_warning": "실제 광원을 사용하며 넓은 범위는 점등·소등 시 지연을 일으킬 수 있습니다.",
+  "screen.quick_build.real_area_limit": "실제 조명은 최대 %s 칸입니다. 범위를 줄이세요.",
+  "screen.quick_build.area_wand_start": "두 지점을 좌클릭하거나 드래그하고 놓아 미리 본 뒤 다시 클릭해 확정합니다. Shift+우클릭 또는 Esc로 취소합니다.",
+  "screen.quick_build.area_wand_help": "두 지점 / 드래그 > 놓아 미리보기 > 클릭 확정",
   "screen.quick_build.area_show": "범위 표시",
   "screen.quick_build.boost_option": "화면 밝기 강화",
     "screen.quick_build.variable_light_mode.area": "두 지점 영역 최대 밝기",

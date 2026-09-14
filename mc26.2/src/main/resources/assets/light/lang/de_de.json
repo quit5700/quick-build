@@ -1,4 +1,9 @@
 {
+  "screen.quick_build.variable_light_mode.real_area": "Echte Zweipunkt-Beleuchtung",
+  "screen.quick_build.real_area_warning": "Echte Lichtquellen; große Bereiche können beim Schalten ruckeln.",
+  "screen.quick_build.real_area_limit": "Echte Beleuchtung erlaubt höchstens %s Zellen. Bereich verkleinern.",
+  "screen.quick_build.area_wand_start": "Zwei Punkte anklicken oder ziehen; loslassen zur Vorschau, erneut klicken zum Bestätigen. Umschalt+Rechtsklick oder Esc bricht ab.",
+  "screen.quick_build.area_wand_help": "Zwei Punkte / ziehen > Vorschau > Klick bestätigt",
   "screen.quick_build.area_show": "Bereich anzeigen",
   "screen.quick_build.boost_option": "Darstellung aufhellen",
     "screen.quick_build.variable_light_mode.area": "Zwei-Punkt-Vollhelligkeit",

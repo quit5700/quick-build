@@ -9,9 +9,11 @@ class VariableLightPresentationTest {
             if (VariableLightPresentation.showsMode(false, mode)) original++;
             if (VariableLightPresentation.showsMode(true, mode)) copy++;
         }
-        assertEquals(3, original); assertEquals(3, copy);
+        assertEquals(4, original); assertEquals(3, copy);
         assertTrue(VariableLightPresentation.showsMode(false,VariableLightMode.AREA_FULL_BRIGHT));
         assertFalse(VariableLightPresentation.showsMode(true,VariableLightMode.AREA_FULL_BRIGHT));
+        assertFalse(VariableLightPresentation.showsMode(true,VariableLightMode.AREA_REAL_LIGHT));
+        assertTrue(VariableLightPresentation.showsMode(false,VariableLightMode.AREA_REAL_LIGHT));
     }
     @Test void savedHybridRemainsBoostedVanillaWithoutChangingItsOrdinal() {
         assertEquals(VariableLightMode.VANILLA_INVISIBLE, VariableLightPresentation.primaryMode(false, VariableLightMode.fromOrdinal(2)));

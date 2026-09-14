@@ -3,6 +3,8 @@ package cn.quit5700.light.network;
 import cn.quit5700.light.LightMod;
 import cn.quit5700.light.block.VariableConstantLightBlockEntity;
 import cn.quit5700.light.logic.LightBox;
+import cn.quit5700.light.logic.VariableLightMode;
+import cn.quit5700.light.logic.RealAreaPolicy;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -30,14 +32,14 @@ public final class AreaSelectionNetworking {
         });
         ServerLifecycleEvents.SERVER_STOPPED.register(server->SESSIONS.clear());
     }
-    public static void begin(ServerPlayer player,VariableConstantLightBlockEntity lamp) {
+    public static void begin(ServerPlayer player,VariableConstantLightBlockEntity lamp,VariableLightMode mode) {
         if(lamp.isLegacy() || !player.mayBuild()) return;
         SESSIONS.put(player.getUUID(),new Session(lamp.getBlockPos(),player.level().dimension().identifier(),null,
-                player.level().getGameTime()+12000));
+                player.level().getGameTime()+12000,mode));
         LightBox old=lamp.area();
         ServerPlayNetworking.send(player,new Preview(true,old==null?null:new BlockPos(old.minX(),old.minY(),old.minZ()),
                 old==null?null:new BlockPos(old.maxX(),old.maxY(),old.maxZ())));
-        player.sendSystemMessage(Component.translatable("screen.quick_build.area_start"));
+        player.sendSystemMessage(Component.translatable("screen.quick_build.area_wand_start"));
     }
     public static void showRange(ServerPlayer player,VariableConstantLightBlockEntity lamp,boolean show) {
         if(lamp.isLegacy()) return;
@@ -64,14 +66,19 @@ public final class AreaSelectionNetworking {
             player.sendSystemMessage(Component.translatable("screen.quick_build.area_missing_lamp")); return;
         }
         if(session.first()==null) {
-            SESSIONS.put(player.getUUID(),new Session(session.lamp(),session.dimension(),point.immutable(),session.expires()));
+            SESSIONS.put(player.getUUID(),new Session(session.lamp(),session.dimension(),point.immutable(),session.expires(),session.mode()));
             ServerPlayNetworking.send(player,new Preview(true,point,null));
             player.sendSystemMessage(Component.translatable("screen.quick_build.area_second")); return;
         }
         try {
             BlockPos first=session.first();
             LightBox box=LightBox.of(first.getX(),first.getY(),first.getZ(),point.getX(),point.getY(),point.getZ());
-            lamp.selectArea(box); SESSIONS.remove(player.getUUID());
+            if(session.mode()==VariableLightMode.AREA_REAL_LIGHT && !RealAreaPolicy.accepts(box)) {
+                ServerPlayNetworking.send(player,new Preview(true,session.first(),null));
+                player.sendSystemMessage(Component.translatable("screen.quick_build.real_area_limit",RealAreaPolicy.MAX_VOLUME));
+                return;
+            }
+            lamp.selectArea(box,session.mode()); SESSIONS.remove(player.getUUID());
             ServerPlayNetworking.send(player,new Preview(false,new BlockPos(box.minX(),box.minY(),box.minZ()),new BlockPos(box.maxX(),box.maxY(),box.maxZ())));
             player.sendSystemMessage(Component.translatable("screen.quick_build.area_saved",box.maxX()-box.minX()+1,box.maxY()-box.minY()+1,box.maxZ()-box.minZ()+1));
         } catch(IllegalArgumentException oversized) {
@@ -79,7 +86,7 @@ public final class AreaSelectionNetworking {
             player.sendSystemMessage(Component.translatable("screen.quick_build.area_too_large",LightBox.MAX_SIDE));
         }
     }
-    private record Session(BlockPos lamp,Identifier dimension,BlockPos first,long expires) { }
+    private record Session(BlockPos lamp,Identifier dimension,BlockPos first,long expires,VariableLightMode mode) { }
     public record Pick(BlockPos pos,boolean cancel) implements CustomPacketPayload {
         public static final Type<Pick> ID=new Type<>(LightMod.id("area_light_pick"));
         public static final StreamCodec<RegistryFriendlyByteBuf,Pick> CODEC=CustomPacketPayload.codec(Pick::write,Pick::read);

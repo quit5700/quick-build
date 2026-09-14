@@ -16,6 +16,9 @@ class VariableLightModeTest {
         assertTrue(VariableLightMode.HYBRID.usesDaylightRendering());
         assertFalse(VariableLightMode.AREA_FULL_BRIGHT.usesInvisibleLight());
         assertTrue(VariableLightMode.AREA_FULL_BRIGHT.usesDaylightRendering());
+        assertTrue(VariableLightMode.AREA_REAL_LIGHT.usesInvisibleLight());
+        assertFalse(VariableLightMode.AREA_REAL_LIGHT.usesDaylightRendering());
+        assertFalse(VariableLightMode.AREA_REAL_LIGHT.usesRadiusLight());
     }
 
     @Test
