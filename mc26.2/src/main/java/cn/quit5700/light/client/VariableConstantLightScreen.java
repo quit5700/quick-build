@@ -113,28 +113,28 @@ public final class VariableConstantLightScreen extends AbstractContainerScreen<V
         graphics.pose().pushMatrix();
         graphics.pose().translate(centerX, y + 12);
         graphics.pose().scale(1.5F, 1.5F);
-        graphics.centeredText(font, title, 0, 0, 0xFFFFFF);
+        graphics.centeredText(font, title, 0, 0, 0xFFFFFFFF);
         graphics.pose().popMatrix();
         int side = VariableConstantLightSettings.sideLength(radiusSlider.radius());
         if(selectedMode==VariableLightMode.AREA_REAL_LIGHT) {
             int lineY=y+80;
             for(var line:font.split(Component.translatable("screen.quick_build.real_area_warning"),220)) {
-                graphics.text(font,line,centerX-font.width(line)/2,lineY,0xFFB040);
+                graphics.text(font,line,centerX-font.width(line)/2,lineY,0xFFFFB040);
                 lineY+=9;
             }
         } else graphics.centeredText(font,
                 selectedMode==VariableLightMode.AREA_REAL_LIGHT ? Component.translatable("screen.quick_build.real_area_warning")
                         : selectedMode==VariableLightMode.AREA_FULL_BRIGHT ? Component.translatable("screen.quick_build.area_wand_help")
                         : Component.translatable("screen.quick_build.variable_light_size", side, side, side),
-                centerX, y + 82, 0xD8EFFF);
+                centerX, y + 82, 0xFFD8EFFF);
         if(selectedMode!=VariableLightMode.AREA_REAL_LIGHT)graphics.centeredText(font,
                 Component.translatable("screen.quick_build.variable_light_powered",
                         Component.translatable(menu.powered() ? "text.quick_build.075" : "text.quick_build.056")),
-                centerX, y + 96, 0xC8C8C8);
+                centerX, y + 96, 0xFFC8C8C8);
         if (selectedMode == VariableLightMode.LOCAL_DAYLIGHT) {
             graphics.centeredText(font,
                     Component.translatable(menu.isLegacy() ? "screen.quick_build.variable_light_legacy_warning" : "screen.quick_build.variable_light_daylight_warning"),
-                    centerX, y + 140, 0xFFB040);
+                    centerX, y + 140, 0xFFFFB040);
         }
     }
 

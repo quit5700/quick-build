@@ -19,12 +19,15 @@ import java.util.*;
 /** Persistent desired regions and reconciliation cursors; never loads chunks. */
 public final class RealAreaLightState extends SavedData {
     private record Source(long pos,LightBox box) { }
-    private record Scan(LightBox box,int next) { }
+    private record Scan(LightBox box,int next,int order) {
+        private Scan(LightBox box,int next){this(box,next,RealAreaPolicy.PROGRESSIVE_ORDER);}
+    }
     private static final Codec<Source> SOURCE=RecordCodecBuilder.create(i->i.group(
             Codec.LONG.fieldOf("pos").forGetter(Source::pos),AreaLightState.BOX_CODEC.fieldOf("box").forGetter(Source::box)
     ).apply(i,Source::new));
     private static final Codec<Scan> SCAN=RecordCodecBuilder.create(i->i.group(
-            AreaLightState.BOX_CODEC.fieldOf("box").forGetter(Scan::box),Codec.INT.optionalFieldOf("next",0).forGetter(Scan::next)
+            AreaLightState.BOX_CODEC.fieldOf("box").forGetter(Scan::box),Codec.INT.optionalFieldOf("next",0).forGetter(Scan::next),
+            Codec.INT.optionalFieldOf("order",0).forGetter(Scan::order)
     ).apply(i,Scan::new));
     private static final Codec<RealAreaLightState> CODEC=RecordCodecBuilder.create(i->i.group(
             SOURCE.listOf().optionalFieldOf("sources",List.of()).forGetter(s->s.sources),
@@ -88,8 +91,8 @@ public final class RealAreaLightState extends SavedData {
         int budget=512, deferred=0;
         while(budget>0 && !scans.isEmpty() && deferred<scans.size()) {
             Scan scan=scans.removeFirst();
-            if(!RealAreaPolicy.accepts(scan.box()) || scan.next()<0 || scan.next()>=scan.box().volume()){setDirty();continue;}
-            var point=RealAreaPolicy.position(scan.box(),scan.next());
+            if(!RealAreaPolicy.accepts(scan.box()) || scan.next()<0 || scan.next()>=RealAreaPolicy.operationCount(scan.box(),scan.order())){setDirty();continue;}
+            var point=RealAreaPolicy.scanPosition(scan.box(),scan.next(),scan.order());
             BlockPos pos=new BlockPos(point.x(),point.y(),point.z());
             if(!world.hasChunk(pos.getX()>>4,pos.getZ()>>4)) {scans.add(scan);deferred++;continue;}
             deferred=0;budget--;
@@ -110,7 +113,7 @@ public final class RealAreaLightState extends SavedData {
                     if(!other)owned.remove(pos.asLong());
                 }
             }
-            if(scan.next()+1<scan.box().volume())scans.add(new Scan(scan.box(),scan.next()+1));
+            if(scan.next()+1<RealAreaPolicy.operationCount(scan.box(),scan.order()))scans.add(new Scan(scan.box(),scan.next()+1,scan.order()));
             setDirty();
         }
     }
