@@ -20,7 +20,7 @@ import java.util.*;
 public final class RealAreaLightState extends SavedData {
     private record Source(long pos,LightBox box) { }
     private record Scan(LightBox box,int next,int order) {
-        private Scan(LightBox box,int next){this(box,next,RealAreaPolicy.PROGRESSIVE_ORDER);}
+        private Scan(LightBox box,int next){this(box,next,RealAreaPolicy.CENTER_OUT_ORDER);}
     }
     private static final Codec<Source> SOURCE=RecordCodecBuilder.create(i->i.group(
             Codec.LONG.fieldOf("pos").forGetter(Source::pos),AreaLightState.BOX_CODEC.fieldOf("box").forGetter(Source::box)
