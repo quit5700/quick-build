@@ -6,7 +6,7 @@ for p in (R/'versions/1.1.3').glob('mc*'):
  d=A/p.name;d.mkdir(exist_ok=True)
  for f in (p/'dist').glob('*.jar'):shutil.copy2(f,d/f.name)
  for name in ['README.md','VERSION_INFO.md']:shutil.copy2(p/name,d/name)
-for name in ['README.md','发布核验.json','安装核验.json']:shutil.copy2(R/'versions/1.1.3'/name,A/name)
+for name in ['README.md','发布核验.json','安装核验.json','发行信息.json']:shutil.copy2(R/'versions/1.1.3'/name,A/name)
 archive=A/'完整八版本工程源码_1.1.3.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
  for folder in [R/'versions/1.1.3',R/'scripts',R/'docs']:
