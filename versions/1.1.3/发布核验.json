@@ -1,0 +1,210 @@
+[
+  {
+    "minecraft": "1.20.1",
+    "java": 17,
+    "loader": "0.15.11",
+    "fabric_api": "0.92.9+1.20.1",
+    "loom": "1.6.12",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 124,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc1.20.1-fabric.jar",
+        "bytes": 697578,
+        "sha256": "ef6ee686150cc732acdad94f40df7a416021b4d1d0307ae3ab6d7c9a0e6bcd4e"
+      },
+      {
+        "file": "quick-build-1.1.3-mc1.20.1-fabric-sources.jar",
+        "bytes": 437160,
+        "sha256": "85fda4b7d84c41703a58a459cdab866492e5c65bf61ecb88c94f634523f53b6e"
+      }
+    ]
+  },
+  {
+    "minecraft": "1.20.4",
+    "java": 17,
+    "loader": "0.15.11",
+    "fabric_api": "0.97.3+1.20.4",
+    "loom": "1.6.12",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 124,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc1.20.4-fabric.jar",
+        "bytes": 700426,
+        "sha256": "353226672cbe7d252d40788994d7b3efcf408ce67e6f9edc21e1f6ed840261bc"
+      },
+      {
+        "file": "quick-build-1.1.3-mc1.20.4-fabric-sources.jar",
+        "bytes": 438473,
+        "sha256": "dd4f0a766e88bffda20c857e228421efd7758fbc8fc74e314d3e0dbe349e9793"
+      }
+    ]
+  },
+  {
+    "minecraft": "1.21.1",
+    "java": 21,
+    "loader": "0.16.14",
+    "fabric_api": "0.116.12+1.21.1",
+    "loom": "1.7.4",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 124,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc1.21.1-fabric.jar",
+        "bytes": 706581,
+        "sha256": "b451176976a984d661ed2cc2540123e01ef44ab5daa9ddb61f04dfd3caa2c5c7"
+      },
+      {
+        "file": "quick-build-1.1.3-mc1.21.1-fabric-sources.jar",
+        "bytes": 437565,
+        "sha256": "b961a9b78d5c01ba16ab2a8d986593e4173cf7470ed152cb76c1057b73727e06"
+      }
+    ]
+  },
+  {
+    "minecraft": "1.21.11",
+    "java": 21,
+    "loader": "0.19.3",
+    "fabric_api": "0.141.5+1.21.11",
+    "loom": "1.15-SNAPSHOT",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 126,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc1.21.11-fabric.jar",
+        "bytes": 702494,
+        "sha256": "c36d4d28ca60fdd5aa443f14aec011f284afdd236d7164af4e854fb07f4673db"
+      },
+      {
+        "file": "quick-build-1.1.3-mc1.21.11-fabric-sources.jar",
+        "bytes": 437405,
+        "sha256": "46eaf4c665591f560f8e9a8e53a9c1b8a58fe740aedaa1fc3021e6d5e62b8d92"
+      }
+    ]
+  },
+  {
+    "minecraft": "1.21.4",
+    "java": 21,
+    "loader": "0.16.14",
+    "fabric_api": "0.119.4+1.21.4",
+    "loom": "1.9.2",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 124,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc1.21.4-fabric.jar",
+        "bytes": 703913,
+        "sha256": "90b09944b0384232131f171d97fada48a363b896a00b7c475e4ddcf9381330fc"
+      },
+      {
+        "file": "quick-build-1.1.3-mc1.21.4-fabric-sources.jar",
+        "bytes": 436220,
+        "sha256": "c5a7f33520f02026d8180abd3b3b63541160ee764fe3595ebcfbd81cff4e5dba"
+      }
+    ]
+  },
+  {
+    "minecraft": "1.21.8",
+    "java": 21,
+    "loader": "0.17.3",
+    "fabric_api": "0.136.1+1.21.8",
+    "loom": "1.11.8",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 126,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc1.21.8-fabric.jar",
+        "bytes": 700749,
+        "sha256": "12f0dc3ba0ecfa1af9c2c6721bebec61f2136afb20b5ba8f850e63be3352f7c3"
+      },
+      {
+        "file": "quick-build-1.1.3-mc1.21.8-fabric-sources.jar",
+        "bytes": 435837,
+        "sha256": "a03164505799f4af57ef88eedb991d884fbe114ef10ae70bb0d96bb5a912948c"
+      }
+    ]
+  },
+  {
+    "minecraft": "26.1.2",
+    "java": 25,
+    "loader": "0.19.3",
+    "fabric_api": "0.153.0+26.1.2",
+    "loom": "1.15.5",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 123,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc26.1.2-fabric.jar",
+        "bytes": 720775,
+        "sha256": "6a73e729f219ab65030e4c5b6294e13118b09950ea722fbb287e51985966213c"
+      },
+      {
+        "file": "quick-build-1.1.3-mc26.1.2-fabric-sources.jar",
+        "bytes": 436494,
+        "sha256": "b2a6a4ea08e63d79303967a8e5fbc72a62f97221bc6b69c3f6c33862b0b81897"
+      }
+    ]
+  },
+  {
+    "minecraft": "26.2",
+    "java": 25,
+    "loader": "0.19.3",
+    "fabric_api": "0.154.0+26.2",
+    "loom": "1.15.5",
+    "yarn": "not-used; Mojang official mappings",
+    "tests": {
+      "tests": 125,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "artifacts": [
+      {
+        "file": "quick-build-1.1.3-mc26.2-fabric.jar",
+        "bytes": 721155,
+        "sha256": "75c0799109d2646fe2c447a5e685b0d63e8dc0e18fc3d590b3cf96f36b5c261b"
+      },
+      {
+        "file": "quick-build-1.1.3-mc26.2-fabric-sources.jar",
+        "bytes": 436220,
+        "sha256": "6922d67ee050dc7b9051b2f0d9ec8574c869efd2e7944b81963faff7dba4e1c7"
+      }
+    ]
+  }
+]

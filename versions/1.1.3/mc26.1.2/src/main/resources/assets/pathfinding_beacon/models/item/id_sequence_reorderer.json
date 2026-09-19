@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "pathfinding_beacon:item/id_sequence_reorderer"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, 90, 45],
+      "translation": [0, 3, 1],
+      "scale": [0.68, 0.68, 0.68]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, -90, -45],
+      "translation": [0, 3, 1],
+      "scale": [0.68, 0.68, 0.68]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, -90, 35],
+      "translation": [1, 2, 1],
+      "scale": [0.66, 0.66, 0.66]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, 90, -35],
+      "translation": [1, 2, 1],
+      "scale": [0.66, 0.66, 0.66]
+    },
+    "gui": {
+      "rotation": [0, 0, -25],
+      "translation": [0, 0, 0],
+      "scale": [0.84, 0.84, 0.84]
+    }
+  }
+}
