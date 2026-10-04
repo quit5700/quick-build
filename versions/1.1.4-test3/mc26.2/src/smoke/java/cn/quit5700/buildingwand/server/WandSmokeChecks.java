@@ -1,0 +1,39 @@
+package cn.quit5700.buildingwand.server;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.core.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluids;
+import java.util.*;
+import java.lang.reflect.*;
+public final class WandSmokeChecks {
+ private static void check(boolean value,String reason){if(!value)throw new AssertionError(reason);}
+ public static void register(){ServerLifecycleEvents.SERVER_STARTED.register(server->{try{run(server.overworld());System.out.println("Q5_WAND_SMOKE_PASS: quiet placement, wire/observer states, water/lava/waterlogging, container contents, fluid/block ticks, piston event rotation, rollback, wand mode persistence, huge build task codec and owner/wand cancellation");}catch(Throwable e){e.printStackTrace();System.out.println("Q5_WAND_SMOKE_FAIL");}finally{server.halt(false);}});}
+ @SuppressWarnings({"rawtypes","unchecked"}) private static void run(ServerLevel w)throws Exception{
+  int flags=MoveUpdates.flags();check((flags&Block.UPDATE_NEIGHBORS)==0,"quiet flags must not update neighbors");check((flags&Block.UPDATE_SKIP_ALL_SIDEEFFECTS)==Block.UPDATE_SKIP_ALL_SIDEEFFECTS,"side effects not suppressed");
+  Set<BlockPos> source=new LinkedHashSet<>(),target=new LinkedHashSet<>(),affected=new LinkedHashSet<>();Map<BlockPos,BlockPos> destinations=new LinkedHashMap<>();for(int x=64;x<=68;x++)for(int y=180;y<=184;y++)for(int z=64;z<=68;z++){var p=new BlockPos(x,y,z);source.add(p);target.add(p.offset(32,0,0));destinations.put(p,p.offset(32,0,0));w.setBlock(p,Blocks.GLASS.defaultBlockState(),flags);}affected.addAll(source);affected.addAll(target);
+  var water=new BlockPos(66,182,66);var wire=new BlockPos(65,181,65);var chest=new BlockPos(67,181,65);var piston=new BlockPos(65,181,67);
+  var lava=new BlockPos(66,183,66);var wet=new BlockPos(67,183,66);var observer=new BlockPos(65,183,66);
+  w.setBlock(lava,Blocks.LAVA.defaultBlockState(),flags);w.setBlock(wet,Blocks.OAK_SLAB.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED,true),flags);w.setBlock(observer,Blocks.OBSERVER.defaultBlockState(),flags);
+  w.setBlock(water,Blocks.WATER.defaultBlockState(),flags);w.setBlock(wire,Blocks.REDSTONE_WIRE.defaultBlockState().setValue(BlockStateProperties.POWER,15),flags);w.setBlock(chest,Blocks.CHEST.defaultBlockState(),flags);w.setBlock(piston,Blocks.PISTON.defaultBlockState(),flags);
+  var container=(Container)w.getBlockEntity(chest);check(container!=null,"chest entity missing");container.setItem(0,new ItemStack(Items.DIAMOND,31));
+  w.scheduleTick(lava,Fluids.LAVA,80);w.scheduleTick(observer,Blocks.OBSERVER,2);
+  w.scheduleTick(water,Fluids.WATER,40);w.scheduleTick(wire,Blocks.REDSTONE_WIRE,30);w.blockEvent(piston,Blocks.PISTON,0,2);
+  var snapshot=WandActions.class.getDeclaredMethod("snapshot",ServerLevel.class,Set.class);snapshot.setAccessible(true);var original=(Map)snapshot.invoke(null,w,source);var rollback=(Map)snapshot.invoke(null,w,affected);
+  var type=Class.forName("cn.quit5700.buildingwand.server.WandActions$MoveBlock");Constructor<?> constructor=type.getDeclaredConstructors()[0];constructor.setAccessible(true);Method state=type.getDeclaredMethod("state"),tag=type.getDeclaredMethod("blockEntityTag");state.setAccessible(true);tag.setAccessible(true);Map moved=new LinkedHashMap();for(Object k:original.keySet()){var p=(BlockPos)k;Object entry=original.get(k);moved.put(destinations.get(p),constructor.newInstance(p,state.invoke(entry),tag.invoke(entry)));}
+  var clear=WandActions.class.getDeclaredMethod("clearPositions",ServerLevel.class,Set.class);clear.setAccessible(true);var place=WandActions.class.getDeclaredMethod("placeSnapshot",ServerLevel.class,Map.class);place.setAccessible(true);var verify=WandActions.class.getDeclaredMethod("verifySnapshot",ServerLevel.class,Map.class);verify.setAccessible(true);
+  var effects=new MoveUpdates(w,source,target);clear.invoke(null,w,source);place.invoke(null,w,moved);verify.invoke(null,w,moved);effects.commit(destinations,1);
+  check(w.getBlockState(water).isAir(),"source not cleared");check(w.getFluidState(destinations.get(water)).getType()==Fluids.WATER,"fluid lost");check(w.getBlockState(destinations.get(wire)).getValue(BlockStateProperties.POWER)==15,"wire changed during move");check(((Container)w.getBlockEntity(destinations.get(chest))).getItem(0).getCount()==31,"container count changed");check(w.getBlockTicks().hasScheduledTick(destinations.get(wire),Blocks.REDSTONE_WIRE),"block tick not moved");check(!w.getBlockTicks().hasScheduledTick(wire,Blocks.REDSTONE_WIRE),"old block tick remained");check(w.getFluidTicks().hasScheduledTick(destinations.get(water),Fluids.WATER),"fluid tick not moved");check(!w.getFluidTicks().hasScheduledTick(water,Fluids.WATER),"old fluid tick remained");
+  check(w.getFluidState(destinations.get(lava)).getType()==Fluids.LAVA,"lava lost");check(w.getBlockState(destinations.get(wet)).getValue(BlockStateProperties.WATERLOGGED),"waterlogged state lost");check(w.getBlockState(destinations.get(observer)).is(Blocks.OBSERVER)&&!w.getBlockState(destinations.get(observer)).getValue(BlockStateProperties.POWERED),"observer triggered during placement");check(w.getFluidTicks().hasScheduledTick(destinations.get(lava),Fluids.LAVA),"lava tick not moved");check(w.getBlockTicks().hasScheduledTick(destinations.get(observer),Blocks.OBSERVER),"observer tick not moved");
+  var access=(cn.quit5700.light.mixin.MoveBlockEventsAccessor)w;check(access.q5$blockEvents().stream().anyMatch(e->e.pos().equals(destinations.get(piston))),"event not moved");check(access.q5$blockEvents().stream().noneMatch(e->e.pos().equals(piston)),"old event remained");check(access.q5$blockEvents().stream().anyMatch(e->e.pos().equals(destinations.get(piston))&&e.paramB()==5),"piston pending event direction not rotated");
+  clear.invoke(null,w,affected);place.invoke(null,w,rollback);effects.restore();check(((Container)w.getBlockEntity(chest)).getItem(0).getCount()==31,"rollback inventory lost");check(w.getFluidTicks().hasScheduledTick(water,Fluids.WATER),"rollback fluid tick lost");
+  var buildTasks=BuildTaskState.get(w);var owner=UUID.randomUUID();var taskWand=UUID.randomUUID().toString();buildTasks.add(owner,taskWand,Blocks.STONE,new cn.quit5700.buildingwand.logic.DeleteSelection.Point(0,0,0),new cn.quit5700.buildingwand.logic.DeleteSelection.Point(100000,10,100000),2);
+  var field=BuildTaskState.class.getDeclaredField("CODEC");field.setAccessible(true);var codec=(com.mojang.serialization.Codec<BuildTaskState>)field.get(null);var encoded=codec.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,buildTasks).getOrThrow();var restored=codec.parse(com.mojang.serialization.JsonOps.INSTANCE,encoded).getOrThrow();check(restored.busy(owner),"build task did not survive codec");check(!restored.cancel(owner,UUID.randomUUID().toString()),"another wand cancelled task");check(restored.cancel(owner,taskWand)&&!restored.busy(owner),"original wand could not cancel task");buildTasks.cancel(owner,taskWand);
+  var wand=new ItemStack(cn.quit5700.buildingwand.registry.ModItems.BUILDING_WAND);check(cn.quit5700.buildingwand.util.BuildWandData.mode(wand)==0,"default mode wrong");cn.quit5700.buildingwand.util.BuildWandData.mode(wand,2);String id=cn.quit5700.buildingwand.util.BuildWandData.ensure(wand);var copy=wand.copy();check(cn.quit5700.buildingwand.util.BuildWandData.mode(copy)==2&&cn.quit5700.buildingwand.util.BuildWandData.id(copy).equals(id),"wand data not persistent");
+ }
+}
