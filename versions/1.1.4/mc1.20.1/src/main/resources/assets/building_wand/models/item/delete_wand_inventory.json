@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "building_wand:item/delete_wand_inventory"
+  }
+}

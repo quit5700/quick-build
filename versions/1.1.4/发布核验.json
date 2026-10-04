@@ -1,0 +1,218 @@
+[
+  {
+    "minecraft": "26.2",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 183,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc26.2_验证.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc26.2\\dist\\quick-build-1.1.4-mc26.2-fabric.jar",
+        "sha256": "23200d56522d1071bbe55a5496cd554bae9af07e87db5157beb869968c351778",
+        "字节": 875875
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc26.2\\dist\\quick-build-1.1.4-mc26.2-fabric-sources.jar",
+        "sha256": "302442b47a88527e9dce1754647c923ecc1f10eaa02c15bff5dd30b34b66bfe7",
+        "字节": 506851
+      }
+    }
+  },
+  {
+    "minecraft": "26.1.2",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 181,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc26.1.2_完整.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc26.1.2\\dist\\quick-build-1.1.4-mc26.1.2-fabric.jar",
+        "sha256": "850f6a52d938a3c82694f5bcf283ad33da1978b4d90aa98215a95d084ae73806",
+        "字节": 871177
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc26.1.2\\dist\\quick-build-1.1.4-mc26.1.2-fabric-sources.jar",
+        "sha256": "753796365ca0cf2c62480a341e0b437abad1c36d8e9a32a391a14f92ffb6875c",
+        "字节": 505645
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.11",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 184,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc1.21.11_完整.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.11\\dist\\quick-build-1.1.4-mc1.21.11-fabric.jar",
+        "sha256": "66b3dd6bedf74b9be49f3ee990b02370c9d09a4c4a0a3d0b258f1d25aa40fcb6",
+        "字节": 849432
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.11\\dist\\quick-build-1.1.4-mc1.21.11-fabric-sources.jar",
+        "sha256": "93d255a1c1b6a9f6ee43ae18b9a15d8f27c30582f117bd8571a238909d050151",
+        "字节": 506396
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.8",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 184,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc1.21.8_完整.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.8\\dist\\quick-build-1.1.4-mc1.21.8-fabric.jar",
+        "sha256": "3163115e15bec9abf433fa20cd5877b034393210b8763d65b6deca8cc2c88236",
+        "字节": 847133
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.8\\dist\\quick-build-1.1.4-mc1.21.8-fabric-sources.jar",
+        "sha256": "5afd6221e2086727e8ee234f15e773ed79d7d34a07db61867933dee4c01107f8",
+        "字节": 504813
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.4",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 182,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc1.21.4_最终.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.4\\dist\\quick-build-1.1.4-mc1.21.4-fabric.jar",
+        "sha256": "20e4c5f261b0ad7e6cc04bbf7fa8b8cd51d752cb2ada2a42ddb07a7a6c932569",
+        "字节": 854261
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.4\\dist\\quick-build-1.1.4-mc1.21.4-fabric-sources.jar",
+        "sha256": "5783bcfd068a86cd54cfc6b86c47402c6394b3eaf52c27dfae3ff1da589f263e",
+        "字节": 506843
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.1",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 182,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc1.21.1_完整.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.1\\dist\\quick-build-1.1.4-mc1.21.1-fabric.jar",
+        "sha256": "3aa719e67193770a1eada873142dab0f10a5d8d64c36c6fbb259724ec5f8e569",
+        "字节": 858729
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.21.1\\dist\\quick-build-1.1.4-mc1.21.1-fabric-sources.jar",
+        "sha256": "93207ad7ce9f998b856feb0b40d9ff39df59d8e7c509be9b07d58bb1429da60d",
+        "字节": 509223
+      }
+    }
+  },
+  {
+    "minecraft": "1.20.4",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 182,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc1.20.4_最终.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.20.4\\dist\\quick-build-1.1.4-mc1.20.4-fabric.jar",
+        "sha256": "7d1872b4ff59b15ae0db5b2ad4e48425dd9f46d213f811321ce227f4b3be4f20",
+        "字节": 856432
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.20.4\\dist\\quick-build-1.1.4-mc1.20.4-fabric-sources.jar",
+        "sha256": "21dcef0439102d02854f36ddcbb16898b5e0e607b9f531e5605dbd7d9cc83a28",
+        "字节": 511493
+      }
+    }
+  },
+  {
+    "minecraft": "1.20.1",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 182,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 27,
+    "世界日志": "世界回归_mc1.20.1_最终.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.20.1\\dist\\quick-build-1.1.4-mc1.20.1-fabric.jar",
+        "sha256": "c5b26feadb82bf0c5aaadbc3e580fc17c116954a6217350ba661b5626bd91415",
+        "字节": 853427
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.4\\mc1.20.1\\dist\\quick-build-1.1.4-mc1.20.1-fabric-sources.jar",
+        "sha256": "1feeb9062892e313df78745d1fca82e4dac8ef027a0a35066b11b69be4da3a1e",
+        "字节": 510120
+      }
+    }
+  }
+]

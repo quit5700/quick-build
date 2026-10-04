@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "light:block/constant_light_block"
+    }
+  }
+}

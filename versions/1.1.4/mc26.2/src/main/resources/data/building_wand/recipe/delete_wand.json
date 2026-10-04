@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "R",
+    "S",
+    "D"
+  ],
+  "key": {
+    "R": "minecraft:redstone_block",
+    "S": "minecraft:stick",
+    "D": "minecraft:diamond"
+  },
+  "result": {
+    "id": "building_wand:delete_wand",
+    "count": 1
+  }
+}

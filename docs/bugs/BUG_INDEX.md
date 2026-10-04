@@ -38,3 +38,5 @@
 - [BUG-20261004-STRUCTURE-PLACEMENT](BUG-20261004-STRUCTURE-PLACEMENT.md)：测试版10特殊结构成组、单箱与连接校正；修正水平相邻箱子误判；181项测试及21项独立世界回归通过，实机待验收。
 
 - [BUG-20261004-TASK-CANCEL-NATURAL-DROPS](BUG-20261004-TASK-CANCEL-NATURAL-DROPS.md)：测试版11跨维度取消本人建造、余位容器精确掉落与自然支撑规则；183项测试及27项独立世界回归通过，实机待验收。
+
+- [BUG-20261004-FORMAL-114-PORTING](BUG-20261004-FORMAL-114-PORTING.md)：正式1.1.4八版本接口适配、历史法杖纹理遗漏、旧版静默装配及独立世界实体观测验证；交付正在最终核验。

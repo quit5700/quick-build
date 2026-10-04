@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "cn.quit5700.light.mixin.client",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "BlockModelLighterCacheMixin",
+    "EntityRendererMixin",
+    "IndigoChunkRenderInfoMixin",
+    "LevelRendererMixin",
+    "SodiumLightDataAccessMixin",
+    "SwitchIconMixin",
+    "WandFlashMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,1382 @@
+Compiled from "LevelChunk.java"
+public class net.minecraft.world.level.chunk.LevelChunk extends net.minecraft.world.level.chunk.ChunkAccess {
+  static final org.slf4j.Logger LOGGER;
+
+  final net.minecraft.world.level.Level level;
+
+  public net.minecraft.world.level.chunk.LevelChunk(net.minecraft.world.level.Level, net.minecraft.world.level.ChunkPos);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: getstatic     #96                 // Field net/minecraft/world/level/chunk/UpgradeData.EMPTY:Lnet/minecraft/world/level/chunk/UpgradeData;
+       6: new           #98                 // class net/minecraft/world/ticks/LevelChunkTicks
+       9: dup
+      10: invokespecial #101                // Method net/minecraft/world/ticks/LevelChunkTicks."<init>":()V
+      13: new           #98                 // class net/minecraft/world/ticks/LevelChunkTicks
+      16: dup
+      17: invokespecial #101                // Method net/minecraft/world/ticks/LevelChunkTicks."<init>":()V
+      20: lconst_0
+      21: aconst_null
+      22: aconst_null
+      23: aconst_null
+      24: invokespecial #104                // Method "<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/chunk/UpgradeData;Lnet/minecraft/world/ticks/LevelChunkTicks;Lnet/minecraft/world/ticks/LevelChunkTicks;J[Lnet/minecraft/world/level/chunk/LevelChunkSection;Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;Lnet/minecraft/world/level/levelgen/blending/BlendingData;)V
+      27: return
+
+  public net.minecraft.world.level.chunk.LevelChunk(net.minecraft.world.level.Level, net.minecraft.world.level.ChunkPos, net.minecraft.world.level.chunk.UpgradeData, net.minecraft.world.ticks.LevelChunkTicks<net.minecraft.world.level.block.Block>, net.minecraft.world.ticks.LevelChunkTicks<net.minecraft.world.level.material.Fluid>, long, net.minecraft.world.level.chunk.LevelChunkSection[], net.minecraft.world.level.chunk.LevelChunk$PostLoadProcessor, net.minecraft.world.level.levelgen.blending.BlendingData);
+    Code:
+       0: aload_0
+       1: aload_2
+       2: aload_3
+       3: aload_1
+       4: aload_1
+       5: invokevirtual #121                // Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;
+       8: getstatic     #127                // Field net/minecraft/core/registries/Registries.BIOME:Lnet/minecraft/resources/ResourceKey;
+      11: invokeinterface #133,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.lookupOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Registry;
+      16: lload         6
+      18: aload         8
+      20: aload         10
+      22: invokespecial #136                // Method net/minecraft/world/level/chunk/ChunkAccess."<init>":(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/chunk/UpgradeData;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/core/Registry;J[Lnet/minecraft/world/level/chunk/LevelChunkSection;Lnet/minecraft/world/level/levelgen/blending/BlendingData;)V
+      25: aload_0
+      26: invokestatic  #142                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+      29: putfield      #144                // Field tickersInLevel:Ljava/util/Map;
+      32: aload_0
+      33: invokedynamic #161,  0            // InvokeDynamic #0:setUnsaved:()Lnet/minecraft/world/level/chunk/LevelChunk$UnsavedListener;
+      38: putfield      #163                // Field unsavedListener:Lnet/minecraft/world/level/chunk/LevelChunk$UnsavedListener;
+      41: aload_0
+      42: aload_1
+      43: putfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+      46: aload_0
+      47: new           #167                // class it/unimi/dsi/fastutil/ints/Int2ObjectOpenHashMap
+      50: dup
+      51: invokespecial #168                // Method it/unimi/dsi/fastutil/ints/Int2ObjectOpenHashMap."<init>":()V
+      54: putfield      #170                // Field gameEventListenerRegistrySections:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      57: invokestatic  #174                // Method net/minecraft/world/level/levelgen/Heightmap$Types.values:()[Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      60: astore        11
+      62: aload         11
+      64: arraylength
+      65: istore        12
+      67: iconst_0
+      68: istore        13
+      70: iload         13
+      72: iload         12
+      74: if_icmpge     126
+      77: aload         11
+      79: iload         13
+      81: aaload
+      82: astore        14
+      84: getstatic     #182                // Field net/minecraft/world/level/chunk/status/ChunkStatus.FULL:Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+      87: invokevirtual #186                // Method net/minecraft/world/level/chunk/status/ChunkStatus.heightmapsAfter:()Ljava/util/EnumSet;
+      90: aload         14
+      92: invokevirtual #192                // Method java/util/EnumSet.contains:(Ljava/lang/Object;)Z
+      95: ifeq          120
+      98: aload_0
+      99: getfield      #195                // Field heightmaps:Ljava/util/Map;
+     102: aload         14
+     104: new           #23                 // class net/minecraft/world/level/levelgen/Heightmap
+     107: dup
+     108: aload_0
+     109: aload         14
+     111: invokespecial #198                // Method net/minecraft/world/level/levelgen/Heightmap."<init>":(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/levelgen/Heightmap$Types;)V
+     114: invokeinterface #202,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     119: pop
+     120: iinc          13, 1
+     123: goto          70
+     126: aload_0
+     127: aload         9
+     129: putfield      #204                // Field postLoad:Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;
+     132: aload_0
+     133: aload         4
+     135: putfield      #206                // Field blockTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+     138: aload_0
+     139: aload         5
+     141: putfield      #208                // Field fluidTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+     144: return
+
+  public net.minecraft.world.level.chunk.LevelChunk(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.chunk.ProtoChunk, net.minecraft.world.level.chunk.LevelChunk$PostLoadProcessor);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokevirtual #222                // Method net/minecraft/world/level/chunk/ProtoChunk.getPos:()Lnet/minecraft/world/level/ChunkPos;
+       6: aload_2
+       7: invokevirtual #226                // Method net/minecraft/world/level/chunk/ProtoChunk.getUpgradeData:()Lnet/minecraft/world/level/chunk/UpgradeData;
+      10: aload_2
+      11: invokevirtual #230                // Method net/minecraft/world/level/chunk/ProtoChunk.unpackBlockTicks:()Lnet/minecraft/world/ticks/LevelChunkTicks;
+      14: aload_2
+      15: invokevirtual #233                // Method net/minecraft/world/level/chunk/ProtoChunk.unpackFluidTicks:()Lnet/minecraft/world/ticks/LevelChunkTicks;
+      18: aload_2
+      19: invokevirtual #237                // Method net/minecraft/world/level/chunk/ProtoChunk.getInhabitedTime:()J
+      22: aload_2
+      23: invokevirtual #241                // Method net/minecraft/world/level/chunk/ProtoChunk.getSections:()[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+      26: aload_3
+      27: aload_2
+      28: invokevirtual #245                // Method net/minecraft/world/level/chunk/ProtoChunk.getBlendingData:()Lnet/minecraft/world/level/levelgen/blending/BlendingData;
+      31: invokespecial #104                // Method "<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/chunk/UpgradeData;Lnet/minecraft/world/ticks/LevelChunkTicks;Lnet/minecraft/world/ticks/LevelChunkTicks;J[Lnet/minecraft/world/level/chunk/LevelChunkSection;Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;Lnet/minecraft/world/level/levelgen/blending/BlendingData;)V
+      34: aload_2
+      35: getfield      #248                // Field net/minecraft/world/level/chunk/ProtoChunk.pendingBlockEntities:Ljava/util/Map;
+      38: invokeinterface #252,  1          // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
+      43: aload_2
+      44: getfield      #255                // Field net/minecraft/world/level/chunk/ProtoChunk.blockEntities:Ljava/util/Map;
+      47: invokeinterface #252,  1          // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
+      52: invokestatic  #261                // Method java/util/Collections.disjoint:(Ljava/util/Collection;Ljava/util/Collection;)Z
+      55: ifne          73
+      58: getstatic     #263                // Field LOGGER:Lorg/slf4j/Logger;
+      61: ldc_w         #265                // String Chunk at {} contains duplicated block entities
+      64: aload_2
+      65: invokevirtual #222                // Method net/minecraft/world/level/chunk/ProtoChunk.getPos:()Lnet/minecraft/world/level/ChunkPos;
+      68: invokeinterface #271,  3          // InterfaceMethod org/slf4j/Logger.error:(Ljava/lang/String;Ljava/lang/Object;)V
+      73: aload_2
+      74: invokevirtual #275                // Method net/minecraft/world/level/chunk/ProtoChunk.getBlockEntities:()Ljava/util/Map;
+      77: invokeinterface #278,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+      82: invokeinterface #284,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      87: astore        4
+      89: aload         4
+      91: invokeinterface #290,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      96: ifeq          120
+      99: aload         4
+     101: invokeinterface #294,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     106: checkcast     #296                // class net/minecraft/world/level/block/entity/BlockEntity
+     109: astore        5
+     111: aload_0
+     112: aload         5
+     114: invokevirtual #300                // Method setBlockEntity:(Lnet/minecraft/world/level/block/entity/BlockEntity;)V
+     117: goto          89
+     120: aload_0
+     121: getfield      #301                // Field pendingBlockEntities:Ljava/util/Map;
+     124: aload_2
+     125: invokevirtual #304                // Method net/minecraft/world/level/chunk/ProtoChunk.getBlockEntityNbts:()Ljava/util/Map;
+     128: invokeinterface #308,  2          // InterfaceMethod java/util/Map.putAll:(Ljava/util/Map;)V
+     133: iconst_0
+     134: istore        4
+     136: iload         4
+     138: aload_2
+     139: invokevirtual #312                // Method net/minecraft/world/level/chunk/ProtoChunk.getPostProcessing:()[Lit/unimi/dsi/fastutil/shorts/ShortList;
+     142: arraylength
+     143: if_icmpge     166
+     146: aload_0
+     147: getfield      #316                // Field postProcessing:[Lit/unimi/dsi/fastutil/shorts/ShortList;
+     150: iload         4
+     152: aload_2
+     153: invokevirtual #312                // Method net/minecraft/world/level/chunk/ProtoChunk.getPostProcessing:()[Lit/unimi/dsi/fastutil/shorts/ShortList;
+     156: iload         4
+     158: aaload
+     159: aastore
+     160: iinc          4, 1
+     163: goto          136
+     166: aload_0
+     167: aload_2
+     168: invokevirtual #319                // Method net/minecraft/world/level/chunk/ProtoChunk.getAllStarts:()Ljava/util/Map;
+     171: invokevirtual #322                // Method setAllStarts:(Ljava/util/Map;)V
+     174: aload_0
+     175: aload_2
+     176: invokevirtual #325                // Method net/minecraft/world/level/chunk/ProtoChunk.getAllReferences:()Ljava/util/Map;
+     179: invokevirtual #328                // Method setAllReferences:(Ljava/util/Map;)V
+     182: aload_2
+     183: invokevirtual #331                // Method net/minecraft/world/level/chunk/ProtoChunk.getHeightmaps:()Ljava/util/Collection;
+     186: invokeinterface #284,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+     191: astore        4
+     193: aload         4
+     195: invokeinterface #290,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     200: ifeq          264
+     203: aload         4
+     205: invokeinterface #294,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     210: checkcast     #26                 // class java/util/Map$Entry
+     213: astore        5
+     215: getstatic     #182                // Field net/minecraft/world/level/chunk/status/ChunkStatus.FULL:Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+     218: invokevirtual #186                // Method net/minecraft/world/level/chunk/status/ChunkStatus.heightmapsAfter:()Ljava/util/EnumSet;
+     221: aload         5
+     223: invokeinterface #334,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     228: invokevirtual #192                // Method java/util/EnumSet.contains:(Ljava/lang/Object;)Z
+     231: ifeq          261
+     234: aload_0
+     235: aload         5
+     237: invokeinterface #334,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     242: checkcast     #21                 // class net/minecraft/world/level/levelgen/Heightmap$Types
+     245: aload         5
+     247: invokeinterface #337,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     252: checkcast     #23                 // class net/minecraft/world/level/levelgen/Heightmap
+     255: invokevirtual #341                // Method net/minecraft/world/level/levelgen/Heightmap.getRawData:()[J
+     258: invokevirtual #345                // Method setHeightmap:(Lnet/minecraft/world/level/levelgen/Heightmap$Types;[J)V
+     261: goto          193
+     264: aload_0
+     265: aload_2
+     266: getfield      #349                // Field net/minecraft/world/level/chunk/ProtoChunk.skyLightSources:Lnet/minecraft/world/level/lighting/ChunkSkyLightSources;
+     269: putfield      #350                // Field skyLightSources:Lnet/minecraft/world/level/lighting/ChunkSkyLightSources;
+     272: aload_0
+     273: aload_2
+     274: invokevirtual #353                // Method net/minecraft/world/level/chunk/ProtoChunk.isLightCorrect:()Z
+     277: invokevirtual #357                // Method setLightCorrect:(Z)V
+     280: aload_0
+     281: invokevirtual #360                // Method markUnsaved:()V
+     284: return
+
+  public void setUnsavedListener(net.minecraft.world.level.chunk.LevelChunk$UnsavedListener);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #163                // Field unsavedListener:Lnet/minecraft/world/level/chunk/LevelChunk$UnsavedListener;
+       5: aload_0
+       6: invokevirtual #374                // Method isUnsaved:()Z
+       9: ifeq          22
+      12: aload_1
+      13: aload_0
+      14: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+      17: invokeinterface #378,  2          // InterfaceMethod net/minecraft/world/level/chunk/LevelChunk$UnsavedListener.setUnsaved:(Lnet/minecraft/world/level/ChunkPos;)V
+      22: return
+
+  public void markUnsaved();
+    Code:
+       0: aload_0
+       1: invokevirtual #374                // Method isUnsaved:()Z
+       4: istore_1
+       5: aload_0
+       6: invokespecial #379                // Method net/minecraft/world/level/chunk/ChunkAccess.markUnsaved:()V
+       9: iload_1
+      10: ifne          26
+      13: aload_0
+      14: getfield      #163                // Field unsavedListener:Lnet/minecraft/world/level/chunk/LevelChunk$UnsavedListener;
+      17: aload_0
+      18: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+      21: invokeinterface #378,  2          // InterfaceMethod net/minecraft/world/level/chunk/LevelChunk$UnsavedListener.setUnsaved:(Lnet/minecraft/world/level/ChunkPos;)V
+      26: return
+
+  public net.minecraft.world.ticks.TickContainerAccess<net.minecraft.world.level.block.Block> getBlockTicks();
+    Code:
+       0: aload_0
+       1: getfield      #206                // Field blockTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+       4: areturn
+
+  public net.minecraft.world.ticks.TickContainerAccess<net.minecraft.world.level.material.Fluid> getFluidTicks();
+    Code:
+       0: aload_0
+       1: getfield      #208                // Field fluidTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+       4: areturn
+
+  public net.minecraft.world.level.chunk.ChunkAccess$PackedTicks getTicksForSerialization(long);
+    Code:
+       0: new           #31                 // class net/minecraft/world/level/chunk/ChunkAccess$PackedTicks
+       3: dup
+       4: aload_0
+       5: getfield      #206                // Field blockTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+       8: lload_1
+       9: invokevirtual #391                // Method net/minecraft/world/ticks/LevelChunkTicks.pack:(J)Ljava/util/List;
+      12: aload_0
+      13: getfield      #208                // Field fluidTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+      16: lload_1
+      17: invokevirtual #391                // Method net/minecraft/world/ticks/LevelChunkTicks.pack:(J)Ljava/util/List;
+      20: invokespecial #394                // Method net/minecraft/world/level/chunk/ChunkAccess$PackedTicks."<init>":(Ljava/util/List;Ljava/util/List;)V
+      23: areturn
+
+  public net.minecraft.world.level.gameevent.GameEventListenerRegistry getListenerRegistry(int);
+    Code:
+       0: aload_0
+       1: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+       4: astore_3
+       5: aload_3
+       6: instanceof    #398                // class net/minecraft/server/level/ServerLevel
+       9: ifeq          39
+      12: aload_3
+      13: checkcast     #398                // class net/minecraft/server/level/ServerLevel
+      16: astore_2
+      17: aload_0
+      18: getfield      #170                // Field gameEventListenerRegistrySections:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      21: iload_1
+      22: aload_0
+      23: aload_2
+      24: iload_1
+      25: invokedynamic #410,  0            // InvokeDynamic #1:get:(Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/server/level/ServerLevel;I)Lit/unimi/dsi/fastutil/ints/Int2ObjectFunction;
+      30: invokeinterface #416,  3          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.computeIfAbsent:(ILit/unimi/dsi/fastutil/ints/Int2ObjectFunction;)Ljava/lang/Object;
+      35: checkcast     #418                // class net/minecraft/world/level/gameevent/GameEventListenerRegistry
+      38: areturn
+      39: aload_0
+      40: iload_1
+      41: invokespecial #420                // Method net/minecraft/world/level/chunk/ChunkAccess.getListenerRegistry:(I)Lnet/minecraft/world/level/gameevent/GameEventListenerRegistry;
+      44: areturn
+
+  public net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos);
+    Code:
+       0: aload_1
+       1: invokevirtual #431                // Method net/minecraft/core/BlockPos.getX:()I
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #434                // Method net/minecraft/core/BlockPos.getY:()I
+       9: istore_3
+      10: aload_1
+      11: invokevirtual #437                // Method net/minecraft/core/BlockPos.getZ:()I
+      14: istore        4
+      16: aload_0
+      17: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+      20: invokevirtual #440                // Method net/minecraft/world/level/Level.isDebug:()Z
+      23: ifeq          74
+      26: aconst_null
+      27: astore        5
+      29: iload_3
+      30: bipush        60
+      32: if_icmpne     43
+      35: getstatic     #446                // Field net/minecraft/world/level/block/Blocks.BARRIER:Lnet/minecraft/world/level/block/Block;
+      38: invokevirtual #452                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+      41: astore        5
+      43: iload_3
+      44: bipush        70
+      46: if_icmpne     57
+      49: iload_2
+      50: iload         4
+      52: invokestatic  #460                // Method net/minecraft/world/level/levelgen/DebugLevelSource.getBlockStateFor:(II)Lnet/minecraft/world/level/block/state/BlockState;
+      55: astore        5
+      57: aload         5
+      59: ifnonnull     71
+      62: getstatic     #463                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+      65: invokevirtual #452                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+      68: goto          73
+      71: aload         5
+      73: areturn
+      74: aload_0
+      75: iload_3
+      76: invokevirtual #467                // Method getSectionIndex:(I)I
+      79: istore        5
+      81: iload         5
+      83: iflt          132
+      86: iload         5
+      88: aload_0
+      89: getfield      #470                // Field sections:[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+      92: arraylength
+      93: if_icmpge     132
+      96: aload_0
+      97: getfield      #470                // Field sections:[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+     100: iload         5
+     102: aaload
+     103: astore        6
+     105: aload         6
+     107: invokevirtual #475                // Method net/minecraft/world/level/chunk/LevelChunkSection.hasOnlyAir:()Z
+     110: ifne          132
+     113: aload         6
+     115: iload_2
+     116: bipush        15
+     118: iand
+     119: iload_3
+     120: bipush        15
+     122: iand
+     123: iload         4
+     125: bipush        15
+     127: iand
+     128: invokevirtual #478                // Method net/minecraft/world/level/chunk/LevelChunkSection.getBlockState:(III)Lnet/minecraft/world/level/block/state/BlockState;
+     131: areturn
+     132: getstatic     #463                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+     135: invokevirtual #452                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+     138: areturn
+     139: astore        5
+     141: aload         5
+     143: ldc_w         #480                // String Getting block state
+     146: invokestatic  #486                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;
+     149: astore        6
+     151: aload         6
+     153: ldc_w         #488                // String Block being got
+     156: invokevirtual #492                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;
+     159: astore        7
+     161: aload         7
+     163: ldc_w         #494                // String Location
+     166: aload_0
+     167: iload_2
+     168: iload_3
+     169: iload         4
+     171: invokedynamic #506,  0            // InvokeDynamic #2:call:(Lnet/minecraft/world/level/chunk/LevelChunk;III)Lnet/minecraft/CrashReportDetail;
+     176: invokevirtual #512                // Method net/minecraft/CrashReportCategory.setDetail:(Ljava/lang/String;Lnet/minecraft/CrashReportDetail;)Lnet/minecraft/CrashReportCategory;
+     179: pop
+     180: new           #514                // class net/minecraft/ReportedException
+     183: dup
+     184: aload         6
+     186: invokespecial #517                // Method net/minecraft/ReportedException."<init>":(Lnet/minecraft/CrashReport;)V
+     189: athrow
+    Exception table:
+       from    to  target type
+          74   131   139   Class java/lang/Throwable
+         132   138   139   Class java/lang/Throwable
+
+  public net.minecraft.world.level.material.FluidState getFluidState(net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #431                // Method net/minecraft/core/BlockPos.getX:()I
+       5: aload_1
+       6: invokevirtual #434                // Method net/minecraft/core/BlockPos.getY:()I
+       9: aload_1
+      10: invokevirtual #437                // Method net/minecraft/core/BlockPos.getZ:()I
+      13: invokevirtual #535                // Method getFluidState:(III)Lnet/minecraft/world/level/material/FluidState;
+      16: areturn
+
+  public net.minecraft.world.level.material.FluidState getFluidState(int, int, int);
+    Code:
+       0: aload_0
+       1: iload_2
+       2: invokevirtual #467                // Method getSectionIndex:(I)I
+       5: istore        4
+       7: iload         4
+       9: iflt          57
+      12: iload         4
+      14: aload_0
+      15: getfield      #470                // Field sections:[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+      18: arraylength
+      19: if_icmpge     57
+      22: aload_0
+      23: getfield      #470                // Field sections:[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+      26: iload         4
+      28: aaload
+      29: astore        5
+      31: aload         5
+      33: invokevirtual #475                // Method net/minecraft/world/level/chunk/LevelChunkSection.hasOnlyAir:()Z
+      36: ifne          57
+      39: aload         5
+      41: iload_1
+      42: bipush        15
+      44: iand
+      45: iload_2
+      46: bipush        15
+      48: iand
+      49: iload_3
+      50: bipush        15
+      52: iand
+      53: invokevirtual #536                // Method net/minecraft/world/level/chunk/LevelChunkSection.getFluidState:(III)Lnet/minecraft/world/level/material/FluidState;
+      56: areturn
+      57: getstatic     #541                // Field net/minecraft/world/level/material/Fluids.EMPTY:Lnet/minecraft/world/level/material/Fluid;
+      60: invokevirtual #547                // Method net/minecraft/world/level/material/Fluid.defaultFluidState:()Lnet/minecraft/world/level/material/FluidState;
+      63: areturn
+      64: astore        4
+      66: aload         4
+      68: ldc_w         #549                // String Getting fluid state
+      71: invokestatic  #486                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;
+      74: astore        5
+      76: aload         5
+      78: ldc_w         #488                // String Block being got
+      81: invokevirtual #492                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;
+      84: astore        6
+      86: aload         6
+      88: ldc_w         #494                // String Location
+      91: aload_0
+      92: iload_1
+      93: iload_2
+      94: iload_3
+      95: invokedynamic #554,  0            // InvokeDynamic #3:call:(Lnet/minecraft/world/level/chunk/LevelChunk;III)Lnet/minecraft/CrashReportDetail;
+     100: invokevirtual #512                // Method net/minecraft/CrashReportCategory.setDetail:(Ljava/lang/String;Lnet/minecraft/CrashReportDetail;)Lnet/minecraft/CrashReportCategory;
+     103: pop
+     104: new           #514                // class net/minecraft/ReportedException
+     107: dup
+     108: aload         5
+     110: invokespecial #517                // Method net/minecraft/ReportedException."<init>":(Lnet/minecraft/CrashReport;)V
+     113: athrow
+    Exception table:
+       from    to  target type
+           0    56    64   Class java/lang/Throwable
+          57    63    64   Class java/lang/Throwable
+
+  public net.minecraft.world.level.block.state.BlockState setBlockState(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, boolean);
+    Code:
+       0: aload_1
+       1: invokevirtual #434                // Method net/minecraft/core/BlockPos.getY:()I
+       4: istore        4
+       6: aload_0
+       7: aload_0
+       8: iload         4
+      10: invokevirtual #467                // Method getSectionIndex:(I)I
+      13: invokevirtual #560                // Method getSection:(I)Lnet/minecraft/world/level/chunk/LevelChunkSection;
+      16: astore        5
+      18: aload         5
+      20: invokevirtual #475                // Method net/minecraft/world/level/chunk/LevelChunkSection.hasOnlyAir:()Z
+      23: istore        6
+      25: iload         6
+      27: ifeq          39
+      30: aload_2
+      31: invokevirtual #563                // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+      34: ifeq          39
+      37: aconst_null
+      38: areturn
+      39: aload_1
+      40: invokevirtual #431                // Method net/minecraft/core/BlockPos.getX:()I
+      43: bipush        15
+      45: iand
+      46: istore        7
+      48: iload         4
+      50: bipush        15
+      52: iand
+      53: istore        8
+      55: aload_1
+      56: invokevirtual #437                // Method net/minecraft/core/BlockPos.getZ:()I
+      59: bipush        15
+      61: iand
+      62: istore        9
+      64: aload         5
+      66: iload         7
+      68: iload         8
+      70: iload         9
+      72: aload_2
+      73: invokevirtual #566                // Method net/minecraft/world/level/chunk/LevelChunkSection.setBlockState:(IIILnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;
+      76: astore        10
+      78: aload         10
+      80: aload_2
+      81: if_acmpne     86
+      84: aconst_null
+      85: areturn
+      86: aload_2
+      87: invokevirtual #570                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+      90: astore        11
+      92: aload_0
+      93: getfield      #195                // Field heightmaps:Ljava/util/Map;
+      96: getstatic     #573                // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      99: invokeinterface #576,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     104: checkcast     #23                 // class net/minecraft/world/level/levelgen/Heightmap
+     107: iload         7
+     109: iload         4
+     111: iload         9
+     113: aload_2
+     114: invokevirtual #580                // Method net/minecraft/world/level/levelgen/Heightmap.update:(IIILnet/minecraft/world/level/block/state/BlockState;)Z
+     117: pop
+     118: aload_0
+     119: getfield      #195                // Field heightmaps:Ljava/util/Map;
+     122: getstatic     #583                // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+     125: invokeinterface #576,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     130: checkcast     #23                 // class net/minecraft/world/level/levelgen/Heightmap
+     133: iload         7
+     135: iload         4
+     137: iload         9
+     139: aload_2
+     140: invokevirtual #580                // Method net/minecraft/world/level/levelgen/Heightmap.update:(IIILnet/minecraft/world/level/block/state/BlockState;)Z
+     143: pop
+     144: aload_0
+     145: getfield      #195                // Field heightmaps:Ljava/util/Map;
+     148: getstatic     #586                // Field net/minecraft/world/level/levelgen/Heightmap$Types.OCEAN_FLOOR:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+     151: invokeinterface #576,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     156: checkcast     #23                 // class net/minecraft/world/level/levelgen/Heightmap
+     159: iload         7
+     161: iload         4
+     163: iload         9
+     165: aload_2
+     166: invokevirtual #580                // Method net/minecraft/world/level/levelgen/Heightmap.update:(IIILnet/minecraft/world/level/block/state/BlockState;)Z
+     169: pop
+     170: aload_0
+     171: getfield      #195                // Field heightmaps:Ljava/util/Map;
+     174: getstatic     #589                // Field net/minecraft/world/level/levelgen/Heightmap$Types.WORLD_SURFACE:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+     177: invokeinterface #576,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     182: checkcast     #23                 // class net/minecraft/world/level/levelgen/Heightmap
+     185: iload         7
+     187: iload         4
+     189: iload         9
+     191: aload_2
+     192: invokevirtual #580                // Method net/minecraft/world/level/levelgen/Heightmap.update:(IIILnet/minecraft/world/level/block/state/BlockState;)Z
+     195: pop
+     196: aload         5
+     198: invokevirtual #475                // Method net/minecraft/world/level/chunk/LevelChunkSection.hasOnlyAir:()Z
+     201: istore        12
+     203: iload         6
+     205: iload         12
+     207: if_icmpeq     257
+     210: aload_0
+     211: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     214: invokevirtual #593                // Method net/minecraft/world/level/Level.getChunkSource:()Lnet/minecraft/world/level/chunk/ChunkSource;
+     217: invokevirtual #599                // Method net/minecraft/world/level/chunk/ChunkSource.getLightEngine:()Lnet/minecraft/world/level/lighting/LevelLightEngine;
+     220: aload_1
+     221: iload         12
+     223: invokevirtual #605                // Method net/minecraft/world/level/lighting/LevelLightEngine.updateSectionStatus:(Lnet/minecraft/core/BlockPos;Z)V
+     226: aload_0
+     227: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     230: invokevirtual #593                // Method net/minecraft/world/level/Level.getChunkSource:()Lnet/minecraft/world/level/chunk/ChunkSource;
+     233: aload_0
+     234: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+     237: getfield      #610                // Field net/minecraft/world/level/ChunkPos.x:I
+     240: iload         4
+     242: invokestatic  #615                // Method net/minecraft/core/SectionPos.blockToSectionCoord:(I)I
+     245: aload_0
+     246: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+     249: getfield      #618                // Field net/minecraft/world/level/ChunkPos.z:I
+     252: iload         12
+     254: invokevirtual #622                // Method net/minecraft/world/level/chunk/ChunkSource.onSectionEmptinessChanged:(IIIZ)V
+     257: aload         10
+     259: aload_2
+     260: invokestatic  #628                // Method net/minecraft/world/level/lighting/LightEngine.hasDifferentLightProperties:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;)Z
+     263: ifeq          327
+     266: invokestatic  #633                // Method net/minecraft/util/profiling/Profiler.get:()Lnet/minecraft/util/profiling/ProfilerFiller;
+     269: astore        13
+     271: aload         13
+     273: ldc_w         #635                // String updateSkyLightSources
+     276: invokeinterface #641,  2          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.push:(Ljava/lang/String;)V
+     281: aload_0
+     282: getfield      #350                // Field skyLightSources:Lnet/minecraft/world/level/lighting/ChunkSkyLightSources;
+     285: aload_0
+     286: iload         7
+     288: iload         4
+     290: iload         9
+     292: invokevirtual #646                // Method net/minecraft/world/level/lighting/ChunkSkyLightSources.update:(Lnet/minecraft/world/level/BlockGetter;III)Z
+     295: pop
+     296: aload         13
+     298: ldc_w         #648                // String queueCheckLight
+     301: invokeinterface #651,  2          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.popPush:(Ljava/lang/String;)V
+     306: aload_0
+     307: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     310: invokevirtual #593                // Method net/minecraft/world/level/Level.getChunkSource:()Lnet/minecraft/world/level/chunk/ChunkSource;
+     313: invokevirtual #599                // Method net/minecraft/world/level/chunk/ChunkSource.getLightEngine:()Lnet/minecraft/world/level/lighting/LevelLightEngine;
+     316: aload_1
+     317: invokevirtual #655                // Method net/minecraft/world/level/lighting/LevelLightEngine.checkBlock:(Lnet/minecraft/core/BlockPos;)V
+     320: aload         13
+     322: invokeinterface #658,  1          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.pop:()V
+     327: aload         10
+     329: invokevirtual #661                // Method net/minecraft/world/level/block/state/BlockState.hasBlockEntity:()Z
+     332: istore        13
+     334: aload_0
+     335: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     338: getfield      #664                // Field net/minecraft/world/level/Level.isClientSide:Z
+     341: ifne          359
+     344: aload         10
+     346: aload_0
+     347: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     350: aload_1
+     351: aload_2
+     352: iload_3
+     353: invokevirtual #668                // Method net/minecraft/world/level/block/state/BlockState.onRemove:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
+     356: goto          379
+     359: aload         10
+     361: aload         11
+     363: invokevirtual #672                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+     366: ifne          379
+     369: iload         13
+     371: ifeq          379
+     374: aload_0
+     375: aload_1
+     376: invokevirtual #675                // Method removeBlockEntity:(Lnet/minecraft/core/BlockPos;)V
+     379: aload         5
+     381: iload         7
+     383: iload         8
+     385: iload         9
+     387: invokevirtual #478                // Method net/minecraft/world/level/chunk/LevelChunkSection.getBlockState:(III)Lnet/minecraft/world/level/block/state/BlockState;
+     390: aload         11
+     392: invokevirtual #672                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+     395: ifne          400
+     398: aconst_null
+     399: areturn
+     400: aload_0
+     401: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     404: getfield      #664                // Field net/minecraft/world/level/Level.isClientSide:Z
+     407: ifne          422
+     410: aload_2
+     411: aload_0
+     412: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     415: aload_1
+     416: aload         10
+     418: iload_3
+     419: invokevirtual #678                // Method net/minecraft/world/level/block/state/BlockState.onPlace:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
+     422: aload_2
+     423: invokevirtual #661                // Method net/minecraft/world/level/block/state/BlockState.hasBlockEntity:()Z
+     426: ifeq          546
+     429: aload_0
+     430: aload_1
+     431: getstatic     #682                // Field net/minecraft/world/level/chunk/LevelChunk$EntityCreationType.CHECK:Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;
+     434: invokevirtual #686                // Method getBlockEntity:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+     437: astore        14
+     439: aload         14
+     441: ifnull        501
+     444: aload         14
+     446: aload_2
+     447: invokevirtual #690                // Method net/minecraft/world/level/block/entity/BlockEntity.isValidBlockState:(Lnet/minecraft/world/level/block/state/BlockState;)Z
+     450: ifne          501
+     453: getstatic     #263                // Field LOGGER:Lorg/slf4j/Logger;
+     456: ldc_w         #692                // String Found mismatched block entity @ {}: type = {}, state = {}
+     459: iconst_3
+     460: anewarray     #694                // class java/lang/Object
+     463: dup
+     464: iconst_0
+     465: aload_1
+     466: aastore
+     467: dup
+     468: iconst_1
+     469: aload         14
+     471: invokevirtual #698                // Method net/minecraft/world/level/block/entity/BlockEntity.getType:()Lnet/minecraft/world/level/block/entity/BlockEntityType;
+     474: invokevirtual #704                // Method net/minecraft/world/level/block/entity/BlockEntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;
+     477: invokevirtual #708                // Method net/minecraft/core/Holder$Reference.key:()Lnet/minecraft/resources/ResourceKey;
+     480: invokevirtual #714                // Method net/minecraft/resources/ResourceKey.location:()Lnet/minecraft/resources/ResourceLocation;
+     483: aastore
+     484: dup
+     485: iconst_2
+     486: aload_2
+     487: aastore
+     488: invokeinterface #718,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+     493: aload_0
+     494: aload_1
+     495: invokevirtual #675                // Method removeBlockEntity:(Lnet/minecraft/core/BlockPos;)V
+     498: aconst_null
+     499: astore        14
+     501: aload         14
+     503: ifnonnull     534
+     506: aload         11
+     508: checkcast     #720                // class net/minecraft/world/level/block/EntityBlock
+     511: aload_1
+     512: aload_2
+     513: invokeinterface #724,  3          // InterfaceMethod net/minecraft/world/level/block/EntityBlock.newBlockEntity:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+     518: astore        14
+     520: aload         14
+     522: ifnull        546
+     525: aload_0
+     526: aload         14
+     528: invokevirtual #727                // Method addAndRegisterBlockEntity:(Lnet/minecraft/world/level/block/entity/BlockEntity;)V
+     531: goto          546
+     534: aload         14
+     536: aload_2
+     537: invokevirtual #730                // Method net/minecraft/world/level/block/entity/BlockEntity.setBlockState:(Lnet/minecraft/world/level/block/state/BlockState;)V
+     540: aload_0
+     541: aload         14
+     543: invokevirtual #733                // Method updateBlockEntityTicker:(Lnet/minecraft/world/level/block/entity/BlockEntity;)V
+     546: aload_0
+     547: invokevirtual #360                // Method markUnsaved:()V
+     550: aload         10
+     552: areturn
+
+  public void addEntity(net.minecraft.world.entity.Entity);
+    Code:
+       0: return
+
+  public net.minecraft.world.level.block.entity.BlockEntity getBlockEntity(net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #682                // Field net/minecraft/world/level/chunk/LevelChunk$EntityCreationType.CHECK:Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;
+       5: invokevirtual #686                // Method getBlockEntity:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+       8: areturn
+
+  public net.minecraft.world.level.block.entity.BlockEntity getBlockEntity(net.minecraft.core.BlockPos, net.minecraft.world.level.chunk.LevelChunk$EntityCreationType);
+    Code:
+       0: aload_0
+       1: getfield      #751                // Field blockEntities:Ljava/util/Map;
+       4: aload_1
+       5: invokeinterface #576,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      10: checkcast     #296                // class net/minecraft/world/level/block/entity/BlockEntity
+      13: astore_3
+      14: aload_3
+      15: ifnonnull     55
+      18: aload_0
+      19: getfield      #301                // Field pendingBlockEntities:Ljava/util/Map;
+      22: aload_1
+      23: invokeinterface #754,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+      28: checkcast     #756                // class net/minecraft/nbt/CompoundTag
+      31: astore        4
+      33: aload         4
+      35: ifnull        55
+      38: aload_0
+      39: aload_1
+      40: aload         4
+      42: invokevirtual #760                // Method promotePendingBlockEntity:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+      45: astore        5
+      47: aload         5
+      49: ifnull        55
+      52: aload         5
+      54: areturn
+      55: aload_3
+      56: ifnonnull     84
+      59: aload_2
+      60: getstatic     #763                // Field net/minecraft/world/level/chunk/LevelChunk$EntityCreationType.IMMEDIATE:Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;
+      63: if_acmpne     104
+      66: aload_0
+      67: aload_1
+      68: invokevirtual #765                // Method createBlockEntity:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+      71: astore_3
+      72: aload_3
+      73: ifnull        104
+      76: aload_0
+      77: aload_3
+      78: invokevirtual #727                // Method addAndRegisterBlockEntity:(Lnet/minecraft/world/level/block/entity/BlockEntity;)V
+      81: goto          104
+      84: aload_3
+      85: invokevirtual #768                // Method net/minecraft/world/level/block/entity/BlockEntity.isRemoved:()Z
+      88: ifeq          104
+      91: aload_0
+      92: getfield      #751                // Field blockEntities:Ljava/util/Map;
+      95: aload_1
+      96: invokeinterface #754,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+     101: pop
+     102: aconst_null
+     103: areturn
+     104: aload_3
+     105: areturn
+
+  public void addAndRegisterBlockEntity(net.minecraft.world.level.block.entity.BlockEntity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #300                // Method setBlockEntity:(Lnet/minecraft/world/level/block/entity/BlockEntity;)V
+       5: aload_0
+       6: invokevirtual #774                // Method isInLevel:()Z
+       9: ifeq          40
+      12: aload_0
+      13: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+      16: astore_3
+      17: aload_3
+      18: instanceof    #398                // class net/minecraft/server/level/ServerLevel
+      21: ifeq          35
+      24: aload_3
+      25: checkcast     #398                // class net/minecraft/server/level/ServerLevel
+      28: astore_2
+      29: aload_0
+      30: aload_1
+      31: aload_2
+      32: invokevirtual #778                // Method addGameEventListener:(Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/server/level/ServerLevel;)V
+      35: aload_0
+      36: aload_1
+      37: invokevirtual #733                // Method updateBlockEntityTicker:(Lnet/minecraft/world/level/block/entity/BlockEntity;)V
+      40: return
+
+  boolean isTicking(net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+       4: invokevirtual #788                // Method net/minecraft/world/level/Level.getWorldBorder:()Lnet/minecraft/world/level/border/WorldBorder;
+       7: aload_1
+       8: invokevirtual #793                // Method net/minecraft/world/level/border/WorldBorder.isWithinBounds:(Lnet/minecraft/core/BlockPos;)Z
+      11: ifne          16
+      14: iconst_0
+      15: ireturn
+      16: aload_0
+      17: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+      20: astore_3
+      21: aload_3
+      22: instanceof    #398                // class net/minecraft/server/level/ServerLevel
+      25: ifeq          63
+      28: aload_3
+      29: checkcast     #398                // class net/minecraft/server/level/ServerLevel
+      32: astore_2
+      33: aload_0
+      34: invokevirtual #797                // Method getFullStatus:()Lnet/minecraft/server/level/FullChunkStatus;
+      37: getstatic     #803                // Field net/minecraft/server/level/FullChunkStatus.BLOCK_TICKING:Lnet/minecraft/server/level/FullChunkStatus;
+      40: invokevirtual #807                // Method net/minecraft/server/level/FullChunkStatus.isOrAfter:(Lnet/minecraft/server/level/FullChunkStatus;)Z
+      43: ifeq          61
+      46: aload_2
+      47: aload_1
+      48: invokestatic  #811                // Method net/minecraft/world/level/ChunkPos.asLong:(Lnet/minecraft/core/BlockPos;)J
+      51: invokevirtual #815                // Method net/minecraft/server/level/ServerLevel.areEntitiesLoaded:(J)Z
+      54: ifeq          61
+      57: iconst_1
+      58: goto          62
+      61: iconst_0
+      62: ireturn
+      63: iconst_1
+      64: ireturn
+
+  public void setBlockEntity(net.minecraft.world.level.block.entity.BlockEntity);
+    Code:
+       0: aload_1
+       1: invokevirtual #819                // Method net/minecraft/world/level/block/entity/BlockEntity.getBlockPos:()Lnet/minecraft/core/BlockPos;
+       4: astore_2
+       5: aload_0
+       6: aload_2
+       7: invokevirtual #749                // Method getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      10: astore_3
+      11: aload_3
+      12: invokevirtual #661                // Method net/minecraft/world/level/block/state/BlockState.hasBlockEntity:()Z
+      15: ifne          46
+      18: getstatic     #263                // Field LOGGER:Lorg/slf4j/Logger;
+      21: ldc_w         #821                // String Trying to set block entity {} at position {}, but state {} does not allow it
+      24: iconst_3
+      25: anewarray     #694                // class java/lang/Object
+      28: dup
+      29: iconst_0
+      30: aload_1
+      31: aastore
+      32: dup
+      33: iconst_1
+      34: aload_2
+      35: aastore
+      36: dup
+      37: iconst_2
+      38: aload_3
+      39: aastore
+      40: invokeinterface #718,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+      45: return
+      46: aload_1
+      47: invokevirtual #823                // Method net/minecraft/world/level/block/entity/BlockEntity.getBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+      50: astore        4
+      52: aload_3
+      53: aload         4
+      55: if_acmpeq     146
+      58: aload_1
+      59: invokevirtual #698                // Method net/minecraft/world/level/block/entity/BlockEntity.getType:()Lnet/minecraft/world/level/block/entity/BlockEntityType;
+      62: aload_3
+      63: invokevirtual #826                // Method net/minecraft/world/level/block/entity/BlockEntityType.isValid:(Lnet/minecraft/world/level/block/state/BlockState;)Z
+      66: ifne          97
+      69: getstatic     #263                // Field LOGGER:Lorg/slf4j/Logger;
+      72: ldc_w         #821                // String Trying to set block entity {} at position {}, but state {} does not allow it
+      75: iconst_3
+      76: anewarray     #694                // class java/lang/Object
+      79: dup
+      80: iconst_0
+      81: aload_1
+      82: aastore
+      83: dup
+      84: iconst_1
+      85: aload_2
+      86: aastore
+      87: dup
+      88: iconst_2
+      89: aload_3
+      90: aastore
+      91: invokeinterface #718,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+      96: return
+      97: aload_3
+      98: invokevirtual #570                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+     101: aload         4
+     103: invokevirtual #570                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+     106: if_acmpeq     141
+     109: getstatic     #263                // Field LOGGER:Lorg/slf4j/Logger;
+     112: ldc_w         #828                // String Block state mismatch on block entity {} in position {}, {} != {}, updating
+     115: iconst_4
+     116: anewarray     #694                // class java/lang/Object
+     119: dup
+     120: iconst_0
+     121: aload_1
+     122: aastore
+     123: dup
+     124: iconst_1
+     125: aload_2
+     126: aastore
+     127: dup
+     128: iconst_2
+     129: aload_3
+     130: aastore
+     131: dup
+     132: iconst_3
+     133: aload         4
+     135: aastore
+     136: invokeinterface #718,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+     141: aload_1
+     142: aload_3
+     143: invokevirtual #730                // Method net/minecraft/world/level/block/entity/BlockEntity.setBlockState:(Lnet/minecraft/world/level/block/state/BlockState;)V
+     146: aload_1
+     147: aload_0
+     148: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+     151: invokevirtual #832                // Method net/minecraft/world/level/block/entity/BlockEntity.setLevel:(Lnet/minecraft/world/level/Level;)V
+     154: aload_1
+     155: invokevirtual #835                // Method net/minecraft/world/level/block/entity/BlockEntity.clearRemoved:()V
+     158: aload_0
+     159: getfield      #751                // Field blockEntities:Ljava/util/Map;
+     162: aload_2
+     163: invokevirtual #838                // Method net/minecraft/core/BlockPos.immutable:()Lnet/minecraft/core/BlockPos;
+     166: aload_1
+     167: invokeinterface #202,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     172: checkcast     #296                // class net/minecraft/world/level/block/entity/BlockEntity
+     175: astore        5
+     177: aload         5
+     179: ifnull        193
+     182: aload         5
+     184: aload_1
+     185: if_acmpeq     193
+     188: aload         5
+     190: invokevirtual #841                // Method net/minecraft/world/level/block/entity/BlockEntity.setRemoved:()V
+     193: return
+
+  public net.minecraft.nbt.CompoundTag getBlockEntityNbtForSaving(net.minecraft.core.BlockPos, net.minecraft.core.HolderLookup$Provider);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #846                // Method getBlockEntity:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+       5: astore_3
+       6: aload_3
+       7: ifnull        42
+      10: aload_3
+      11: invokevirtual #768                // Method net/minecraft/world/level/block/entity/BlockEntity.isRemoved:()Z
+      14: ifne          42
+      17: aload_3
+      18: aload_0
+      19: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+      22: invokevirtual #121                // Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;
+      25: invokevirtual #850                // Method net/minecraft/world/level/block/entity/BlockEntity.saveWithFullMetadata:(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;
+      28: astore        4
+      30: aload         4
+      32: ldc_w         #852                // String keepPacked
+      35: iconst_0
+      36: invokevirtual #856                // Method net/minecraft/nbt/CompoundTag.putBoolean:(Ljava/lang/String;Z)V
+      39: aload         4
+      41: areturn
+      42: aload_0
+      43: getfield      #301                // Field pendingBlockEntities:Ljava/util/Map;
+      46: aload_1
+      47: invokeinterface #576,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      52: checkcast     #756                // class net/minecraft/nbt/CompoundTag
+      55: astore        4
+      57: aload         4
+      59: ifnull        78
+      62: aload         4
+      64: invokevirtual #860                // Method net/minecraft/nbt/CompoundTag.copy:()Lnet/minecraft/nbt/CompoundTag;
+      67: astore        4
+      69: aload         4
+      71: ldc_w         #852                // String keepPacked
+      74: iconst_1
+      75: invokevirtual #856                // Method net/minecraft/nbt/CompoundTag.putBoolean:(Ljava/lang/String;Z)V
+      78: aload         4
+      80: areturn
+
+  public void removeBlockEntity(net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: invokevirtual #774                // Method isInLevel:()Z
+       4: ifeq          55
+       7: aload_0
+       8: getfield      #751                // Field blockEntities:Ljava/util/Map;
+      11: aload_1
+      12: invokeinterface #754,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+      17: checkcast     #296                // class net/minecraft/world/level/block/entity/BlockEntity
+      20: astore_2
+      21: aload_2
+      22: ifnull        55
+      25: aload_0
+      26: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+      29: astore        4
+      31: aload         4
+      33: instanceof    #398                // class net/minecraft/server/level/ServerLevel
+      36: ifeq          51
+      39: aload         4
+      41: checkcast     #398                // class net/minecraft/server/level/ServerLevel
+      44: astore_3
+      45: aload_0
+      46: aload_2
+      47: aload_3
+      48: invokevirtual #864                // Method removeGameEventListener:(Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/server/level/ServerLevel;)V
+      51: aload_2
+      52: invokevirtual #841                // Method net/minecraft/world/level/block/entity/BlockEntity.setRemoved:()V
+      55: aload_0
+      56: aload_1
+      57: invokevirtual #867                // Method removeBlockEntityTicker:(Lnet/minecraft/core/BlockPos;)V
+      60: return
+
+  public void runPostLoad();
+    Code:
+       0: aload_0
+       1: getfield      #204                // Field postLoad:Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;
+       4: ifnull        22
+       7: aload_0
+       8: getfield      #204                // Field postLoad:Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;
+      11: aload_0
+      12: invokeinterface #899,  2          // InterfaceMethod net/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor.run:(Lnet/minecraft/world/level/chunk/LevelChunk;)V
+      17: aload_0
+      18: aconst_null
+      19: putfield      #204                // Field postLoad:Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;
+      22: return
+
+  public boolean isEmpty();
+    Code:
+       0: iconst_0
+       1: ireturn
+
+  public void replaceWithPacketData(net.minecraft.network.FriendlyByteBuf, net.minecraft.nbt.CompoundTag, java.util.function.Consumer<net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData$BlockEntityTagOutput>);
+    Code:
+       0: aload_0
+       1: invokevirtual #908                // Method clearAllBlockEntities:()V
+       4: aload_0
+       5: getfield      #470                // Field sections:[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+       8: astore        4
+      10: aload         4
+      12: arraylength
+      13: istore        5
+      15: iconst_0
+      16: istore        6
+      18: iload         6
+      20: iload         5
+      22: if_icmpge     44
+      25: aload         4
+      27: iload         6
+      29: aaload
+      30: astore        7
+      32: aload         7
+      34: aload_1
+      35: invokevirtual #913                // Method net/minecraft/world/level/chunk/LevelChunkSection.read:(Lnet/minecraft/network/FriendlyByteBuf;)V
+      38: iinc          6, 1
+      41: goto          18
+      44: invokestatic  #174                // Method net/minecraft/world/level/levelgen/Heightmap$Types.values:()[Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      47: astore        4
+      49: aload         4
+      51: arraylength
+      52: istore        5
+      54: iconst_0
+      55: istore        6
+      57: iload         6
+      59: iload         5
+      61: if_icmpge     107
+      64: aload         4
+      66: iload         6
+      68: aaload
+      69: astore        7
+      71: aload         7
+      73: invokevirtual #918                // Method net/minecraft/world/level/levelgen/Heightmap$Types.getSerializationKey:()Ljava/lang/String;
+      76: astore        8
+      78: aload_2
+      79: aload         8
+      81: bipush        12
+      83: invokevirtual #921                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+      86: ifeq          101
+      89: aload_0
+      90: aload         7
+      92: aload_2
+      93: aload         8
+      95: invokevirtual #925                // Method net/minecraft/nbt/CompoundTag.getLongArray:(Ljava/lang/String;)[J
+      98: invokevirtual #345                // Method setHeightmap:(Lnet/minecraft/world/level/levelgen/Heightmap$Types;[J)V
+     101: iinc          6, 1
+     104: goto          57
+     107: aload_0
+     108: invokevirtual #928                // Method initializeLightSources:()V
+     111: aload_3
+     112: aload_0
+     113: invokedynamic #938,  0            // InvokeDynamic #4:accept:(Lnet/minecraft/world/level/chunk/LevelChunk;)Lnet/minecraft/network/protocol/game/ClientboundLevelChunkPacketData$BlockEntityTagOutput;
+     118: invokeinterface #941,  2          // InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V
+     123: return
+
+  public void replaceBiomes(net.minecraft.network.FriendlyByteBuf);
+    Code:
+       0: aload_0
+       1: getfield      #470                // Field sections:[Lnet/minecraft/world/level/chunk/LevelChunkSection;
+       4: astore_2
+       5: aload_2
+       6: arraylength
+       7: istore_3
+       8: iconst_0
+       9: istore        4
+      11: iload         4
+      13: iload_3
+      14: if_icmpge     35
+      17: aload_2
+      18: iload         4
+      20: aaload
+      21: astore        5
+      23: aload         5
+      25: aload_1
+      26: invokevirtual #952                // Method net/minecraft/world/level/chunk/LevelChunkSection.readBiomes:(Lnet/minecraft/network/FriendlyByteBuf;)V
+      29: iinc          4, 1
+      32: goto          11
+      35: return
+
+  public void setLoaded(boolean);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #780                // Field loaded:Z
+       5: return
+
+  public net.minecraft.world.level.Level getLevel();
+    Code:
+       0: aload_0
+       1: getfield      #165                // Field level:Lnet/minecraft/world/level/Level;
+       4: areturn
+
+  public java.util.Map<net.minecraft.core.BlockPos, net.minecraft.world.level.block.entity.BlockEntity> getBlockEntities();
+    Code:
+       0: aload_0
+       1: getfield      #751                // Field blockEntities:Ljava/util/Map;
+       4: areturn
+
+  public void postProcessGeneration(net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_0
+       1: invokevirtual #959                // Method getPos:()Lnet/minecraft/world/level/ChunkPos;
+       4: astore_2
+       5: iconst_0
+       6: istore_3
+       7: iload_3
+       8: aload_0
+       9: getfield      #316                // Field postProcessing:[Lit/unimi/dsi/fastutil/shorts/ShortList;
+      12: arraylength
+      13: if_icmpge     168
+      16: aload_0
+      17: getfield      #316                // Field postProcessing:[Lit/unimi/dsi/fastutil/shorts/ShortList;
+      20: iload_3
+      21: aaload
+      22: ifnull        162
+      25: aload_0
+      26: getfield      #316                // Field postProcessing:[Lit/unimi/dsi/fastutil/shorts/ShortList;
+      29: iload_3
+      30: aaload
+      31: invokeinterface #964,  1          // InterfaceMethod it/unimi/dsi/fastutil/shorts/ShortList.iterator:()Lit/unimi/dsi/fastutil/shorts/ShortListIterator;
+      36: astore        4
+      38: aload         4
+      40: invokeinterface #290,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      45: ifeq          151
+      48: aload         4
+      50: invokeinterface #294,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      55: checkcast     #968                // class java/lang/Short
+      58: astore        5
+      60: aload         5
+      62: invokevirtual #972                // Method java/lang/Short.shortValue:()S
+      65: aload_0
+      66: iload_3
+      67: invokevirtual #975                // Method getSectionYFromSectionIndex:(I)I
+      70: aload_2
+      71: invokestatic  #979                // Method net/minecraft/world/level/chunk/ProtoChunk.unpackOffsetCoordinates:(SILnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/core/BlockPos;
+      74: astore        6
+      76: aload_0
+      77: aload         6
+      79: invokevirtual #749                // Method getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      82: astore        7
+      84: aload         7
+      86: invokevirtual #981                // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+      89: astore        8
+      91: aload         8
+      93: invokevirtual #985                // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z
+      96: ifne          109
+      99: aload         8
+     101: aload_1
+     102: aload         6
+     104: aload         7
+     106: invokevirtual #989                // Method net/minecraft/world/level/material/FluidState.tick:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+     109: aload         7
+     111: invokevirtual #570                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+     114: instanceof    #991                // class net/minecraft/world/level/block/LiquidBlock
+     117: ifne          148
+     120: aload         7
+     122: aload_1
+     123: aload         6
+     125: invokestatic  #995                // Method net/minecraft/world/level/block/Block.updateFromNeighbourShapes:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+     128: astore        9
+     130: aload         9
+     132: aload         7
+     134: if_acmpeq     148
+     137: aload_1
+     138: aload         6
+     140: aload         9
+     142: bipush        20
+     144: invokevirtual #999                // Method net/minecraft/server/level/ServerLevel.setBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z
+     147: pop
+     148: goto          38
+     151: aload_0
+     152: getfield      #316                // Field postProcessing:[Lit/unimi/dsi/fastutil/shorts/ShortList;
+     155: iload_3
+     156: aaload
+     157: invokeinterface #1002,  1         // InterfaceMethod it/unimi/dsi/fastutil/shorts/ShortList.clear:()V
+     162: iinc          3, 1
+     165: goto          7
+     168: aload_0
+     169: getfield      #301                // Field pendingBlockEntities:Ljava/util/Map;
+     172: invokeinterface #252,  1          // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
+     177: invokestatic  #1008               // Method com/google/common/collect/ImmutableList.copyOf:(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;
+     180: invokevirtual #1011               // Method com/google/common/collect/ImmutableList.iterator:()Lcom/google/common/collect/UnmodifiableIterator;
+     183: astore_3
+     184: aload_3
+     185: invokeinterface #290,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     190: ifeq          214
+     193: aload_3
+     194: invokeinterface #294,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     199: checkcast     #427                // class net/minecraft/core/BlockPos
+     202: astore        4
+     204: aload_0
+     205: aload         4
+     207: invokevirtual #846                // Method getBlockEntity:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+     210: pop
+     211: goto          184
+     214: aload_0
+     215: getfield      #301                // Field pendingBlockEntities:Ljava/util/Map;
+     218: invokeinterface #1014,  1         // InterfaceMethod java/util/Map.clear:()V
+     223: aload_0
+     224: getfield      #1016               // Field upgradeData:Lnet/minecraft/world/level/chunk/UpgradeData;
+     227: aload_0
+     228: invokevirtual #1019               // Method net/minecraft/world/level/chunk/UpgradeData.upgrade:(Lnet/minecraft/world/level/chunk/LevelChunk;)V
+     231: return
+
+  public void unpackTicks(long);
+    Code:
+       0: aload_0
+       1: getfield      #206                // Field blockTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+       4: lload_1
+       5: invokevirtual #1053               // Method net/minecraft/world/ticks/LevelChunkTicks.unpack:(J)V
+       8: aload_0
+       9: getfield      #208                // Field fluidTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+      12: lload_1
+      13: invokevirtual #1053               // Method net/minecraft/world/ticks/LevelChunkTicks.unpack:(J)V
+      16: return
+
+  public void registerTickContainerInLevel(net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_1
+       1: invokevirtual #1057               // Method net/minecraft/server/level/ServerLevel.getBlockTicks:()Lnet/minecraft/world/ticks/LevelTicks;
+       4: aload_0
+       5: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+       8: aload_0
+       9: getfield      #206                // Field blockTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+      12: invokevirtual #1063               // Method net/minecraft/world/ticks/LevelTicks.addContainer:(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/ticks/LevelChunkTicks;)V
+      15: aload_1
+      16: invokevirtual #1065               // Method net/minecraft/server/level/ServerLevel.getFluidTicks:()Lnet/minecraft/world/ticks/LevelTicks;
+      19: aload_0
+      20: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+      23: aload_0
+      24: getfield      #208                // Field fluidTicks:Lnet/minecraft/world/ticks/LevelChunkTicks;
+      27: invokevirtual #1063               // Method net/minecraft/world/ticks/LevelTicks.addContainer:(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/ticks/LevelChunkTicks;)V
+      30: return
+
+  public void unregisterTickContainerFromLevel(net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_1
+       1: invokevirtual #1057               // Method net/minecraft/server/level/ServerLevel.getBlockTicks:()Lnet/minecraft/world/ticks/LevelTicks;
+       4: aload_0
+       5: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+       8: invokevirtual #1069               // Method net/minecraft/world/ticks/LevelTicks.removeContainer:(Lnet/minecraft/world/level/ChunkPos;)V
+      11: aload_1
+      12: invokevirtual #1065               // Method net/minecraft/server/level/ServerLevel.getFluidTicks:()Lnet/minecraft/world/ticks/LevelTicks;
+      15: aload_0
+      16: getfield      #376                // Field chunkPos:Lnet/minecraft/world/level/ChunkPos;
+      19: invokevirtual #1069               // Method net/minecraft/world/ticks/LevelTicks.removeContainer:(Lnet/minecraft/world/level/ChunkPos;)V
+      22: return
+
+  public net.minecraft.world.level.chunk.status.ChunkStatus getPersistedStatus();
+    Code:
+       0: getstatic     #182                // Field net/minecraft/world/level/chunk/status/ChunkStatus.FULL:Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+       3: areturn
+
+  public net.minecraft.server.level.FullChunkStatus getFullStatus();
+    Code:
+       0: aload_0
+       1: getfield      #1073               // Field fullStatus:Ljava/util/function/Supplier;
+       4: ifnonnull     11
+       7: getstatic     #1075               // Field net/minecraft/server/level/FullChunkStatus.FULL:Lnet/minecraft/server/level/FullChunkStatus;
+      10: areturn
+      11: aload_0
+      12: getfield      #1073               // Field fullStatus:Ljava/util/function/Supplier;
+      15: invokeinterface #1079,  1         // InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;
+      20: checkcast     #799                // class net/minecraft/server/level/FullChunkStatus
+      23: areturn
+
+  public void setFullStatus(java.util.function.Supplier<net.minecraft.server.level.FullChunkStatus>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #1073               // Field fullStatus:Ljava/util/function/Supplier;
+       5: return
+
+  public void clearAllBlockEntities();
+    Code:
+       0: aload_0
+       1: getfield      #751                // Field blockEntities:Ljava/util/Map;
+       4: invokeinterface #278,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+       9: invokedynamic #1089,  0           // InvokeDynamic #5:accept:()Ljava/util/function/Consumer;
+      14: invokeinterface #1093,  2         // InterfaceMethod java/util/Collection.forEach:(Ljava/util/function/Consumer;)V
+      19: aload_0
+      20: getfield      #751                // Field blockEntities:Ljava/util/Map;
+      23: invokeinterface #1014,  1         // InterfaceMethod java/util/Map.clear:()V
+      28: aload_0
+      29: getfield      #144                // Field tickersInLevel:Ljava/util/Map;
+      32: invokeinterface #278,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+      37: invokedynamic #1100,  0           // InvokeDynamic #6:accept:()Ljava/util/function/Consumer;
+      42: invokeinterface #1093,  2         // InterfaceMethod java/util/Collection.forEach:(Ljava/util/function/Consumer;)V
+      47: aload_0
+      48: getfield      #144                // Field tickersInLevel:Ljava/util/Map;
+      51: invokeinterface #1014,  1         // InterfaceMethod java/util/Map.clear:()V
+      56: return
+
+  public void registerAllBlockEntitiesAfterLevelLoad();
+    Code:
+       0: aload_0
+       1: getfield      #751                // Field blockEntities:Ljava/util/Map;
+       4: invokeinterface #278,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+       9: aload_0
+      10: invokedynamic #1108,  0           // InvokeDynamic #7:accept:(Lnet/minecraft/world/level/chunk/LevelChunk;)Ljava/util/function/Consumer;
+      15: invokeinterface #1093,  2         // InterfaceMethod java/util/Collection.forEach:(Ljava/util/function/Consumer;)V
+      20: return
+
+  static {};
+    Code:
+       0: invokestatic  #1183               // Method com/mojang/logging/LogUtils.getLogger:()Lorg/slf4j/Logger;
+       3: putstatic     #263                // Field LOGGER:Lorg/slf4j/Logger;
+       6: new           #17                 // class net/minecraft/world/level/chunk/LevelChunk$1
+       9: dup
+      10: invokespecial #1184               // Method net/minecraft/world/level/chunk/LevelChunk$1."<init>":()V
+      13: putstatic     #888                // Field NULL_TICKER:Lnet/minecraft/world/level/block/entity/TickingBlockEntity;
+      16: return
+}
