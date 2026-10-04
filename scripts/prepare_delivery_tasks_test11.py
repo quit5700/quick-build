@@ -1,0 +1,16 @@
+from pathlib import Path
+r=Path.cwd();p=r/'scripts/deliver_structures_test10.py';s=p.read_text(encoding='utf-8')
+s=s.replace('1.1.4-test10','1.1.4-test11').replace('1.1.4-test9','1.1.4-test10')
+s=s.replace('20261004_结构建造26.2测试版10','20261004_任务取消自然掉落26.2测试版11').replace('结构建造_26.2测试版10_20261004','任务取消自然掉落_26.2测试版11_20261004')
+s=s.replace('最终21场景回归.log','最终27场景回归.log').replace('21 cases','27 cases').replace('完整构建与181项测试.log','完整构建与183项测试.log').replace('assert tests==181','assert tests==183').replace("'自动测试':181","'自动测试':183").replace("'独立世界回归':21","'独立世界回归':27").replace("'原173项测试':'全部保留原样'","'原181项测试':'全部保留原样'").replace('181项自动测试结果.zip','183项自动测试结果.zip').replace('181项测试','183项测试').replace('21项独立世界回归','27项独立世界回归').replace('八语言键集合和参数一致','八语言键集合和参数一致')
+s=s.replace('BUG-20261004-STRUCTURE-PLACEMENT.md','BUG-20261004-TASK-CANCEL-NATURAL-DROPS.md')
+start=s.index('scriptnames=');end=s.index('\nwith zipfile.ZipFile',start)
+s=s[:start]+"scriptnames=['implement_tasks_test11.py','localize_tasks_test11.py','fix_tasks_api_test11.py','test_tasks_test11.py','fix_task_tests_test11.py','document_tasks_test11.py','deliver_tasks_test11.py']"+s[end:]
+s=s.replace(".replace('修正水平相邻箱子误判，待最终构建核验。','修正水平相邻箱子误判；183项测试及27项独立世界回归通过，实机待验收。')", ".replace('27场景通过，待完整构建核验。','183项测试及27项独立世界回归通过，实机待验收。')")
+s=s.replace(".replace('核验结果将在交付文件中记录。','完整清理构建、183项自动测试及27项独立世界回归通过；八语言键集合和参数一致，成品不含测试类。')", ".replace('完整测试结果以交付核验为准。','完整清理构建与183项自动测试通过；八语言键集合和参数一致，成品不含测试类。')")
+s=s.replace('测试版10已安装','测试版11已安装').replace('游戏占用测试版9；测试版10已暂存','游戏占用测试版10；测试版11已暂存')
+s=s.replace('按用户补充49×49从第一点建造、末端留空。','取消本人跨维度建筑任务、余位内容一次掉落及自然支撑规则已核验。')
+s=s.replace("for p in [r/'AGENTS.md',bug,*[r/'scripts'/n for n in scriptnames]]", "for p in [r/'AGENTS.md',r/'docs/PORTING_NOTES.md',bug,*[r/'scripts'/n for n in scriptnames]]")
+s=s.replace(" assert not any('WandSmokeChecks' in n for n in z.namelist())", " assert not any('WandSmokeChecks' in n for n in z.namelist())\n assert 'cn/quit5700/buildingwand/network/BuildNetworking$CancelAll.class' in z.namelist()\n assert 'cn/quit5700/buildingwand/network/BuildNetworking$Cancelled.class' in z.namelist()\n assert not any(b'q5_test_property_pair' in z.read(n) for n in z.namelist() if n.endswith('.class'))")
+(r/'scripts/deliver_tasks_test11.py').write_text(s,encoding='utf-8')
+print('交付脚本准备完成')

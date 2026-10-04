@@ -36,3 +36,5 @@
 - [BUG-20261004-BUILD-MATERIAL-HINT](BUG-20261004-BUILD-MATERIAL-HINT.md)：测试版9修正旧材料选择提示；173项测试通过，代码未改，实机待重启验收。
 
 - [BUG-20261004-STRUCTURE-PLACEMENT](BUG-20261004-STRUCTURE-PLACEMENT.md)：测试版10特殊结构成组、单箱与连接校正；修正水平相邻箱子误判；181项测试及21项独立世界回归通过，实机待验收。
+
+- [BUG-20261004-TASK-CANCEL-NATURAL-DROPS](BUG-20261004-TASK-CANCEL-NATURAL-DROPS.md)：测试版11跨维度取消本人建造、余位容器精确掉落与自然支撑规则；183项测试及27项独立世界回归通过，实机待验收。
