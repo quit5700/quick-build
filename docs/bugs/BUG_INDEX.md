@@ -21,3 +21,6 @@
 - [BUG-20261004-DELETE-WAND-STATE-RENDER](BUG-20261004-DELETE-WAND-STATE-RENDER.md)：删除选区跨持物保留、翻页布局、耐久与局部渲染刷新；160项测试通过，实机待验收。
 
 - [BUG-20261004-WAND-BUILD-MOVE-UNBOUNDED](BUG-20261004-WAND-BUILD-MOVE-UNBOUNDED.md)：建筑三模式与无上限分批任务、移动副作用及计划事件迁移、Q5说明台；完整170项测试，独立世界验证，实机待验收。
+
+
+- [BUG-20261004-MOVE-LEGACY-RESTORE](BUG-20261004-MOVE-LEGACY-RESTORE.md)：原区域变化检查拦截；测试版4按用户要求恢复原移动实现，仅移除数量上限。170项测试及代码对照通过，实机待验收。
