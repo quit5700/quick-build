@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "light:item/copy_variable_constant_light"
+  }
+}
