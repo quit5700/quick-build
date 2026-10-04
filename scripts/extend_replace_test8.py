@@ -1,0 +1,19 @@
+from pathlib import Path
+r=Path.cwd();v=r/'versions/1.1.4-test8/mc26.2';p=v/'src/smoke/java/cn/quit5700/buildingwand/server/WandSmokeChecks.java';s=p.read_text(encoding='utf-8');s=s.replace('run("replace_survival_pause_resume",()->survival(server));','run("replace_survival_pause_resume",()->survival(server));run("replace_filter_counts_and_no_drops",()->filterCounts(server));');s=s.replace('Q5_MOVE_REGRESSION_PASS: 12 cases','Q5_MOVE_REGRESSION_PASS: 13 cases');s=s.replace('@Override public void sendOverlayMessage(net.minecraft.network.chat.Component message){}','net.minecraft.network.chat.Component lastMessage;\n  @Override public void sendOverlayMessage(net.minecraft.network.chat.Component message){lastMessage=message;}')
+s=s.replace('stand.discard();}', '''stand.discard();var frame=new net.minecraft.world.entity.decoration.ItemFrame(world,p.south(),net.minecraft.core.Direction.SOUTH);world.addFreshEntity(frame);check(ReplacementRules.protectedPosition(world,p,Blocks.DIRT.defaultBlockState(),true),"frame support missed");frame.discard();}''')
+a=s.rindex('\n}');s=s[:a]+'''
+ private static void filterCounts(net.minecraft.server.MinecraftServer server)throws Exception{
+  var p=new TestPlayer(server);server.getPlayerList().getPlayersByUUID().put(p.getUUID(),p);try{
+   var wand=new ItemStack(cn.quit5700.buildingwand.registry.ModItems.BUILDING_WAND);p.getInventory().setItem(0,wand);String id=cn.quit5700.buildingwand.util.BuildWandData.ensure(wand);p.getInventory().setItem(1,new ItemStack(Blocks.STONE,5));var first=new BlockPos(160,180,64);world.getChunk(first);
+   var states=List.of(Blocks.DIRT.defaultBlockState(),Blocks.GRAVEL.defaultBlockState(),Blocks.CHEST.defaultBlockState(),wire(0),Blocks.AIR.defaultBlockState(),Blocks.STONE.defaultBlockState());
+   for(int n=0;n<states.size();n++){world.setBlock(first.offset(n,-1,0),Blocks.STONE.defaultBlockState(),QUIET);world.setBlock(first.offset(n,0,0),states.get(n),QUIET);}
+   ((net.minecraft.world.Container)world.getBlockEntity(first.offset(2,0,0))).setItem(0,new ItemStack(Items.DIAMOND,7));
+   var a=new cn.quit5700.buildingwand.logic.DeleteSelection.Point(first.getX(),first.getY(),first.getZ());var b=new cn.quit5700.buildingwand.logic.DeleteSelection.Point(first.getX()+5,first.getY(),first.getZ());var tasks=new BuildTaskState();tasks.add(p.getUUID(),id,Blocks.STONE,a,b,3,Blocks.DIRT);for(int n=0;n<20;n++)tasks.tick(world);
+   check(!tasks.busy(p.getUUID())&&world.getBlockState(first).is(Blocks.STONE)&&world.getBlockState(first.east()).is(Blocks.GRAVEL)&&p.getInventory().getItem(1).getCount()==4,"target filter or material count wrong");
+   tasks.add(p.getUUID(),id,Blocks.STONE,a,b,3);for(int n=0;n<20;n++)tasks.tick(world);check(!tasks.busy(p.getUUID())&&world.getBlockState(first.east()).is(Blocks.STONE)&&world.getBlockState(first.offset(4,0,0)).isAir(),"unfiltered replacement filled air or failed");
+   check(world.getBlockState(first.offset(3,0,0)).is(Blocks.REDSTONE_WIRE)&&((net.minecraft.world.Container)world.getBlockEntity(first.offset(2,0,0))).getItem(0).getCount()==7,"protected block or inventory changed");
+   var args=((net.minecraft.network.chat.contents.TranslatableContents)p.lastMessage.getContents()).getArgs();check(args[0].equals("1")&&args[1].equals("2"),"replacement/protection counts wrong");check(p.getInventory().getItem(1).getCount()==3,"skipped blocks consumed material");check(world.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(first).inflate(8)).isEmpty(),"old blocks dropped items");
+  }finally{server.getPlayerList().getPlayersByUUID().remove(p.getUUID());}
+ }
+'''+s[a:];p.write_text(s,encoding='utf-8')
+out=r/'outputs/20261004_区域替换26.2测试版8';out.mkdir(parents=True,exist_ok=True);import shutil;shutil.copy2(v/'run/logs/latest.log',out/'首轮12场景回归.log')
