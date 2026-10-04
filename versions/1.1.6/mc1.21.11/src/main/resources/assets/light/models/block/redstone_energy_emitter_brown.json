@@ -1,0 +1,4 @@
+{
+  "parent": "light:block/redstone_energy_emitter",
+  "textures": { "redstone": "minecraft:block/brown_concrete" }
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "minecraft": "26.2",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\26.2\\mods\\quick-build-1.1.6-mc26.2-fabric.jar",
+    "sha256": "ea7f27889fa21961ae9d07cda5ad6bbcc796eccb8eeb7bd26e7085204b62656e",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc26.2\\quick-build-1.1.6-mc26.2-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "26.1.2",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\26.1.2-Fabric\\mods\\quick-build-1.1.6-mc26.1.2-fabric.jar",
+    "sha256": "424fd6e5a36894dfcc6e1426d1563027d0a3c80f2e021ee37577a6588bcdb223",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc26.1.2\\quick-build-1.1.6-mc26.1.2-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "1.21.11",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.11-Fabric\\mods\\quick-build-1.1.6-mc1.21.11-fabric.jar",
+    "sha256": "50a36da162f0c21af216d06f9db9c5c13c028d169e5795e4c917856872162314",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc1.21.11\\quick-build-1.1.6-mc1.21.11-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "1.21.8",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.8-Fabric\\mods\\quick-build-1.1.6-mc1.21.8-fabric.jar",
+    "sha256": "f7f087afd339d2b7865a6ea37c573a6f4e2848ac69f8a5c8bc7412eea1a3c1b9",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc1.21.8\\quick-build-1.1.6-mc1.21.8-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "1.21.4",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.4-Fabric\\mods\\quick-build-1.1.6-mc1.21.4-fabric.jar",
+    "sha256": "b0405348abac5941c73b5b246895159193a3239c27f1bf59e5a099be2b7c1c98",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc1.21.4\\quick-build-1.1.6-mc1.21.4-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "1.21.1",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.1-mtr\\mods\\quick-build-1.1.6-mc1.21.1-fabric.jar",
+    "sha256": "6b5608ae06fa5f27d48ccb3f0c6017afa2b8c95fe41a82fdf58c98f22e0bb281",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc1.21.1\\quick-build-1.1.6-mc1.21.1-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "1.20.4",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\mods\\quick-build-1.1.6-mc1.20.4-fabric.jar",
+    "sha256": "83f497d208726c014bfe071fdb50a1d6087da72b16ee39ded591ea576b5754a5",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc1.20.4\\quick-build-1.1.6-mc1.20.4-fabric-sources.jar",
+    "唯一运行包": true
+  },
+  {
+    "minecraft": "1.20.1",
+    "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.1-Fabric-mtr\\mods\\quick-build-1.1.6-mc1.20.1-fabric.jar",
+    "sha256": "bf20596db307e2014948ed1b5ba6f76abf285f14a200296c928e6bfb2bceb12e",
+    "源码包": "H:\\Codex交接文档库\\快捷建筑模组_可调恒亮灯改版_01a0afdc\\正式版1.1.6_20261005\\mc1.20.1\\quick-build-1.1.6-mc1.20.1-fabric-sources.jar",
+    "唯一运行包": true
+  }
+]

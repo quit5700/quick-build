@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "W",
+    "C"
+  ],
+  "key": {
+    "W": "building_wand:building_wand",
+    "C": "minecraft:crafting_table"
+  },
+  "result": {
+    "count": 1,
+    "id": "building_wand:wand_settings_station"
+  }
+}

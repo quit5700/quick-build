@@ -1,0 +1,266 @@
+[
+  {
+    "minecraft": "26.2",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 196,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc26.2.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc26.2\\dist\\quick-build-1.1.6-mc26.2-fabric.jar",
+        "sha256": "ea7f27889fa21961ae9d07cda5ad6bbcc796eccb8eeb7bd26e7085204b62656e",
+        "字节": 881446
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc26.2\\dist\\quick-build-1.1.6-mc26.2-fabric-sources.jar",
+        "sha256": "9a17469789c93eb1bddd169ccfb5da568e82879bfbf7c5a44e7c660e4cf14c83",
+        "字节": 508563
+      }
+    }
+  },
+  {
+    "minecraft": "26.1.2",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 194,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc26.1.2.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc26.1.2\\dist\\quick-build-1.1.6-mc26.1.2-fabric.jar",
+        "sha256": "424fd6e5a36894dfcc6e1426d1563027d0a3c80f2e021ee37577a6588bcdb223",
+        "字节": 877486
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc26.1.2\\dist\\quick-build-1.1.6-mc26.1.2-fabric-sources.jar",
+        "sha256": "a111dc345e54195aa528ebdaacb5e28dc0e470968abbfab6c5f4df45a7f0dad4",
+        "字节": 508081
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.11",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 197,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc1.21.11.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.11\\dist\\quick-build-1.1.6-mc1.21.11-fabric.jar",
+        "sha256": "50a36da162f0c21af216d06f9db9c5c13c028d169e5795e4c917856872162314",
+        "字节": 856063
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.11\\dist\\quick-build-1.1.6-mc1.21.11-fabric-sources.jar",
+        "sha256": "2a7d3bd2dc6e17f39ee28e2e1b02000df40ab6342a6eac18a4511f4be863d9fc",
+        "字节": 508985
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.8",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 197,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc1.21.8.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.8\\dist\\quick-build-1.1.6-mc1.21.8-fabric.jar",
+        "sha256": "f7f087afd339d2b7865a6ea37c573a6f4e2848ac69f8a5c8bc7412eea1a3c1b9",
+        "字节": 853685
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.8\\dist\\quick-build-1.1.6-mc1.21.8-fabric-sources.jar",
+        "sha256": "296ebe89f20cb686f8d9864fc5399933aab1bbf3a9d1eeb02cfb37fdb53702e7",
+        "字节": 507383
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.4",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 195,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc1.21.4.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.4\\dist\\quick-build-1.1.6-mc1.21.4-fabric.jar",
+        "sha256": "b0405348abac5941c73b5b246895159193a3239c27f1bf59e5a099be2b7c1c98",
+        "字节": 860819
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.4\\dist\\quick-build-1.1.6-mc1.21.4-fabric-sources.jar",
+        "sha256": "b5158a3bb0b771a4b53cde9e39634e2ff861a1d104ae4bdebff7970157aab83f",
+        "字节": 509394
+      }
+    }
+  },
+  {
+    "minecraft": "1.21.1",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 195,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc1.21.1.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.1\\dist\\quick-build-1.1.6-mc1.21.1-fabric.jar",
+        "sha256": "6b5608ae06fa5f27d48ccb3f0c6017afa2b8c95fe41a82fdf58c98f22e0bb281",
+        "字节": 865293
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.21.1\\dist\\quick-build-1.1.6-mc1.21.1-fabric-sources.jar",
+        "sha256": "773c186d28372f9a9ac37b9ac5904f384ebfa065390d6ee50276267507b798db",
+        "字节": 511785
+      }
+    }
+  },
+  {
+    "minecraft": "1.20.4",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 195,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc1.20.4.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.20.4\\dist\\quick-build-1.1.6-mc1.20.4-fabric.jar",
+        "sha256": "83f497d208726c014bfe071fdb50a1d6087da72b16ee39ded591ea576b5754a5",
+        "字节": 862995
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.20.4\\dist\\quick-build-1.1.6-mc1.20.4-fabric-sources.jar",
+        "sha256": "6caef2a90ed5d89b86ed631be6055f5629dd451450b623ed258161d7329939cf",
+        "字节": 514035
+      }
+    }
+  },
+  {
+    "minecraft": "1.20.1",
+    "正式构建": true,
+    "自动测试": {
+      "tests": 195,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "独立世界回归": 31,
+    "灯迁移磁盘重启验证": {
+      "首次保存": true,
+      "迁移加载": true,
+      "再次加载保存结果": true,
+      "灯数": 6
+    },
+    "世界日志": "世界回归_mc1.20.1.log",
+    "八语言键及参数一致": true,
+    "运行包排除测试类": true,
+    "纹理与验收基线一致": true,
+    "包": {
+      "运行包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.20.1\\dist\\quick-build-1.1.6-mc1.20.1-fabric.jar",
+        "sha256": "bf20596db307e2014948ed1b5ba6f76abf285f14a200296c928e6bfb2bceb12e",
+        "字节": 859984
+      },
+      "源码包": {
+        "文件": "C:\\Users\\quit5700\\Documents\\mc虚拟线路模组\\快捷建筑模组\\versions\\1.1.6\\mc1.20.1\\dist\\quick-build-1.1.6-mc1.20.1-fabric-sources.jar",
+        "sha256": "014a02de6c244e403f77c83d05be616b7d81f283032124ee4b70f5e1e982b6b9",
+        "字节": 512662
+      }
+    }
+  }
+]

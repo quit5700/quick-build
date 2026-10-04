@@ -1,0 +1,27 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "#base",
+    "base": "minecraft:block/white_concrete",
+    "lever": "minecraft:block/lever"
+  },
+  "elements": [
+    {
+      "from": [4, 0, 3], "to": [12, 4, 13],
+      "faces": {
+        "down": {"texture": "#base", "cullface": "down"},
+        "up": {"texture": "#base"},
+        "north": {"texture": "#base"}, "south": {"texture": "#base"},
+        "west": {"texture": "#base"}, "east": {"texture": "#base"}
+      }
+    },
+    {
+      "from": [7, 3, 7], "to": [9, 13, 9],
+      "rotation": {"origin": [8, 3, 8], "axis": "x", "angle": -45},
+      "faces": {
+        "up": {"texture": "#lever"}, "north": {"texture": "#lever"},
+        "south": {"texture": "#lever"}, "west": {"texture": "#lever"}, "east": {"texture": "#lever"}
+      }
+    }
+  ]
+}

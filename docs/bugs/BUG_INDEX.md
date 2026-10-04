@@ -42,3 +42,7 @@
 - [BUG-20261004-FORMAL-114-PORTING](BUG-20261004-FORMAL-114-PORTING.md)：正式1.1.4八版本接口适配、历史法杖纹理遗漏、旧版静默装配及独立世界实体观测验证；交付正在最终核验。
 
 - [BUG-20261005-LIGHT-LOAD-CHUNK-REENTRY](BUG-20261005-LIGHT-LOAD-CHUNK-REENTRY.md)：26.1.2旧灯迁移初始化setChanged导致当前区块加载重入等待；活动游戏两次线程快照确认，1.1.5八版本修复及独立存档重载通过，原玩家世界待验收。
+
+- [BUG-20261005-WAND-CLIENT-INTERACTIONS](BUG-20261005-WAND-CLIENT-INTERACTIONS.md)：重排器模型、法杖框错位、首次切换失效、双材料交互与箱子提醒；1.1.6八版本验证中。
+
+- [BUG-20261005-1211-LEGACY-RECIPE-FORMAT](BUG-20261005-1211-LEGACY-RECIPE-FORMAT.md)：1.21.1部分灯旧配方原料格式不兼容，独立测试日志发现，另批待处理。

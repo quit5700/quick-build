@@ -1,0 +1,12 @@
+{
+    "type":  "minecraft:crafting_shapeless",
+    "ingredients":  [
+                        "light:constant_light_block",
+                        "minecraft:lever",
+                        "minecraft:light_blue_dye"
+                    ],
+    "result":  {
+                   "id":  "light:redstone_energy_remote_switch_light_blue",
+                   "count":  1
+               }
+}

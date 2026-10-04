@@ -10,3 +10,7 @@ ServerPlayer.getServer（服务端玩家获取服务器）已尝试失败：26.2
 ## 1.1.5旧灯存档加载
 
 BlockEntity.setChanged（方块实体标记修改）会通过世界getChunkAt（获取所在区块）再次加载当前区块；禁止在setLevel（初始化关联世界）迁移分支调用。成功方法：读取时记录迁移待保存，ServerChunkEvents.CHUNK_LOAD（区块已加载事件）直接使用传入LevelChunk（区块）标记保存。26.x至1.21.4使用markUnsaved，1.21.1与1.20.x使用setUnsaved(true)。保护副本灯与未供电灯；必须独立存档保存、迁移重载、再次重载核对写盘，不能仅测新建世界或方块放置。详见docs/bugs/BUG-20261005-LIGHT-LOAD-CHUNK-REENTRY.md及scripts/verify_light_load_115.py。
+
+## 1.1.6法杖范围框与客户端交互
+
+范围框禁止反射猜相机方法名及脚部回退；26.2编译期mainCamera，26.1.2编译期getMainCamera，1.21.11渲染上下文cameraRenderState，较旧版本context.camera对应API。已尝试失败：26.1.2直接照搬mainCamera，必须核对实际版本类接口。资源比对必须包含物品JSON模型，不仅PNG。请求先原版同步手持槽位，再发带ID和槽位的法杖命令；排队保留查询期间点击，超时仅QUERY不重复变更；回包包含权威模式、两种材料。详见BUG-20261005-WAND-CLIENT-INTERACTIONS.md，真实handle请求/编码测试不能被工具函数直调替代。
