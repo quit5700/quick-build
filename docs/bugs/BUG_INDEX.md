@@ -24,3 +24,5 @@
 
 
 - [BUG-20261004-MOVE-LEGACY-RESTORE](BUG-20261004-MOVE-LEGACY-RESTORE.md)：原区域变化检查拦截；测试版4按用户要求恢复原移动实现，仅移除数量上限。170项测试及代码对照通过，实机待验收。
+
+- [BUG-20261004-MOVE-TRANSLATION-LITERAL](BUG-20261004-MOVE-TRANSLATION-LITERAL.md)：测试版5修复移动提示直接显示翻译键；修复前回归失败、修复后170项测试通过。
