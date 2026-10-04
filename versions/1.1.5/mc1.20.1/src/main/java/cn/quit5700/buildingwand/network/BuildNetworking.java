@@ -1,0 +1,29 @@
+package cn.quit5700.buildingwand.network;
+import cn.quit5700.buildingwand.BuildingWandMod;
+import cn.quit5700.buildingwand.server.BuildWandServer;
+import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+
+
+public final class BuildNetworking {
+ public static final int LEFT=0,RIGHT=1,SELECT=2,QUERY=3,CLEAR=4;
+ public static void register(){LegacyWandPackets.serverReceiver(Request.ID,Request::read,(p,c)->c.server().execute(()->BuildWandServer.handle(c.player(),p)));LegacyWandPackets.serverReceiver(CancelAll.ID,CancelAll::read,(p,c)->c.server().execute(()->LegacyWandPackets.send(c.player(),new Cancelled(BuildWandServer.cancelAll(c.player())))));BuildWandServer.register();}
+ public record Request(int action,BlockPos pos,long revision,long sequence) implements LegacyWandPayload{
+  public static final net.minecraft.resources.ResourceLocation ID=BuildingWandMod.id("build_request");
+  public net.minecraft.resources.ResourceLocation id(){return ID;}public void write(FriendlyByteBuf b){b.writeVarInt(action);b.writeBlockPos(pos);b.writeLong(revision);b.writeLong(sequence);}public static Request read(FriendlyByteBuf b){return new Request(b.readVarInt(),b.readBlockPos(),b.readLong(),b.readLong());}
+ }
+ public record State(String dimension,String wand,int mode,int stage,BlockPos first,BlockPos second,long revision,long sequence,boolean busy) implements LegacyWandPayload{
+  public static final net.minecraft.resources.ResourceLocation ID=BuildingWandMod.id("build_state");
+  public net.minecraft.resources.ResourceLocation id(){return ID;}public void write(FriendlyByteBuf b){b.writeUtf(dimension,128);b.writeUtf(wand,64);b.writeVarInt(mode);b.writeVarInt(stage);b.writeBlockPos(first);b.writeBlockPos(second);b.writeLong(revision);b.writeLong(sequence);b.writeBoolean(busy);}public static State read(FriendlyByteBuf b){return new State(b.readUtf(128),b.readUtf(64),b.readVarInt(),b.readVarInt(),b.readBlockPos(),b.readBlockPos(),b.readLong(),b.readLong(),b.readBoolean());}
+ }
+ public record CancelAll() implements LegacyWandPayload{
+  public static final net.minecraft.resources.ResourceLocation ID=BuildingWandMod.id("cancel_all_builds");public net.minecraft.resources.ResourceLocation id(){return ID;}public void write(FriendlyByteBuf b){}public static CancelAll read(FriendlyByteBuf b){return new CancelAll();}
+ }
+ public record Cancelled(int count) implements LegacyWandPayload {
+  public static final net.minecraft.resources.ResourceLocation ID=BuildingWandMod.id("builds_cancelled");
+  public net.minecraft.resources.ResourceLocation id(){return ID;}
+  public void write(FriendlyByteBuf b){b.writeVarInt(count);}
+  public static Cancelled read(FriendlyByteBuf b){return new Cancelled(b.readVarInt());}
+ }
+}
