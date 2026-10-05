@@ -1,0 +1,20 @@
+{
+  "minecraft": "26.1.2",
+  "version": "1.1.7",
+  "自动测试": {
+    "tests": 195,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "实际安装": "G:\\game\\mcfabric\\.minecraft\\versions\\26.1.2-Fabric\\mods\\quick-build-1.1.7-mc26.1.2-fabric.jar",
+  "运行包SHA256": "31c4d4831d1ddeee0f059a8a200299ecb530a8e1818c39e611f81443f5611134",
+  "旧新差异": [
+    "cn/quit5700/buildingwand/client/BuildBoxRenderer.class",
+    "cn/quit5700/buildingwand/client/DeleteBoxRenderer.class",
+    "fabric.mod.json"
+  ],
+  "实际画面": "待玩家验收",
+  "GitHub": "未同步",
+  "其他版本": "保持1.1.6"
+}
