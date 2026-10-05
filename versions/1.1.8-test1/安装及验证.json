@@ -1,0 +1,24 @@
+{
+  "minecraft": "1.21.8",
+  "version": "1.1.8-test1",
+  "正式版": false,
+  "自动测试": {
+    "tests": 197,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "缓存回调回归": 4,
+  "世界回归": 31,
+  "灯磁盘重载阶段": 3,
+  "安装路径": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.8-Fabric\\mods\\quick-build-1.1.8-test1-mc1.21.8-fabric.jar",
+  "运行包SHA256": "405c529457d37848e36988d6808a8bad6d79ae59fdc5e8810b21376ae9be6924",
+  "旧新条目差异": [
+    "cn/quit5700/light/light/DaylightOcclusion$SourceCache.class",
+    "cn/quit5700/light/light/DaylightOcclusion$WorldCache.class",
+    "cn/quit5700/light/light/DaylightOcclusion.class",
+    "fabric.mod.json"
+  ],
+  "GitHub": "未同步",
+  "用户存档": "未修改，待实测"
+}
