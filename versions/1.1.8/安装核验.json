@@ -1,0 +1,66 @@
+{
+  "26.2": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\26.2\\mods",
+    "文件": "quick-build-1.1.8-mc26.2-fabric.jar",
+    "SHA256": "a525e0260f7cbe5f5ab5d6d31d8da0394e053a74db1da1945b578f997b2fe4e9",
+    "单元测试": 200,
+    "功能与test16逐字节一致": true
+  },
+  "26.1.2": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\26.1.2-Fabric\\mods",
+    "文件": "quick-build-1.1.8-mc26.1.2-fabric.jar",
+    "SHA256": "d77705486d942ea048138b4a20b6a82c67baf7325fad6e2c5601d4b29f25d4da",
+    "单元测试": 199,
+    "功能与test16逐字节一致": true
+  },
+  "1.21.11": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.11-Fabric\\mods",
+    "文件": "quick-build-1.1.8-mc1.21.11-fabric.jar",
+    "SHA256": "dc3f695fd477584dfdf0f42c981b31a7891f6807e7d5d49e5e5c7ef1f9f16ce9",
+    "单元测试": 201,
+    "功能与test16逐字节一致": true
+  },
+  "1.21.8": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.8-Fabric\\mods",
+    "文件": "quick-build-1.1.8-mc1.21.8-fabric.jar",
+    "SHA256": "e5306b768ea33ba9559c3c995732229ba7545786a5669021dfe221088d898c5e",
+    "单元测试": 201,
+    "功能与test16逐字节一致": true
+  },
+  "1.21.4": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.4-Fabric\\mods",
+    "文件": "quick-build-1.1.8-mc1.21.4-fabric.jar",
+    "SHA256": "2bac6385df8340055786f280c4ec2c60f2980040780fed5bda38607c12433b95",
+    "单元测试": 199,
+    "功能与test16逐字节一致": true
+  },
+  "1.21.1": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.1-mtr\\mods",
+    "文件": "quick-build-1.1.8-mc1.21.1-fabric.jar",
+    "SHA256": "4a824553f1f97cb3dab60b29fb545469569ec5fef24255101ed49820bc7b50c9",
+    "单元测试": 199,
+    "功能与test16逐字节一致": true
+  },
+  "1.20.4": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\mods",
+    "文件": "quick-build-1.1.8-mc1.20.4-fabric.jar",
+    "SHA256": "e19138c446dcd247d711c00b12ba9f29091e2af028e39f92e9d64b6675f80f08",
+    "单元测试": 199,
+    "功能与test16逐字节一致": true
+  },
+  "1.20.1": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.1-Fabric-mtr\\mods",
+    "文件": "quick-build-1.1.8-mc1.20.1-fabric.jar",
+    "SHA256": "8864fbe373d85d760723ef747e3e09d48686d17e4dfe4fda2a00507922cb93d0",
+    "单元测试": 199,
+    "功能与test16逐字节一致": true
+  }
+}

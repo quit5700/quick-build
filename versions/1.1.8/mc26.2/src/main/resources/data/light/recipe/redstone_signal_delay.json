@@ -1,0 +1,1 @@
+{ "type": "minecraft:crafting_shapeless", "ingredients": ["light:constant_light_block", "minecraft:repeater", "minecraft:clock", "minecraft:redstone"], "result": { "id": "light:redstone_signal_delay", "count": 1 } }

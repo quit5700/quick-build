@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "RLR",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "L": {
+      "item": "light:constant_light_block"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "light:redstone_energy_emitter"
+  }
+}
