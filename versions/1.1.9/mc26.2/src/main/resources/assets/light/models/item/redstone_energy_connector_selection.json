@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": { "layer0": "light:item/redstone_energy_connector_selection" }
+}

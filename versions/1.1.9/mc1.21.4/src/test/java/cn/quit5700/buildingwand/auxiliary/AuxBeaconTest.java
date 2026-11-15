@@ -1,0 +1,19 @@
+package cn.quit5700.buildingwand.aux;
+import org.junit.jupiter.api.*;
+import net.minecraft.core.BlockPos;
+import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
+class AuxBeaconTest {
+ @BeforeAll static void detect(){net.minecraft.SharedConstants.tryDetectVersion();}
+ private static AuxRow row(int w,int h,int d){var n=AuxRow.create(BlockPos.ZERO,new BlockPos(w-1,h-1,d-1));n.putInt("Shape",AuxBeacon.SHAPE);n.putString("Material","minecraft:iron_block");return new AuxRow(n);}
+ @Test void vanillaOneToFourLayersHaveExactMaterialCounts(){int[] expected={9,34,83,164};for(int levels=1;levels<=4;levels++){var row=row(levels*2+1,levels+1,levels*2+1);var counts=new HashMap<String,Integer>();for(long i=0;i<row.volume();i++){var p=row.coordinates(i);if(row.contains(p[0],p[1],p[2]))counts.merge(cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(row.material(p[0],p[1],p[2]),"id",""),1,Integer::sum);}assertEquals(Map.of("minecraft:iron_block",expected[levels-1],"minecraft:beacon",1),counts);}}
+ @Test void eachLayerIsSolidAndShrinksOneBlockPerSide(){var row=row(9,5,9);for(int y=0;y<4;y++)for(int x=0;x<9;x++)for(int z=0;z<9;z++)assertEquals(x>=y&&x<9-y&&z>=y&&z<9-y,row.contains(x,y,z));assertTrue(row.contains(4,4,4));assertFalse(row.contains(3,4,4));}
+ @Test void hollowFlagCannotMakeAnInvalidBeaconBase(){var data=row(9,5,9).data.copy();data.putBoolean("Solid",false);var row=new AuxRow(data);assertTrue(row.contains(4,0,4));assertTrue(row.contains(4,2,4));}
+ @Test void minimumBoundsAreRejectedInsteadOfCreatingAnIncompleteTower(){for(int[] size:new int[][]{{2,2,3},{3,1,3},{3,2,2}})assertThrows(IllegalArgumentException.class,()->row(size[0],size[1],size[2]));}
+ @Test void heightAndFootprintLimitTheLargestCompleteTower(){assertEquals(49,AuxBeacon.levels(100,100,100));assertEquals(1,AuxBeacon.levels(9,2,9));assertEquals(2,AuxBeacon.levels(5,20,99));assertEquals(0,AuxBeacon.levels(1,1,1));}
+ @Test void largerAndEvenBoundsCenterOneCompleteTowerWithoutScanningUnusedSpace(){var row=row(100,100,100);assertEquals(99L*50*99,row.volume());assertTrue(row.contains(0,0,0));assertTrue(row.contains(49,49,49));assertFalse(row.contains(99,0,0));}
+ @Test void fiveBaseMaterialsNeverReplaceTheTopBeacon(){for(String base:AuxBeacon.BASES){var n=row(3,2,3).data.copy();n.putString("Material",base);var row=new AuxRow(n);assertEquals(base,cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(row.material(0,0,0),"id",""));assertEquals("minecraft:beacon",cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(row.material(1,1,1),"id",""));}}
+ @Test void ordinaryBaseMaterialIsAcceptedAndTopBeaconIsPreserved(){var n=row(3,2,3).data.copy();n.putString("Material","minecraft:stone");var row=new AuxRow(n);assertEquals("minecraft:stone",cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(row.material(0,0,0),"id",""));assertEquals("minecraft:beacon",cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(row.material(1,1,1),"id",""));}
+ @Test void rotationMovementRemovalAndRecordReloadKeepBothMaterials(){var row=row(9,5,9);row.rotate(0,new BlockPos(4,2,4),1);row.translate(20,30,40);var loaded=new AuxRow(row.data.copy());assertEquals(row.world(4,4,4),loaded.world(4,4,4));assertEquals("minecraft:beacon",cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(loaded.material(4,4,4),"id",""));var cell=loaded.world(0,0,0);loaded.remove(cell);assertFalse(loaded.contains(0,0,0));assertTrue(row.contains(0,0,0));}
+ @Test void oldStoredShapeIdsStayStableWhileMenuPlacesBeaconAfterPyramid(){assertArrayEquals(new String[]{"cuboid","sphere","cylinder","pyramid","rectangle","circle","prism_triangle","triangle","prism_star","star","prism_crescent","crescent"},Arrays.copyOf(AuxRow.SHAPES,12));assertArrayEquals(new int[]{0,1,2,3,12,4,5,6,7,8,9,10,11},AuxRow.SHAPE_ORDER);assertEquals(13,Arrays.stream(AuxRow.SHAPE_ORDER).distinct().count());}
+}

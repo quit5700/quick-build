@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "light:block/variable_constant_light"
+    },
+    "powered=true": {
+      "model": "light:block/variable_constant_light"
+    }
+  }
+}

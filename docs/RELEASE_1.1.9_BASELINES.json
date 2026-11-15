@@ -1,0 +1,102 @@
+{
+  "1.20.1": {
+    "baseline": "1.1.9-test24",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.20.1",
+    "java": "17",
+    "loader": "0.16.14",
+    "api": "0.92.9+1.20.1",
+    "loom": "1.6.12",
+    "gradle": "8.6",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "1.20.4": {
+    "baseline": "1.1.9-test24",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.20.4",
+    "java": "17",
+    "loader": "0.15.11",
+    "api": "0.97.3+1.20.4",
+    "loom": "1.6.12",
+    "gradle": "8.6",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "1.21.1": {
+    "baseline": "1.1.9-test23",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.21.1",
+    "java": "21",
+    "loader": "0.16.14",
+    "api": "0.116.12+1.21.1",
+    "loom": "1.7.4",
+    "gradle": "8.8",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "1.21.4": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.21.4",
+    "java": "21",
+    "loader": "0.16.14",
+    "api": "0.119.4+1.21.4",
+    "loom": "1.9.2",
+    "gradle": "8.14.3",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "1.21.8": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.21.8",
+    "java": "21",
+    "loader": "0.17.3",
+    "api": "0.136.1+1.21.8",
+    "loom": "1.11.8",
+    "gradle": "8.14.3",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "1.21.10": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.21.10",
+    "java": "21",
+    "loader": "0.18.1",
+    "api": "0.138.4+1.21.10",
+    "loom": "1.15-SNAPSHOT",
+    "gradle": "9.2.1",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "1.21.11": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc1.21.11",
+    "java": "21",
+    "loader": "0.19.3",
+    "api": "0.141.5+1.21.11",
+    "loom": "1.15-SNAPSHOT",
+    "gradle": "9.2.1",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "26.1.2": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc26.1.2",
+    "java": "25",
+    "loader": "0.19.3",
+    "api": "0.153.0+26.1.2",
+    "loom": "1.15.5",
+    "gradle": "9.2.1",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "26.2": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc26.2",
+    "java": "25",
+    "loader": "0.19.3",
+    "api": "0.154.0+26.2",
+    "loom": "1.15.5",
+    "gradle": "9.2.1",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  },
+  "26.3": {
+    "baseline": "1.1.9-test22",
+    "project": "H:\\CodexWork\\快捷建筑模组\\versions\\1.1.9\\mc26.3",
+    "java": "25",
+    "loader": "0.19.5",
+    "api": "0.163.0+26.3",
+    "loom": "1.17.21",
+    "gradle": "9.6.0",
+    "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518"
+  }
+}

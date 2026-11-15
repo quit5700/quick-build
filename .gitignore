@@ -4,3 +4,7 @@
 **/dist/
 *.log
 hs_err_pid*
+
+**/logs/
+**/world-release119.gradle
+*.hprof

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "cn.quit5700.light.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "NaturalSpawnerMixin",
+    "PhantomSpawnerMixin",
+    "DaylightChunkMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

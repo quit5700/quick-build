@@ -1,0 +1,4 @@
+{
+  "parent": "light:block/redstone_energy_remote_switch_on",
+  "textures": { "base": "minecraft:block/yellow_concrete" }
+}

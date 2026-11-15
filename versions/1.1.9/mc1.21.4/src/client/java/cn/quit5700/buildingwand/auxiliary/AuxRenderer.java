@@ -1,0 +1,67 @@
+package cn.quit5700.buildingwand.aux;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import org.joml.Matrix4f;
+import java.util.*;
+
+public final class AuxRenderer {
+ private record Face(BlockPos pos,int direction,int color,int edges,String buildOwner){}
+ private record Ghost(BlockPos pos,net.minecraft.world.level.block.state.BlockState state){}
+ private static List<Face> faces=List.of(),pendingFaces=new ArrayList<>();private static List<Ghost> ghosts=List.of(),pendingGhosts=new ArrayList<>();private static BlockPos renderAnchor=BlockPos.ZERO;
+ private static final Set<Ghost> ghostSet=new HashSet<>();
+ private static int signature;private static List<AuxRow> work=List.of();private static int ri;private static long cursor;
+ public static void register(){WorldRenderEvents.AFTER_TRANSLUCENT.register(ctx->{var mc=Minecraft.getInstance();if(mc.player==null||ctx.matrixStack()==null||mc.level==null)return;
+  List<AuxRow> rows=AuxClient.drawing();String dimension=mc.level.dimension().location().toString();rows=rows.stream().filter(r->cn.quit5700.buildingwand.aux.LegacyNbt.booleanOr(r.data,"Visible",true)&&cn.quit5700.buildingwand.aux.LegacyNbt.stringOr(r.data,"Dim",dimension).equals(dimension)).toList();
+  int radius=Math.max(16,mc.options.getEffectiveRenderDistance()*16);int key=radius*17+mc.player.blockPosition().getX()/16*31+mc.player.blockPosition().getZ()/16*991+mc.player.blockPosition().getY()/16*131;
+  key=key*31+AuxClient.selected.hashCode();for(var row:rows)key=key*31+row.renderKey();
+  if(key!=signature){signature=key;work=BuildProjection.renderingOrder(rows);ri=0;cursor=0;pendingFaces=new ArrayList<>();pendingGhosts=new ArrayList<>();ghostSet.clear();renderAnchor=mc.player.blockPosition();}
+  long deadline=System.nanoTime()+3_000_000;int budget=8192;while(ri<work.size()&&budget-->0&&System.nanoTime()<deadline){var row=work.get(ri);int[] center=row.local(renderAnchor);int xmin=Math.max(0,center[0]-radius),xmax=Math.min(row.w-1,center[0]+radius),ymin=Math.max(0,center[1]-radius),ymax=Math.min(row.h-1,center[1]+radius),zmin=Math.max(0,center[2]-radius),zmax=Math.min(row.d-1,center[2]+radius);long width=(long)xmax-xmin+1,depth=(long)zmax-zmin+1,height=(long)ymax-ymin+1;
+   if(width<1||depth<1||height<1||cursor>=width*depth*height){ri++;cursor=0;continue;}long n=cursor++;int x=xmin+(int)(n%width),y=ymin+(int)(n/(width*depth)),z=zmin+(int)(n/width%depth);if(!row.contains(x,y,z))continue;boolean surface=false;var chosenMaterial=row.material(x,y,z);int color=chosenMaterial==null?AuxRow.COLORS[Math.floorMod(cn.quit5700.buildingwand.aux.LegacyNbt.intOr(row.data,"Color",0),16)]:0xffffff;if(AuxClient.selected.contains(row.id()))color=0xffdf55;var at=row.world(x,y,z);
+   for(var d:Direction.values()){int[] local=row.local(at.relative(d));if(!row.contains(local[0],local[1],local[2])){surface=true;pendingFaces.add(new Face(at,d.ordinal(),color,AuxSurface.edgeMask(row,at,d),cn.quit5700.buildingwand.aux.LegacyNbt.booleanOr(row.data,"BuildPreview",false)?row.id():""));}}
+   if(surface&&chosenMaterial!=null){try{for(var entry:AuxMaterials.unit(row,x,y,z).entrySet())if(!entry.getValue().isAir()){var ghost=new Ghost(entry.getKey(),entry.getValue());if(ghostSet.add(ghost))pendingGhosts.add(ghost);}}catch(IllegalArgumentException invalid){}}
+
+  }
+  if(ri>=work.size()){faces=pendingFaces;ghosts=pendingGhosts;}
+  Vec3 camera=ctx.camera().getPosition();var currentBuildRows=new HashMap<String,AuxRow>();for(var row:rows)if(cn.quit5700.buildingwand.aux.LegacyNbt.booleanOr(row.data,"BuildPreview",false))currentBuildRows.put(row.id(),row);var availableFaces=new ArrayList<>(faces);if(ri<work.size()){availableFaces.removeIf(f->!f.buildOwner.isEmpty());for(var f:pendingFaces)if(!f.buildOwner.isEmpty())availableFaces.add(f);}var frameFaces=availableFaces.stream().filter(f->f.buildOwner.isEmpty()||BuildProjection.visible(currentBuildRows.get(f.buildOwner),f.pos)).toList();
+  boolean inside=rows.stream().anyMatch(row->{int[] cell=row.local(BlockPos.containing(camera));return row.contains(cell[0],cell[1],cell[2]);});
+  mesh(ctx.matrixStack(),ctx.consumers().getBuffer(RenderType.debugQuads()),(pose,buffer)->{for(var f:frameFaces){var direction=Direction.values()[f.direction];if(inside||AuxSurface.frontFacing(f.pos,direction,camera.x,camera.y,camera.z))face(buffer,pose.pose(),f.pos,camera,direction,f.color,f.color==0xffdf55?100:62,f.edges);}});
+  for(var ghost:ghosts){var model=mc.getBlockRenderer().getBlockModel(ghost.state);var parts=List.of(model);ctx.matrixStack().pushPose();ctx.matrixStack().translate(ghost.pos.getX()-camera.x,ghost.pos.getY()-camera.y,ghost.pos.getZ()-camera.z);
+   if(parts.stream().anyMatch(part->!part.getQuads(ghost.state,null,RandomSource.create(42)).isEmpty()||Arrays.stream(Direction.values()).anyMatch(dir->!part.getQuads(ghost.state,dir,RandomSource.create(42)).isEmpty()))){mesh(ctx.matrixStack(),ctx.consumers().getBuffer(RenderType.translucentMovingBlock()),(pose,buffer)->{for(var part:parts)for(int face=-1;face<6;face++)for(var q:part.getQuads(ghost.state,face<0?null:Direction.values()[face],RandomSource.create(42))){int tint=q.isTinted()?mc.getBlockColors().getColor(ghost.state,mc.level,ghost.pos,q.getTintIndex()):0xffffff;buffer.putBulkData(pose,q,(tint>>16&255)/255f,(tint>>8&255)/255f,(tint&255)/255f,.41f,0xF000F0,net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);}});}
+   else{boolean rendered=false;if(ghost.state.getBlock() instanceof net.minecraft.world.level.block.EntityBlock factory&&BuiltInRegistries.BLOCK.getKey(ghost.state.getBlock()).getNamespace().equals("minecraft")){try{var entity=factory.newBlockEntity(ghost.pos,ghost.state);if(entity!=null){entity.setLevel(mc.level);var renderer=mc.getBlockEntityRenderDispatcher().getRenderer(entity);if(renderer!=null){renderer.render(entity,0,ctx.matrixStack(),ctx.consumers(),0xF000F0,net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);rendered=true;}}}catch(RuntimeException invalid){}}if(!rendered&&!ghost.state.getBlock().asItem().equals(net.minecraft.world.item.Items.AIR)){ctx.matrixStack().translate(.5,.5,.5);mc.getItemRenderer().renderStatic(new net.minecraft.world.item.ItemStack(ghost.state.getBlock().asItem()),net.minecraft.world.item.ItemDisplayContext.NONE,0xF000F0,net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY,ctx.matrixStack(),ctx.consumers(),mc.level,42);}}
+   ctx.matrixStack().popPose();
+  }
+  var buildRanges=rows.stream().filter(row->cn.quit5700.buildingwand.aux.LegacyNbt.booleanOr(row.data,"BuildPreview",false)).toList();
+  if(!buildRanges.isEmpty())mesh(ctx.matrixStack(),ctx.consumers().getBuffer(RenderType.debugQuads()),(pose,buffer)->{for(var row:buildRanges)box(buffer,pose.pose(),row.world(0,0,0),row.world(row.w-1,row.h-1,row.d-1),camera,0x55baff);});
+  if(mc.player.getMainHandItem().is(cn.quit5700.buildingwand.registry.ModItems.AUX_WAND)){
+   BlockPos target=AuxClient.target(mc);BlockPos a=AuxClient.first,b=AuxClient.second;
+   var markers=new ArrayList<BlockPos>();var colors=new ArrayList<Integer>();
+   if(a!=null){markers.add(a);colors.add(0x55ff77);}if(b!=null){markers.add(b);colors.add(0x55bbff);}else{markers.add(target);colors.add(0xffffff);}
+   List<AuxRow> selectedRows=rows.stream().filter(row->cn.quit5700.buildingwand.aux.LegacyNbt.booleanOr(row.data,"Placed",false)&&AuxClient.selected.contains(row.id())).toList();
+   BlockPos first=a,second=b==null?target:b;
+   mesh(ctx.matrixStack(),ctx.consumers().getBuffer(RenderType.debugQuads()),(pose,buffer)->{
+    for(int i=0;i<markers.size();i++){if(colors.get(i)==0xffffff)box(buffer,pose.pose(),markers.get(i),markers.get(i),camera,0xffffff);else for(var dir:Direction.values())face(buffer,pose.pose(),markers.get(i),camera,dir,colors.get(i),80,15);}
+    if(first!=null)box(buffer,pose.pose(),first,second,camera,0xffffff);
+    for(var row:selectedRows){BlockPos lo=row.world(0,0,0),hi=lo;for(int ix:new int[]{0,row.w-1})for(int iy:new int[]{0,row.h-1})for(int iz:new int[]{0,row.d-1}){var q=row.world(ix,iy,iz);lo=new BlockPos(Math.min(lo.getX(),q.getX()),Math.min(lo.getY(),q.getY()),Math.min(lo.getZ(),q.getZ()));hi=new BlockPos(Math.max(hi.getX(),q.getX()),Math.max(hi.getY(),q.getY()),Math.max(hi.getZ(),q.getZ()));}box(buffer,pose.pose(),lo,hi,camera,0xffffff);var endpoints=AuxFacing.endpoints(row);for(var dir:Direction.values()){face(buffer,pose.pose(),endpoints[0],camera,dir,0x55ff77,80,15);face(buffer,pose.pose(),endpoints[1],camera,dir,0x55bbff,80,15);}}
+   });
+   Vec3 ray=AuxClient.rayEnd();if(ray!=null){Vec3 right=mc.player.getLookAngle().cross(new Vec3(0,1,0)).normalize();Vec3 start=mc.player.getEyePosition().add(mc.player.getLookAngle().scale(.35)).add(right.scale(.22)).add(0,-.18,0);Vec3 end=ray;mesh(ctx.matrixStack(),ctx.consumers().getBuffer(RenderType.debugQuads()),(pose,buffer)->{Vec3 offset=end.subtract(start).normalize().cross(new Vec3(0,1,0)).normalize().scale(.015);quad(buffer,pose.pose(),start.add(offset).subtract(camera),end.add(offset).subtract(camera),end.subtract(offset).subtract(camera),start.subtract(offset).subtract(camera),0x88ff22,220);});}
+  }
+ });}
+ @FunctionalInterface private interface Geometry{void draw(com.mojang.blaze3d.vertex.PoseStack.Pose pose,VertexConsumer buffer);}
+ private static void mesh(com.mojang.blaze3d.vertex.PoseStack pose,VertexConsumer buffer,Geometry geometry){geometry.draw(pose.last(),buffer);}
+ private static void box(VertexConsumer buffer,Matrix4f matrix,BlockPos first,BlockPos second,Vec3 camera,int color){
+  double[] min={Math.min(first.getX(),second.getX())-.005,Math.min(first.getY(),second.getY())-.005,Math.min(first.getZ(),second.getZ())-.005};
+  double[] max={Math.max(first.getX(),second.getX())+1.005,Math.max(first.getY(),second.getY())+1.005,Math.max(first.getZ(),second.getZ())+1.005};
+  double line=first.equals(second)?.006:.025;
+  for(int axis=0;axis<3;axis++)for(int i=0;i<2;i++)for(int j=0;j<2;j++){int u=(axis+1)%3,v=(axis+2)%3;double[] a=min.clone(),b=min.clone();a[u]=b[u]=i==0?min[u]:max[u];a[v]=b[v]=j==0?min[v]:max[v];b[axis]=max[axis];Vec3 start=new Vec3(a[0],a[1],a[2]).subtract(camera),end=new Vec3(b[0],b[1],b[2]).subtract(camera);Vec3 side=(u==0?new Vec3(line,0,0):u==1?new Vec3(0,line,0):new Vec3(0,0,line));quad(buffer,matrix,start,end,end.add(side),start.add(side),color,240);Vec3 other=(v==0?new Vec3(line,0,0):v==1?new Vec3(0,line,0):new Vec3(0,0,line));quad(buffer,matrix,start,end,end.add(other),start.add(other),color,240);}
+ }
+ private static void face(VertexConsumer b,Matrix4f m,BlockPos p,Vec3 cam,Direction d,int color,int alpha,int edges){double x=p.getX()-cam.x+d.getStepX()*.003,y=p.getY()-cam.y+d.getStepY()*.003,z=p.getZ()-cam.z+d.getStepZ()*.003;Vec3 a,c,e,f;switch(d){case DOWN->{a=new Vec3(x,y,z+1);c=new Vec3(x+1,y,z+1);e=new Vec3(x+1,y,z);f=new Vec3(x,y,z);}case UP->{a=new Vec3(x,y+1,z);c=new Vec3(x+1,y+1,z);e=new Vec3(x+1,y+1,z+1);f=new Vec3(x,y+1,z+1);}case NORTH->{a=new Vec3(x+1,y,z);c=new Vec3(x,y,z);e=new Vec3(x,y+1,z);f=new Vec3(x+1,y+1,z);}case SOUTH->{a=new Vec3(x,y,z+1);c=new Vec3(x+1,y,z+1);e=new Vec3(x+1,y+1,z+1);f=new Vec3(x,y+1,z+1);}case WEST->{a=new Vec3(x,y,z);c=new Vec3(x,y,z+1);e=new Vec3(x,y+1,z+1);f=new Vec3(x,y+1,z);}default->{a=new Vec3(x+1,y,z+1);c=new Vec3(x+1,y,z);e=new Vec3(x+1,y+1,z);f=new Vec3(x+1,y+1,z+1);}}quad(b,m,a,c,e,f,color,alpha);Vec3 lift=new Vec3(d.getStepX()*.003,d.getStepY()*.003,d.getStepZ()*.003);a=a.add(lift);c=c.add(lift);e=e.add(lift);f=f.add(lift);Vec3 u=c.subtract(a).scale(.018),v=f.subtract(a).scale(.018);double line=AuxSurface.outlineWidth(cam.distanceTo(Vec3.atCenterOf(p)));Vec3 outerU=c.subtract(a).scale(line),outerV=f.subtract(a).scale(line);quad(b,m,a,c,c.add((edges&1)!=0?outerV:v),a.add((edges&1)!=0?outerV:v),(edges&1)!=0?AuxSurface.outlineColor(color):color,(edges&1)!=0?230:45);quad(b,m,c,e,e.subtract((edges&2)!=0?outerU:u),c.subtract((edges&2)!=0?outerU:u),(edges&2)!=0?AuxSurface.outlineColor(color):color,(edges&2)!=0?230:45);quad(b,m,e,f,f.subtract((edges&4)!=0?outerV:v),e.subtract((edges&4)!=0?outerV:v),(edges&4)!=0?AuxSurface.outlineColor(color):color,(edges&4)!=0?230:45);quad(b,m,f,a,a.add((edges&8)!=0?outerU:u),f.add((edges&8)!=0?outerU:u),(edges&8)!=0?AuxSurface.outlineColor(color):color,(edges&8)!=0?230:45);}
+ private static void quad(VertexConsumer b,Matrix4f m,Vec3 a,Vec3 c,Vec3 e,Vec3 f,int color,int alpha){for(var p:new Vec3[]{a,c,e,f})b.addVertex(m,(float)p.x,(float)p.y,(float)p.z).setColor(color>>16&255,color>>8&255,color&255,alpha);}
+}

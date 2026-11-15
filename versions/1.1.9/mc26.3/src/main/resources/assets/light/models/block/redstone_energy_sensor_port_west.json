@@ -1,0 +1,1 @@
+{ "parent": "minecraft:block/block", "textures": { "port": "minecraft:block/redstone_block", "particle": "minecraft:block/redstone_block" }, "elements": [{ "from": [-3,4,4], "to": [3,12,12], "faces": { "north":{"texture":"#port"}, "south":{"texture":"#port"}, "east":{"texture":"#port"}, "west":{"texture":"#port"}, "up":{"texture":"#port"}, "down":{"texture":"#port"} } }] }

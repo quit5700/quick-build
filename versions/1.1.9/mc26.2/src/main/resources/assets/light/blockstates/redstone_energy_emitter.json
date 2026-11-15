@@ -1,0 +1,106 @@
+{
+    "variants":  {
+                     "color=none,enabled=false":  {
+                                                      "model":  "light:block/redstone_energy_emitter_none"
+                                                  },
+                     "color=none,enabled=true":  {
+                                                     "model":  "light:block/redstone_energy_emitter_none"
+                                                 },
+                     "color=white,enabled=false":  {
+                                                       "model":  "light:block/redstone_energy_emitter_white"
+                                                   },
+                     "color=white,enabled=true":  {
+                                                      "model":  "light:block/redstone_energy_emitter_white"
+                                                  },
+                     "color=orange,enabled=false":  {
+                                                        "model":  "light:block/redstone_energy_emitter_orange"
+                                                    },
+                     "color=orange,enabled=true":  {
+                                                       "model":  "light:block/redstone_energy_emitter_orange"
+                                                   },
+                     "color=magenta,enabled=false":  {
+                                                         "model":  "light:block/redstone_energy_emitter_magenta"
+                                                     },
+                     "color=magenta,enabled=true":  {
+                                                        "model":  "light:block/redstone_energy_emitter_magenta"
+                                                    },
+                     "color=light_blue,enabled=false":  {
+                                                            "model":  "light:block/redstone_energy_emitter_light_blue"
+                                                        },
+                     "color=light_blue,enabled=true":  {
+                                                           "model":  "light:block/redstone_energy_emitter_light_blue"
+                                                       },
+                     "color=yellow,enabled=false":  {
+                                                        "model":  "light:block/redstone_energy_emitter_yellow"
+                                                    },
+                     "color=yellow,enabled=true":  {
+                                                       "model":  "light:block/redstone_energy_emitter_yellow"
+                                                   },
+                     "color=lime,enabled=false":  {
+                                                      "model":  "light:block/redstone_energy_emitter_lime"
+                                                  },
+                     "color=lime,enabled=true":  {
+                                                     "model":  "light:block/redstone_energy_emitter_lime"
+                                                 },
+                     "color=pink,enabled=false":  {
+                                                      "model":  "light:block/redstone_energy_emitter_pink"
+                                                  },
+                     "color=pink,enabled=true":  {
+                                                     "model":  "light:block/redstone_energy_emitter_pink"
+                                                 },
+                     "color=gray,enabled=false":  {
+                                                      "model":  "light:block/redstone_energy_emitter_gray"
+                                                  },
+                     "color=gray,enabled=true":  {
+                                                     "model":  "light:block/redstone_energy_emitter_gray"
+                                                 },
+                     "color=light_gray,enabled=false":  {
+                                                            "model":  "light:block/redstone_energy_emitter_light_gray"
+                                                        },
+                     "color=light_gray,enabled=true":  {
+                                                           "model":  "light:block/redstone_energy_emitter_light_gray"
+                                                       },
+                     "color=cyan,enabled=false":  {
+                                                      "model":  "light:block/redstone_energy_emitter_cyan"
+                                                  },
+                     "color=cyan,enabled=true":  {
+                                                     "model":  "light:block/redstone_energy_emitter_cyan"
+                                                 },
+                     "color=purple,enabled=false":  {
+                                                        "model":  "light:block/redstone_energy_emitter_purple"
+                                                    },
+                     "color=purple,enabled=true":  {
+                                                       "model":  "light:block/redstone_energy_emitter_purple"
+                                                   },
+                     "color=blue,enabled=false":  {
+                                                      "model":  "light:block/redstone_energy_emitter_blue"
+                                                  },
+                     "color=blue,enabled=true":  {
+                                                     "model":  "light:block/redstone_energy_emitter_blue"
+                                                 },
+                     "color=brown,enabled=false":  {
+                                                       "model":  "light:block/redstone_energy_emitter_brown"
+                                                   },
+                     "color=brown,enabled=true":  {
+                                                      "model":  "light:block/redstone_energy_emitter_brown"
+                                                  },
+                     "color=green,enabled=false":  {
+                                                       "model":  "light:block/redstone_energy_emitter_green"
+                                                   },
+                     "color=green,enabled=true":  {
+                                                      "model":  "light:block/redstone_energy_emitter_green"
+                                                  },
+                     "color=red,enabled=false":  {
+                                                     "model":  "light:block/redstone_energy_emitter_red"
+                                                 },
+                     "color=red,enabled=true":  {
+                                                    "model":  "light:block/redstone_energy_emitter_red"
+                                                },
+                     "color=black,enabled=false":  {
+                                                       "model":  "light:block/redstone_energy_emitter_black"
+                                                   },
+                     "color=black,enabled=true":  {
+                                                      "model":  "light:block/redstone_energy_emitter_black"
+                                                  }
+                 }
+}

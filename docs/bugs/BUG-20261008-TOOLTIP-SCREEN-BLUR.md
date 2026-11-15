@@ -1,0 +1,88 @@
+# 悬浮说明及1.21.1说明台虚化
+当前项目根目录：C:\Users\quit5700\Documents\mc虚拟线路模组\快捷建筑模组
+类型：文字显示、客户端绘制顺序。
+七版删除法杖仍显示两行耐久信息，本次仅删显示调用。1.21.1正文先绘制，super.render末尾调用Screen.renderBackground，背景模糊覆盖此前正文和图标，按钮随后绘制保持清晰。已通过本版Screen字节码确认顺序；修复在render开始调用super.renderBackground，并覆盖后续renderBackground为空，保持最后super.render绘制按钮。
+变更文件及测试结果见安装核验.json。其余源码、旧测试、模型和材质逐字节保持，完整单元测试通过。待用户验证实际画面，不声称已实机通过。
+防重复：背景及模糊必须在界面内容之前执行，不把新版Screen.render当作只绘制按钮。
+{
+  "26.2": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\26.2\\mods",
+    "文件": "quick-build-1.1.8-test16-mc26.2-fabric.jar",
+    "SHA256": "9804aa9009fae13de7e0c3d0f1c0d3b6fa23c67cfe04fd01621aab0f5ae58e4f",
+    "单元测试": 200,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  },
+  "26.1.2": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\26.1.2-Fabric\\mods",
+    "文件": "quick-build-1.1.8-test16-mc26.1.2-fabric.jar",
+    "SHA256": "499a4367f9ecbad7eae431273721b1863c7c14a9ea92d19e252b5b65e7f595d3",
+    "单元测试": 199,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  },
+  "1.21.11": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.11-Fabric\\mods",
+    "文件": "quick-build-1.1.8-test16-mc1.21.11-fabric.jar",
+    "SHA256": "c27bd7d123d6ef44136a20b97ff55a06caa8b9538018334412e1f083c78362ce",
+    "单元测试": 201,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  },
+  "1.21.8": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.8-Fabric\\mods",
+    "文件": "quick-build-1.1.8-test16-mc1.21.8-fabric.jar",
+    "SHA256": "278fa34662967b2208c08c83ecbc175ecaa44e91ec5ededbbc46ab03fa419228",
+    "单元测试": 201,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  },
+  "1.21.4": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.4-Fabric\\mods",
+    "文件": "quick-build-1.1.8-test16-mc1.21.4-fabric.jar",
+    "SHA256": "362e21424de38111b689eb26ffe3450b29cfcea4b98bf4a1f571cb74136947e2",
+    "单元测试": 199,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  },
+  "1.21.1": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.21.1-mtr\\mods",
+    "文件": "quick-build-1.1.8-test16-mc1.21.1-fabric.jar",
+    "SHA256": "fb7e389639fe52acd0326af214f51a0af33d924bfe0255e8094e0cfc55190ba1",
+    "单元测试": 199,
+    "变更": [
+      "src/client/java/cn/quit5700/buildingwand/client/WandSettingsScreen.java"
+    ]
+  },
+  "1.20.4": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\mods",
+    "文件": "quick-build-1.1.8-test16-mc1.20.4-fabric.jar",
+    "SHA256": "92aa3422915e40a0caa8b4b7afa9c61ce044c8e6866ae792c9e81a4e6db005bd",
+    "单元测试": 199,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  },
+  "1.20.1": {
+    "状态": "已安装",
+    "目录": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.1-Fabric-mtr\\mods",
+    "文件": "quick-build-1.1.8-test16-mc1.20.1-fabric.jar",
+    "SHA256": "e3286073c98dc9aba5fb4ccb1cbeca060298d7f477f5cc67fae4b3f8c19d1c53",
+    "单元测试": 199,
+    "变更": [
+      "src/main/java/cn/quit5700/buildingwand/item/DeletionWandItem.java"
+    ]
+  }
+}

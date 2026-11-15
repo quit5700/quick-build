@@ -1,26 +1,17 @@
-# 快捷建筑（Quick Build）
+# 快捷建筑 1.1.9 正式版
 
-Fabric（织物）模组，合并建筑魔杖、移动魔杖、无线红石与寻路光柱功能。各 Minecraft（我的世界）版本保存在独立目录中。
+<img src="assets/confirmed/quick-build-approved.png" width="160" alt="快捷建筑正式图标">
 
-## 版本矩阵
+用户于2026-11-16确认正式版。支持1.20.1、1.20.4、1.21.1、1.21.4、1.21.8、1.21.10、1.21.11、26.1.2、26.2、26.3。各版完整代码在versions/1.1.9/mc对应版本，安装目标共11个实例。
 
-| 目录 | Minecraft | Java | Fabric Loader | Fabric API | Fabric Loom | Yarn Mappings |
-| --- | --- | --- | --- | --- | --- | --- |
-| `mc26.2` | 26.2 | 25 | 0.19.3 | 0.154.0+26.2 | 1.15.5 | Mojang Official |
-| `mc26.1.2` | 26.1.2 | 25 | 0.19.3 | 0.153.0+26.1.2 | 1.15.5 | Mojang Official |
-| `mc1.21.11` | 1.21.11 | 21 | 0.19.3 | 0.141.5+1.21.11 | 1.15-SNAPSHOT | Mojang Official |
-| `mc1.21.8` | 1.21.8 | 21 | 0.17.3 | 0.136.1+1.21.8 | 1.11.8 | Mojang Official |
-| `mc1.21.4` | 1.21.4 | 21 | 0.16.14 | 0.119.4+1.21.4 | 1.9.2 | Mojang Official |
-| `mc1.21.1` | 1.21.1 | 21 | 0.16.14 | 0.116.12+1.21.1 | 1.7.4 | Mojang Official |
-| `mc1.20.4` | 1.20.4 | 17 | 0.15.11 | 0.97.3+1.20.4 | 1.6.12 | Mojang Official |
-| `mc1.20.1` | 1.20.1 | 17 | 0.15.11 | 0.92.9+1.20.1 | 1.6.12 | Mojang Official |
+保留建筑、蓝图、移动、删除法杖、生成箱、照明及信标等功能。生成箱仅由法杖任务生成。各版最新已验收修复分别保留；正式图标复用assets/confirmed中的用户确认原图，不重新设计。
 
-每个目录中的 `README.md`（说明文档）与 `VERSION_INFO.md`（版本信息）包含该版本的功能、依赖和构建说明。正式运行 JAR（Java 归档）与 sources JAR（源码归档）由 GitHub Releases（GitHub 发行版）提供。
+每版的Minecraft（我的世界）、Java（爪哇）、Fabric Loader（模组加载器）、Fabric API（应用程序接口）、Fabric Loom（构建插件）、Gradle（构建工具）及Yarn Mappings（命名映射）情况见该版VERSION_INFO.md；实际安装信息见docs/INSTALLATION_TARGETS.json。
 
-八个受支持的 Minecraft（我的世界）版本均已发布正式版 `1.1.1`，同步“可变恒亮灯”：半径 1～64、间隔 1～7、六面红石输入，以及原版无形光源、局部白昼和混合三种模式。1.20.x 已在 Fabric 模组清单中正式注册客户端 Mixin，使 Indigo 与 Sodium 0.5.8 局部白昼兼容实际加载；原版无形光源优先安装当前范围、后台清理历史范围。
+Windows PowerShell（命令外壳）构建：在项目根目录设置 $env:PYTHONUTF8='1' 后运行 python .\scripts\release_119.py build 1.20.1；将末尾版本替换为所需版本。脚本自动为26系列选择Java25，其余使用Java21构建，目标字节码遵循各版Java要求。运行世界回归使用 python .\scripts\release_119.py world 对应版本。
 
-## 语言支持
+源码、原始图标、全部材质模型、八语言翻译、组件接入文档和针对性测试均保留，可继续修改和增加组件。本地编译JAR依赖置于各版libs；其他声明依赖可由Gradle下载，H盘共享依赖缓存保留。构建产物／测试世界／项目缓存可重新生成，不属于源码。
 
-模组内所有玩家可见文字均使用翻译键，不在 Java（爪哇）源码中硬编码显示语言。当前内置英语、简体中文、繁体中文、日语、韩语、德语、法语和西班牙语。英语和中文为主要校对语言，其他语言为首版翻译，欢迎继续校正游戏术语。
+工具环境路径可按本机安装调整；脚本默认GRADLE_USER_HOME=H:/CodexWork/q5-gradle-cache，Java临时目录=H:/CodexWork/q5-settings-runtime-tmp，避免构建缓存增长到C盘。
 
-新增界面、提示、物品或命令反馈时，必须同步维护八种语言；`LocalizationResourcesTest`（本地化资源测试）会检查语言文件、键集合、缺失键和 Java 中文硬编码。
+Windows（视窗系统）源码布局：辅助模块的物理目录为auxiliary，以避开Windows保留名AUX；Java历史包名保留aux，不影响运行接口和存档。请保留该兼容布局并通过Gradle构建。源码归档中的虚拟ZIP路径仍对应二进制包名。

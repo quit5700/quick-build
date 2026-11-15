@@ -1,0 +1,11 @@
+{
+  "multipart": [
+    { "apply": { "model": "light:block/redstone_energy_sensor" } },
+    { "when": { "north": "true" }, "apply": { "model": "light:block/redstone_energy_sensor_port_north" } },
+    { "when": { "east": "true" }, "apply": { "model": "light:block/redstone_energy_sensor_port_east" } },
+    { "when": { "south": "true" }, "apply": { "model": "light:block/redstone_energy_sensor_port_south" } },
+    { "when": { "west": "true" }, "apply": { "model": "light:block/redstone_energy_sensor_port_west" } },
+    { "when": { "up": "true" }, "apply": { "model": "light:block/redstone_energy_sensor_port_up" } },
+    { "when": { "down": "true" }, "apply": { "model": "light:block/redstone_energy_sensor_port_down" } }
+  ]
+}

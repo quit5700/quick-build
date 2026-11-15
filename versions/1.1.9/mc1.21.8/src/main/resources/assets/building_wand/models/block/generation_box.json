@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "building_wand:block/generation_box_side",
+    "down": "building_wand:block/generation_box_top",
+    "up": "building_wand:block/generation_box_top",
+    "north": "building_wand:block/generation_box_front",
+    "south": "building_wand:block/generation_box_side",
+    "east": "building_wand:block/generation_box_side",
+    "west": "building_wand:block/generation_box_side"
+  }
+}

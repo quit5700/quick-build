@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "building_wand:delete_wand",
+    "building_wand:building_wand",
+    "building_wand:aux_wand"
+  ]
+}

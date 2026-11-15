@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "light:block/redstone_energy_emitter_none"
+  }
+}

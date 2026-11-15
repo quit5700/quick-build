@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "building_wand:block/wand_settings_station"
+    }
+  }
+}

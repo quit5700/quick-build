@@ -1,0 +1,16 @@
+# 1.20双版兼容与逐版待办
+
+当前项目根目录：C:\Users\quit5700\Documents\mc虚拟线路模组\快捷建筑模组
+类型：旧版接口、第三方模组兼容、配方、核心逻辑、退出卡顿。
+现象：1.20.4启动崩溃；1.20.1删除法杖模型越界、退出存档无响应。
+根因：1.20.4 QuietPlacementMixin与Carpet对LevelChunk.setBlockState同一调用做Redirect，实际旧代码共同加载复现崩溃，两者先后顺序不同只改变谁注入失败；不是缺包。23份灯配方仍放recipe目录并用新字符串原料、id结果，1.20.1/4不识别；应为recipes、item/tag原料对象、item结果。专用GUI图标路由遗漏旧版；灯缓存回调清空source.volume导致同类空指针，提取原算法真实复现3/4后修复4/4。
+修复：QuietPlacementMixin改在BlockStateBase.onRemove/onPlace入口Inject，仅QuietPlacement.active期间阻断回调，并保留容器实体清理；普通玩家放置不受影响。按各版本旧网络Payload、NBT、SavedData、BlockEntity保存接口适配累计功能，禁止替换旧移动实现。
+文件：详细变更列表见变更范围核验.json；WandActions仅插入计数及耐久扣除，ClientWandController仅buildingTarget方法；所有旧单元测试及PNG保留。
+已尝试失败：旧版没有compileClientJava任务，client源属于main；字符串空片段补丁把WandActions新增行插到文件头，已恢复本版原文件改用具体放置锚点；1.20.4保存需要旧Factory而1.20.1为函数式computeIfAbsent，不能一套替换；BlockEntity.saveWithFullMetadata/loadStatic无需注册表参数；网络必须旧LegacyWandPackets，避免全限定名称误拼接；Java17无List.getLast，旧DataResult.getOrThrow需要参数；经验球旧接口repairPlayerItems参数是Player；灯测试需lightLoadSmoke与lightLoadPhase同时指定，最初只给phase未启用测试；检查标记应使用原Q5_LIGHT_LOAD标记，不能误判准备阶段失败。客户端首次冷启动超时所采线程是启动阶段，不是退出死锁；第二次模型探针在加载覆盖层未结束时取模型导致诊断副本异常，增加资源加载完成条件，不能把探针问题当成生产BUG；第三次未先level.disconnect导致服务器继续运行，属于探针遗漏正常退出前置流程，修正后两份独立存档退出通过。
+验证：旧Carpet共同启动失败日志与灯旧算法失败日志保留；修复后共同加载无Redirect冲突；每版199单元、59世界、58配方、4灯缓存、六灯3阶段保存重载通过，服务器停止保存完成。
+退出证据：用户明确退出存档回主菜单。Windows AppHangB1记录Java25无响应，游戏日志停在Xaero hud finalized，没有退出异常栈；WER报告内容未能取得。不能据Java25版本或独立服务器退出通过宣布原整合卡顿已修复。后续原场景卡住时用capture_1201_exit.ps1或直接jcmd采两份线程，禁止先强退后猜根因。
+1.20.4、1.20.1更新为1.1.8-test14测试版。1.20.4已复现并修复与Carpet（地毯模组）争抢方块放置回调的启动崩溃；改在方块状态回调入口保持移动静默语义，不降低注入检查。两版旧灯配方目录及原料、结果格式修复，并补齐58配方；建筑法杖512耐久、100块扣1、多格完整放置后损坏、经验修补、创造不扣；生存实心空心覆盖清单、区域双材料筛选、保护及自然支撑掉落、白色辅助坐标、独立警告去重5秒、掉落物排除均适配验证。删除法杖物品栏复用定稿平面图标，手持立体模型和选点闪烁保持。修复两版同类灯缓存重入空指针，保留旧版世界读取接口。其他六版运行包摘要未变；不改玩家存档、不上传GitHub、不关机。
+退出问题：1.20.1使用实际14个整合模组及Java25，实验存档和新的世界 (7)独立副本均已进入游戏、保存退出并返回主菜单；原退出卡顿未再现，根因仍未确认，不宣称已修复。
+
+## 1.20.1当前运行现场补充
+用户反馈箱子及全部法杖无法交互，退出不完成。对实际游戏进程28904连续采两份线程：服务器线程持续在fabric-train-simulator 0.2.40的TrackTrail.trim第49行，经record、advanceLogicalTrain进入ArrayDeque.removeFirstOccurrence；10秒间服务器线程CPU增加约9秒，调用栈未变。客户端在正常退出clearLevel循环等待服务器结束。由此定位卡顿发生在列车轨迹清理，快捷建筑交互受服务器阻塞连带影响。尚未分析列车源码根因、未修复。现场原日志和线程在outputs/20261007_1201交互卡死现场。未结束用户进程、未修改用户存档。该证据只作为当前项目受第三方阻塞的记录；其他项目修复需先明确项目范围。

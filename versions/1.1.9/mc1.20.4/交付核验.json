@@ -1,0 +1,42 @@
+{
+  "version": "1.1.9",
+  "baseline": "1.1.9-test24",
+  "tests": {
+    "tests": 341,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "world": {
+    "world_cases": 60,
+    "other_recipes": 59
+  },
+  "runtime": "H:\\Codex交接文档库\\快捷建筑模组_两项修复接管_20261027\\1.1.9_正式版\\运行包与源码包\\quick-build-1.1.9-mc1.20.4-fabric.jar",
+  "runtime_sha256": "7a10666d659d5e08dab375eac2b62df5bfc51a9cd14787498f33af619d3e018e",
+  "sources": "H:\\Codex交接文档库\\快捷建筑模组_两项修复接管_20261027\\1.1.9_正式版\\运行包与源码包\\quick-build-1.1.9-mc1.20.4-fabric-sources.jar",
+  "sources_sha256": "a0efee120cff7043f74e61fcc942083ff3d037cab9d35d4188488c11c91c4117",
+  "icon_sha256": "2470dc0bdef95f06bf47030118123f34690f83366fe24f2769d0b15afeb0a518",
+  "java": "17",
+  "loaderMinimum": "0.15.11",
+  "fabricApiCompile": "0.97.3+1.20.4",
+  "loom": "1.6.12",
+  "gradle": "8.6",
+  "installations": [
+    {
+      "minecraft": "1.20.4",
+      "instance": "1.20.4-Fabric-mtr",
+      "profile": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\1.20.4-Fabric-mtr.json",
+      "mods": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\mods",
+      "actualLoader": [
+        "net.fabricmc:fabric-loader:0.19.3"
+      ],
+      "actualApi": "fabric-api-0.97.3+1.20.4.jar",
+      "previousActive": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\mods\\quick-build-1.1.9-test24-mc1.20.4-fabric.jar",
+      "runtime": "H:\\Codex交接文档库\\快捷建筑模组_两项修复接管_20261027\\1.1.9_正式版\\运行包与源码包\\quick-build-1.1.9-mc1.20.4-fabric.jar",
+      "runtime_sha256": "7a10666d659d5e08dab375eac2b62df5bfc51a9cd14787498f33af619d3e018e",
+      "installed": "G:\\game\\mcfabric\\.minecraft\\versions\\1.20.4-Fabric-mtr\\mods\\quick-build-1.1.9-mc1.20.4-fabric.jar",
+      "installed_sha256": "7a10666d659d5e08dab375eac2b62df5bfc51a9cd14787498f33af619d3e018e",
+      "unrelatedModsUnchanged": true
+    }
+  ]
+}

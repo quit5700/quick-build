@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "building_wand:block/wand_settings_station"
+  }
+}

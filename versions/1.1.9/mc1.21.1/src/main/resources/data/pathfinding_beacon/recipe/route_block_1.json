@@ -1,0 +1,13 @@
+{
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "category": "building",
+  "result": {
+    "count": 64,
+    "id": "pathfinding_beacon:route_block_1"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

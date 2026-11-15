@@ -1,1 +1,0 @@
-{ "type": "minecraft:crafting_shapeless", "ingredients": ["light:constant_light_block", "minecraft:redstone", "minecraft:iron_ingot"], "result": { "id": "light:redstone_energy_connector", "count": 1 } }
